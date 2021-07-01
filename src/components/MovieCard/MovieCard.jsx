@@ -3,8 +3,20 @@ import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
 
-const MovieCard = ({ movie }) => (
-  <div className="movie-card">
+const MovieCard = ({ movie, onClick }) => (
+  <div
+    role="link"
+    tabIndex="0"
+    className="movie-card"
+    onClick={onClick}
+    onKeyDown={
+    ({ keyCode }) => {
+      if (keyCode === 13 || keyCode === 32) {
+        onClick();
+      }
+    }
+  }
+  >
     <div className="movie-poster">
       <img src={movie.ImagePath} alt={movie.Title} />
     </div>
@@ -21,6 +33,7 @@ const MovieCard = ({ movie }) => (
 
 MovieCard.propTypes = {
   movie: PropTypes.objectOf(PropTypes.shape).isRequired,
+  onClick: PropTypes.func.isRequired,
 };
 
 export default MovieCard;

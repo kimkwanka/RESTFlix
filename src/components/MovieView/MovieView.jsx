@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import './MovieView.scss';
 
-const MovieView = ({ movie }) => (
+const MovieView = ({ movie, onBackClick }) => (
   <div className="movie-view">
     <div className="movie-poster">
       <img src={movie.ImagePath} alt={movie.Title} />
@@ -16,12 +16,13 @@ const MovieView = ({ movie }) => (
       <span className="label">Description: </span>
       <span className="value">{movie.Description}</span>
     </div>
-    <button type="button">Back</button>
+    <button type="button" onClick={onBackClick}>Back</button>
   </div>
 );
 
 MovieView.propTypes = {
   movie: PropTypes.objectOf(PropTypes.shape).isRequired,
+  onBackClick: PropTypes.func.isRequired,
 };
 
 export default MovieView;

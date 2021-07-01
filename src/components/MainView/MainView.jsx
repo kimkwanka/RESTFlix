@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import './MainView.scss';
 
 import MovieCard from '../MovieCard/MovieCard';
+import MovieView from '../MovieView/MovieView';
 
 const MainView = () => {
   const [movies] = useState([
@@ -16,12 +17,19 @@ const MainView = () => {
       _id: 3, Title: 'Gladiator', Description: 'desc3...', ImagePath: '...',
     },
   ]);
+  const [selectedMovie, setSelectedMovie] = useState(null);
+
   if (movies.length === 0) {
     return <div className="main-view">The list is empty!</div>;
   }
+
   return (
     <div className="main-view">
-      {movies.map((movie) => <MovieCard key={movie._id} movie={movie} />)}
+      { selectedMovie
+        ? <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+        : movies.map((movie) => (
+          <MovieCard key={movie._id} movie={movie} onClick={() => setSelectedMovie(movie)} />
+        )) }
     </div>
   );
 };
