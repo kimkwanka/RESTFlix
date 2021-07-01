@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 
 import './index.scss';
 
+import MainView from './components/MainView/MainView';
+
 const App = () => (
-  <div className="my-flix">
-    <div>Good morning</div>
-  </div>
+  <MainView />
 );
 
 ReactDOM.render(<App />, document.getElementById('root'));
