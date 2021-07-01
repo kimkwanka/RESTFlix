@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
 
@@ -17,5 +18,9 @@ const MovieCard = ({ movie }) => (
     </div>
   </div>
 );
+
+MovieCard.propTypes = {
+  movie: PropTypes.objectOf(PropTypes.shape).isRequired,
+};
 
 export default MovieCard;
