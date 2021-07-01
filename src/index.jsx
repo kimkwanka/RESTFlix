@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 
 import './index.scss';
 
-import MainView from './components/MainView/MainView';
+import MainView from './components/MainView';
 
 const App = () => (
   <MainView />
