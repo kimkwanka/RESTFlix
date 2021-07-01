@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import './MovieCard.scss';
 
 const MovieCard = ({ movie }) => (
-  <div className="movie-view">
+  <div className="movie-card">
     <div className="movie-poster">
       <img src={movie.ImagePath} alt={movie.Title} />
     </div>
