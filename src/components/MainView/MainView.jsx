@@ -1,8 +1,10 @@
+/* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 
 import './MainView.scss';
 
 import LoginView from '../LoginView';
+import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
 import MovieView from '../MovieView';
 
@@ -16,12 +18,13 @@ function showLoadingSpinner() {
   return loadingSpinner;
 }
 
-// Hide a loading spinner
 function hideLoadingSpinner(loadingSpinner) {
   loadingSpinner.remove();
 }
 
 const MainView = () => {
+  const [route, setRoute] = useState('/');
+  const [errors, setErrors] = useState([]);
   const [loggedInUser, setloggedInUser] = useState(null);
   const [jwtToken, setJwtToken] = useState('');
   const [movies, setMovies] = useState([]);
@@ -53,25 +56,57 @@ const MainView = () => {
   const onLoggedIn = (user, token) => {
     setloggedInUser(user);
     setJwtToken(token);
+    setRoute('/movies');
   };
 
-  if (!loggedInUser) {
-    return <LoginView onLoggedIn={onLoggedIn} />;
+  const onError = (newErrors) => {
+    setErrors(newErrors);
+  };
+
+  let content = <div className="main-view" />;
+
+  if (route === '/') {
+    content = (
+      <div className="main-view">
+        <button type="button" onClick={() => setRoute('/register')}>Sign Up</button>
+        <button type="button" onClick={() => setRoute('/login')}>Log in</button>
+      </div>
+    );
   }
 
-  if (movies.length === 0) {
-    return <div className="main-view" />;
+  if (route === '/login') {
+    content = (
+      <div className="main-view">
+        <LoginView onLoggedIn={onLoggedIn} onLoginError={onError} />
+        {errors.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+        <button type="button" onClick={() => setRoute('/')}>Back</button>
+      </div>
+    );
   }
 
-  return (
-    <div className="main-view">
-      { selectedMovie
-        ? <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-        : movies.map((movie) => (
-          <MovieCard key={movie._id} movie={movie} onClick={() => setSelectedMovie(movie)} />
-        )) }
-    </div>
-  );
+  if (route === '/register') {
+    content = (
+      <div className="main-view">
+        <RegistrationView onRegister={() => setRoute('/')} onRegisterError={onError} />
+        {errors.map((e, i) => <p className="errorText" key={`err${i}`}>{e.msg || e}</p>)}
+        <button type="button" onClick={() => setRoute('/')}>Back</button>
+      </div>
+    );
+  }
+
+  if (route === '/movies') {
+    content = (
+      <div className="main-view">
+        { selectedMovie
+          ? <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+          : movies.map((movie) => (
+            <MovieCard key={movie._id} movie={movie} onClick={() => setSelectedMovie(movie)} />
+          )) }
+      </div>
+    );
+  }
+
+  return (content);
 };
 
 export default MainView;
