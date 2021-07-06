@@ -23,6 +23,16 @@ const hideLoadingSpinner = (loadingSpinner) => {
   loadingSpinner.remove();
 };
 
+const ErrorMessages = () => {
+  const [{ errorMessages }] = useStoreContext();
+
+  return (
+    <>
+      {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+    </>
+  );
+};
+
 const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -30,7 +40,7 @@ const MainView = () => {
   const [storeState, setStoreState] = useStoreContext();
 
   const {
-    user: loggedInUser, token: jwtToken, errorMessages, route: currentRoute,
+    user: loggedInUser, token: jwtToken, route: currentRoute,
   } = storeState;
 
   const setRoute = (route) => {
@@ -74,7 +84,7 @@ const MainView = () => {
     content = (
       <div className="main-view">
         <LoginView />
-        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+        <ErrorMessages />
         <button type="button" onClick={() => setRoute('/')}>Back</button>
       </div>
     );
@@ -83,8 +93,8 @@ const MainView = () => {
   if (currentRoute === '/register') {
     content = (
       <div className="main-view">
-        <RegistrationView onRegister={() => setRoute('/')} onRegisterError={null} />
-        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e.msg || e}</p>)}
+        <RegistrationView />
+        <ErrorMessages />
         <button type="button" onClick={() => setRoute('/')}>Back</button>
       </div>
     );

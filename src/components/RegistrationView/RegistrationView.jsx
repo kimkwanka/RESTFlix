@@ -40,18 +40,22 @@ const RegistrationView = () => {
 
       if (res.status === 201) {
         await res.json();
+
         setStoreState({ ...storeState, route: '/', errorMessages: [] });
       }
 
       if (res.status === 400) {
         const responseBodyText = await res.text();
+
         setStoreState({ ...storeState, errorMessages: [responseBodyText] });
         console.error(responseBodyText);
       }
 
       if (res.status === 422) {
         const responseBody = await res.json();
-        setStoreState({ ...storeState, errorMessages: responseBody.errors });
+        const errorMessages = responseBody.errors.map((e) => e.msg);
+
+        setStoreState({ ...storeState, errorMessages });
         console.error(responseBody.errors);
       }
     } catch (err) {
