@@ -33,6 +33,16 @@ const ErrorMessages = () => {
   );
 };
 
+const MovieList = ({ movies, setSelectedMovie }) => {
+  const handleClick = (myMovie) => React.useCallback(() => setSelectedMovie(myMovie), [myMovie]);
+
+  return (
+    movies.map((movie) => (
+      <MovieCard key={movie._id} movie={movie} onClick={handleClick(movie)} />
+    ))
+  );
+};
+
 const MainView = () => {
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
@@ -105,9 +115,7 @@ const MainView = () => {
       <div className="main-view">
         { selectedMovie
           ? <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-          : movies.map((movie) => (
-            <MovieCard key={movie._id} movie={movie} onClick={() => setSelectedMovie(movie)} />
-          )) }
+          : <MovieList movies={movies} setSelectedMovie={setSelectedMovie} />}
       </div>
     );
   }

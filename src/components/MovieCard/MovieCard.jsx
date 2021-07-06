@@ -40,4 +40,4 @@ MovieCard.propTypes = {
   onClick: PropTypes.func.isRequired,
 };
 
-export default MovieCard;
+export default React.memo(MovieCard);
