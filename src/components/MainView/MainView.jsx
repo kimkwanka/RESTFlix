@@ -9,7 +9,7 @@ import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
 import MovieView from '../MovieView';
 
-function showLoadingSpinner() {
+const showLoadingSpinner = () => {
   const loadingSpinner = document.createElement('div');
   loadingSpinner.className = 'loading-spinner';
 
@@ -17,11 +17,11 @@ function showLoadingSpinner() {
 
   loadingSpinnerParent.appendChild(loadingSpinner);
   return loadingSpinner;
-}
+};
 
-function hideLoadingSpinner(loadingSpinner) {
+const hideLoadingSpinner = (loadingSpinner) => {
   loadingSpinner.remove();
-}
+};
 
 const MainView = () => {
   const [movies, setMovies] = useState([]);
