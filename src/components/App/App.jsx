@@ -1,9 +1,12 @@
 import React from 'react';
 
+import { StoreProvider } from '../Store';
 import MainView from '../MainView';
 
 const App = () => (
-  <MainView />
+  <StoreProvider>
+    <MainView />
+  </StoreProvider>
 );
 
 export default App;

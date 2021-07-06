@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import './MainView.scss';
 
+import { useStoreContext } from '../Store';
 import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
@@ -12,7 +13,7 @@ function showLoadingSpinner() {
   const loadingSpinner = document.createElement('div');
   loadingSpinner.className = 'loading-spinner';
 
-  const loadingSpinnerParent = document.querySelector('body');
+  const loadingSpinnerParent = document.querySelector('.main-view');
 
   loadingSpinnerParent.appendChild(loadingSpinner);
   return loadingSpinner;
@@ -23,18 +24,23 @@ function hideLoadingSpinner(loadingSpinner) {
 }
 
 const MainView = () => {
-  const [route, setRoute] = useState('/');
-  const [errors, setErrors] = useState([]);
-  const [loggedInUser, setloggedInUser] = useState(null);
-  const [jwtToken, setJwtToken] = useState('');
   const [movies, setMovies] = useState([]);
   const [selectedMovie, setSelectedMovie] = useState(null);
+
+  const [storeState, setStoreState] = useStoreContext();
+
+  const {
+    user: loggedInUser, token: jwtToken, errorMessages, route: currentRoute,
+  } = storeState;
+
+  const setRoute = (route) => {
+    setStoreState({ ...storeState, route, errorMessages: [] });
+  };
 
   useEffect(async () => {
     if (!loggedInUser) {
       return;
     }
-
     const loadingSpinner = showLoadingSpinner();
 
     try {
@@ -53,19 +59,9 @@ const MainView = () => {
     }
   }, [jwtToken]);
 
-  const onLoggedIn = (user, token) => {
-    setloggedInUser(user);
-    setJwtToken(token);
-    setRoute('/movies');
-  };
-
-  const onError = (newErrors) => {
-    setErrors(newErrors);
-  };
-
   let content = <div className="main-view" />;
 
-  if (route === '/') {
+  if (currentRoute === '/') {
     content = (
       <div className="main-view">
         <button type="button" onClick={() => setRoute('/register')}>Sign Up</button>
@@ -74,27 +70,27 @@ const MainView = () => {
     );
   }
 
-  if (route === '/login') {
+  if (currentRoute === '/login') {
     content = (
       <div className="main-view">
-        <LoginView onLoggedIn={onLoggedIn} onLoginError={onError} />
-        {errors.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+        <LoginView />
+        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
         <button type="button" onClick={() => setRoute('/')}>Back</button>
       </div>
     );
   }
 
-  if (route === '/register') {
+  if (currentRoute === '/register') {
     content = (
       <div className="main-view">
-        <RegistrationView onRegister={() => setRoute('/')} onRegisterError={onError} />
-        {errors.map((e, i) => <p className="errorText" key={`err${i}`}>{e.msg || e}</p>)}
+        <RegistrationView onRegister={() => setRoute('/')} onRegisterError={null} />
+        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e.msg || e}</p>)}
         <button type="button" onClick={() => setRoute('/')}>Back</button>
       </div>
     );
   }
 
-  if (route === '/movies') {
+  if (currentRoute === '/movies') {
     content = (
       <div className="main-view">
         { selectedMovie
