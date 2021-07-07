@@ -1,6 +1,12 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import Button from 'react-bootstrap/Button';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainView.scss';
 
 import { useStoreContext } from '../Store';
@@ -27,9 +33,11 @@ const ErrorMessages = () => {
   const [{ errorMessages }] = useStoreContext();
 
   return (
-    <>
-      {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
-    </>
+    <Row className="m-4">
+      <Col>
+        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+      </Col>
+    </Row>
   );
 };
 
@@ -38,7 +46,9 @@ const MovieList = ({ movies, setSelectedMovie }) => {
 
   return (
     movies.map((movie) => (
-      <MovieCard key={movie._id} movie={movie} onClick={handleClick(movie)} />
+      <Col className="mb-4" md={4}>
+        <MovieCard key={movie._id} movie={movie} onClick={handleClick(movie)} />
+      </Col>
     ))
   );
 };
@@ -83,44 +93,54 @@ const MainView = () => {
 
   if (currentRoute === '/') {
     content = (
-      <div className="main-view">
-        <button type="button" onClick={() => setRoute('/register')}>Sign Up</button>
-        <button type="button" onClick={() => setRoute('/login')}>Log in</button>
-      </div>
+      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+        <Button className="mb-3" onClick={() => setRoute('/register')}>Sign Up</Button>
+        <Button onClick={() => setRoute('/login')}>Log in</Button>
+      </Col>
     );
   }
 
   if (currentRoute === '/login') {
     content = (
-      <div className="main-view">
+      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
         <LoginView />
         <ErrorMessages />
-        <button type="button" onClick={() => setRoute('/')}>Back</button>
-      </div>
+        <Button variant="secondary" className="mt-4" onClick={() => setRoute('/')}>Back</Button>
+      </Col>
     );
   }
 
   if (currentRoute === '/register') {
     content = (
-      <div className="main-view">
+      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
         <RegistrationView />
         <ErrorMessages />
-        <button type="button" onClick={() => setRoute('/')}>Back</button>
-      </div>
+        <Button variant="secondary" className="mt-4" onClick={() => setRoute('/')}>Back</Button>
+      </Col>
     );
   }
 
   if (currentRoute === '/movies') {
     content = (
-      <div className="main-view">
-        { selectedMovie
-          ? <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+      <>
+        {selectedMovie
+          ? (
+            <Col md={8}>
+              <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
+            </Col>
+          )
           : <MovieList movies={movies} setSelectedMovie={setSelectedMovie} />}
-      </div>
+      </>
     );
   }
 
-  return (content);
+  return (
+    <Container>
+      <Row className="main-view m-3 justify-content-md-center">
+        {content}
+      </Row>
+    </Container>
+  );
 };
 
 export default MainView;

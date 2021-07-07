@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Form from 'react-bootstrap/Form';
+import Button from 'react-bootstrap/Button';
 
 import './RegistrationView.scss';
 
@@ -69,25 +71,25 @@ const RegistrationView = () => {
   };
 
   return (
-    <form id="register-form">
-      <label htmlFor="register-username">
-        Username:
-        <input id="register-username" type="text" value={Username} onChange={(e) => setUsername(e.target.value)} />
-      </label>
-      <label htmlFor="register-password">
-        Password:
-        <input id="register-password" type="password" value={Password} onChange={(e) => setPassword(e.target.value)} />
-      </label>
-      <label htmlFor="register-email">
-        Email:
-        <input id="register-email" type="text" value={Email} onChange={(e) => setEmail(e.target.value)} />
-      </label>
-      <label htmlFor="register-birthday">
-        Birthday:
-        <input id="register-birthday" type="text" value={Birthday} onChange={(e) => setBirthday(e.target.value)} placeholder="06/11/1973" />
-      </label>
-      <button type="submit" onClick={(e) => handleSubmit(e)}>Register</button>
-    </form>
+    <Form className="d-flex flex-column align-items-center">
+      <Form.Group controlId="formUsername">
+        <Form.Label>Username:</Form.Label>
+        <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} />
+      </Form.Group>
+      <Form.Group controlId="formPassword">
+        <Form.Label>Password:</Form.Label>
+        <Form.Control type="password" defaultValue={Password} onChange={(e) => setPassword(e.target.value)} />
+      </Form.Group>
+      <Form.Group controlId="formEmail">
+        <Form.Label>Email:</Form.Label>
+        <Form.Control type="text" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} />
+      </Form.Group>
+      <Form.Group controlId="formBirthday">
+        <Form.Label>Birthday:</Form.Label>
+        <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
+      </Form.Group>
+      <Button type="submit" variant="primary" onClick={handleSubmit}>Register</Button>
+    </Form>
   );
 };
 

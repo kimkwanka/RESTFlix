@@ -1,34 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import Card from 'react-bootstrap/Card';
+
 import './MovieCard.scss';
 
+const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
+
 const MovieCard = ({ movie, onClick }) => (
-  <div
-    role="link"
-    tabIndex="0"
-    className="movie-card"
-    onClick={onClick}
-    onKeyDown={
-    ({ keyCode }) => {
-      if (keyCode === 13 || keyCode === 32) {
-        onClick();
-      }
-    }
-  }
-  >
-    <div className="movie-poster">
-      <img src={movie.ImagePath} alt={movie.Title} />
-    </div>
-    <div className="movie-title">
-      <span className="label">Title: </span>
-      <span className="value">{movie.Title}</span>
-    </div>
-    <div className="movie-description">
-      <span className="label">Description: </span>
-      <span className="value">{movie.Description}</span>
-    </div>
-  </div>
+  <Card className="movie-card h-100" onClick={onClick}>
+    <Card.Img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} />
+    <Card.Body>
+      <Card.Title>{movie.Title}</Card.Title>
+      <Card.Text>{movie.Description}</Card.Text>
+    </Card.Body>
+  </Card>
 );
 
 MovieCard.propTypes = {
