@@ -45,8 +45,8 @@ const MovieList = ({ movies, setSelectedMovie }) => {
   const handleClick = (myMovie) => React.useCallback(() => setSelectedMovie(myMovie), [myMovie]);
 
   return (
-    movies.map((movie) => (
-      <Col className="mb-4" md={4}>
+    movies.map((movie, i) => (
+      <Col className="mb-4" md={4} key={i}>
         <MovieCard key={movie._id} movie={movie} onClick={handleClick(movie)} />
       </Col>
     ))
