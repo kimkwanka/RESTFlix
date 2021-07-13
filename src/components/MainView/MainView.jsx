@@ -22,19 +22,7 @@ import MovieView from '../MovieView';
 import GenreView from '../GenreView';
 import DirectorView from '../DirectorView';
 
-const showLoadingSpinner = () => {
-  const loadingSpinner = document.createElement('div');
-  loadingSpinner.className = 'loading-spinner';
-
-  const loadingSpinnerParent = document.querySelector('.main-view');
-
-  loadingSpinnerParent.appendChild(loadingSpinner);
-  return loadingSpinner;
-};
-
-const hideLoadingSpinner = (loadingSpinner) => {
-  loadingSpinner.remove();
-};
+import LoadingSpinner from '../LoadingSpinner';
 
 const ErrorMessages = () => {
   const [{ errorMessages }] = useStoreContext();
@@ -61,6 +49,8 @@ const MovieList = ({ movies, setSelectedMovie }) => {
 };
 
 const MainView = ({ history }) => {
+  const [isLoading, setIsLoading] = useState(false);
+
   const [movies, setMovies] = useState([]);
   const [storeState, setStoreState] = useStoreContext();
 
@@ -101,7 +91,7 @@ const MainView = ({ history }) => {
       return;
     }
 
-    const loadingSpinner = showLoadingSpinner();
+    setIsLoading(true);
 
     try {
       const res = await fetch('https://dry-sands-45830.herokuapp.com/movies/', {
@@ -115,7 +105,7 @@ const MainView = ({ history }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      hideLoadingSpinner(loadingSpinner);
+      setIsLoading(false);
     }
   }, [jwtToken]);
 
@@ -130,6 +120,7 @@ const MainView = ({ history }) => {
           </Row>
         ) : null}
       <Row className="main-view m-3 justify-content-md-center">
+        <LoadingSpinner isLoading={isLoading} />
         <Switch>
           <Route exact path="/">
             {!loggedInUser
@@ -193,7 +184,6 @@ const MainView = ({ history }) => {
               );
             }}
           />
-
           <Route exact path="/movies">
             {loggedInUser
               ? <MovieList movies={movies} setSelectedMovie={null} />

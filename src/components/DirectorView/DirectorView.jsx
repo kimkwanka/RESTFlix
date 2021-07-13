@@ -4,31 +4,23 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
+import LoadingSpinner from '../LoadingSpinner';
+
 import './DirectorView.scss';
 
-const showLoadingSpinner = () => {
-  const loadingSpinner = document.createElement('div');
-  loadingSpinner.className = 'loading-spinner';
-
-  const loadingSpinnerParent = document.querySelector('.main-view');
-
-  loadingSpinnerParent.appendChild(loadingSpinner);
-  return loadingSpinner;
-};
-
-const hideLoadingSpinner = (loadingSpinner) => {
-  loadingSpinner.remove();
-};
-
 const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
-  const [director, setDirector] = useState({ Name: '', Bio: '', Birth: '', Death: '' });
+  const [director, setDirector] = useState({
+    Name: '', Bio: '', Birth: '', Death: '',
+  });
+
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(async () => {
     if (!jwtToken) {
       return;
     }
 
-    const loadingSpinner = showLoadingSpinner();
+    setIsLoading(true);
 
     try {
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/directors/${directorName}`, {
@@ -42,12 +34,13 @@ const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      hideLoadingSpinner(loadingSpinner);
+      setIsLoading(false);
     }
   }, [jwtToken]);
 
   return (
-    <Card className="genre-card d-flex flex-column align-items-center">
+    <Card className="d-flex flex-column align-items-center">
+      <LoadingSpinner isLoading={isLoading} />
       <Card.Body>
         <Card.Title>{director.Name}</Card.Title>
         <Card.Text>{`Year of Birth: ${director.Birth}`}</Card.Text>
