@@ -24,8 +24,16 @@ MovieView.propTypes = {
     Title: PropTypes.string.isRequired,
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
   onBackClick: PropTypes.func.isRequired,
+};
+
+MovieView.defaultProps = {
+  movie: {
+    Title: '',
+    Description: '',
+    ImagePath: '',
+  },
 };
 
 export default MovieView;

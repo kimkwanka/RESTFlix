@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+import PropTypes from 'prop-types';
 
 import './LoginView.scss';
 
@@ -11,7 +15,7 @@ const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('user', user);
 };
 
-const LoginView = () => {
+const LoginView = ({ history }) => {
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
 
@@ -28,10 +32,12 @@ const LoginView = () => {
         const { user, token } = await res.json();
 
         setStoreState({
-          ...storeState, user, token, route: '/movies', errorMessages: [],
+          ...storeState, user, token, errorMessages: [],
         });
 
         saveToLocalStorage({ user, token });
+
+        history.push('/movies');
       } else {
         const loginError = await res.text();
 
@@ -63,4 +69,10 @@ const LoginView = () => {
   );
 };
 
-export default LoginView;
+LoginView.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(LoginView);

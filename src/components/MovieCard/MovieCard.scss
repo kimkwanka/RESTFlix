@@ -1,4 +1,8 @@
 .movie-card {
-  cursor: pointer;
   margin-bottom: 16px;
+  color: inherit;
+  &:hover {
+    color: inherit;
+    text-decoration: none;
+  }
 }

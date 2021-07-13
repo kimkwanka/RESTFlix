@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
+import { withRouter } from 'react-router-dom';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+
+import PropTypes from 'prop-types';
 
 import './RegistrationView.scss';
 
 import { useStoreContext } from '../Store';
 
-const RegistrationView = () => {
+const RegistrationView = ({ history }) => {
   const [newUser, setNewUser] = useState({
     Username: '',
     Password: '',
@@ -43,7 +47,8 @@ const RegistrationView = () => {
       if (res.status === 201) {
         await res.json();
 
-        setStoreState({ ...storeState, route: '/', errorMessages: [] });
+        setStoreState({ ...storeState, errorMessages: [] });
+        history.push('/');
       }
 
       if (res.status === 400) {
@@ -93,4 +98,10 @@ const RegistrationView = () => {
   );
 };
 
-export default RegistrationView;
+RegistrationView.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
+
+export default withRouter(RegistrationView);

@@ -2,7 +2,7 @@ import React, { useState, useContext, createContext } from 'react';
 import PropTypes from 'prop-types';
 
 const initialState = {
-  user: null, token: null, errorMessages: [], route: '/',
+  user: null, token: null, errorMessages: [],
 };
 
 const StoreContext = createContext(initialState);

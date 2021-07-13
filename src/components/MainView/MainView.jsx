@@ -1,5 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
+import {
+  Route, withRouter, Switch, Redirect,
+} from 'react-router-dom';
+
+import PropTypes from 'prop-types';
 
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -53,26 +58,27 @@ const MovieList = ({ movies, setSelectedMovie }) => {
   );
 };
 
-const MainView = () => {
+const MainView = ({ history }) => {
   const [movies, setMovies] = useState([]);
-  const [selectedMovie, setSelectedMovie] = useState(null);
-
   const [storeState, setStoreState] = useStoreContext();
 
   const {
-    user: loggedInUser, token: jwtToken, route: currentRoute,
+    user: loggedInUser, token: jwtToken,
   } = storeState;
 
   const setRoute = (route) => {
-    setStoreState({ ...storeState, route, errorMessages: [] });
+    history.push(route);
   };
+
+  const goBack = React.useCallback(() => history.goBack(), []);
 
   const logoutCurrentUser = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setStoreState({
-      user: null, token: null, errorMessages: [], route: '/',
+      user: null, token: null, errorMessages: [],
     });
+    history.push('/');
   };
 
   useEffect(async () => {
@@ -82,10 +88,14 @@ const MainView = () => {
 
       if (savedUser) {
         setStoreState({
-          ...storeState, user: savedUser, token: savedToken, route: '/movies', errorMessages: [],
+          ...storeState, user: savedUser, token: savedToken, errorMessages: [],
         });
       }
 
+      return;
+    }
+
+    if (movies.length > 0) {
       return;
     }
 
@@ -107,63 +117,81 @@ const MainView = () => {
     }
   }, [jwtToken]);
 
-  let content = <div className="main-view" />;
-
-  if (currentRoute === '/') {
-    content = (
-      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
-        <Button className="mb-3" onClick={() => setRoute('/register')}>Sign Up</Button>
-        <Button onClick={() => setRoute('/login')}>Log in</Button>
-      </Col>
-    );
-  }
-
-  if (currentRoute === '/login') {
-    content = (
-      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
-        <LoginView />
-        <ErrorMessages />
-        <Button variant="secondary" className="mt-4" onClick={() => setRoute('/')}>Back</Button>
-      </Col>
-    );
-  }
-
-  if (currentRoute === '/register') {
-    content = (
-      <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
-        <RegistrationView />
-        <ErrorMessages />
-        <Button variant="secondary" className="mt-4" onClick={() => setRoute('/')}>Back</Button>
-      </Col>
-    );
-  }
-
-  if (currentRoute === '/movies') {
-    content = (
-      <>
-        {selectedMovie
-          ? (
-            <Col md={8}>
-              <MovieView movie={selectedMovie} onBackClick={() => setSelectedMovie(null)} />
-            </Col>
-          )
-          : <MovieList movies={movies} setSelectedMovie={setSelectedMovie} />}
-      </>
-    );
-  }
-
   return (
     <Container>
-      <Row className="m-3">
-        <Col className="d-flex justify-content-end" md={12}>
-          { loggedInUser ? <Button onClick={logoutCurrentUser}>Log out</Button> : null}
-        </Col>
-      </Row>
+      { loggedInUser
+        ? (
+          <Row className="m-3">
+            <Col className="d-flex justify-content-end" md={12}>
+              <Button onClick={logoutCurrentUser}>Log out</Button>
+            </Col>
+          </Row>
+        ) : null}
       <Row className="main-view m-3 justify-content-md-center">
-        {content}
+        <Switch>
+          <Route exact path="/">
+            {!loggedInUser
+              ? (
+                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                  <Button className="mb-3" onClick={() => setRoute('/register')}>Sign Up</Button>
+                  <Button onClick={() => setRoute('/login')}>Log in</Button>
+                </Col>
+              )
+              : <Redirect to="/movies" />}
+          </Route>
+          <Route exact path="/login">
+            {!loggedInUser
+              ? (
+                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                  <LoginView />
+                  <ErrorMessages />
+                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
+                </Col>
+              )
+              : <Redirect to="/movies" />}
+          </Route>
+          <Route exact path="/register">
+            {!loggedInUser
+              ? (
+                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                  <RegistrationView />
+                  <ErrorMessages />
+                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
+                </Col>
+              )
+              : <Redirect to="/movies" />}
+          </Route>
+          <Route
+            exact
+            path="/movies/:movie_id"
+            render={({ match }) => {
+              const movieFoundByID = movies.find((movie) => movie._id === match.params.movie_id);
+              return (
+                <Col md={8}>
+                  <MovieView movie={movieFoundByID} onBackClick={goBack} />
+                </Col>
+              );
+            }}
+          />
+          <Route exact path="/movies">
+            {loggedInUser
+              ? <MovieList movies={movies} setSelectedMovie={null} />
+              : <Redirect to="/" />}
+          </Route>
+        </Switch>
       </Row>
     </Container>
   );
 };
 
-export default MainView;
+MainView.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+    goBack: PropTypes.func.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape(),
+  }).isRequired,
+};
+
+export default withRouter(MainView);
