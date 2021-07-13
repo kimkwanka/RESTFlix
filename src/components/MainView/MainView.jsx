@@ -159,7 +159,11 @@ const MainView = ({ history }) => {
             path="/directors/:director_name"
             render={({ match }) => (
               <Col md={8}>
-                <DirectorView directorName={match.params.director_name} jwtToken={jwtToken} onBackClick={goBack} />
+                <DirectorView
+                  directorName={match.params.director_name}
+                  jwtToken={jwtToken}
+                  onBackClick={goBack}
+                />
               </Col>
             )}
           />
@@ -168,7 +172,11 @@ const MainView = ({ history }) => {
             path="/genres/:genre_name"
             render={({ match }) => (
               <Col md={8}>
-                <GenreView genreName={match.params.genre_name} jwtToken={jwtToken} onBackClick={goBack} />
+                <GenreView
+                  genreName={match.params.genre_name}
+                  jwtToken={jwtToken}
+                  onBackClick={goBack}
+                />
               </Col>
             )}
           />
