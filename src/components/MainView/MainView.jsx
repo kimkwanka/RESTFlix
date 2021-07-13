@@ -19,6 +19,8 @@ import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
 import MovieView from '../MovieView';
+import GenreView from '../GenreView';
+import DirectorView from '../DirectorView';
 
 const showLoadingSpinner = () => {
   const loadingSpinner = document.createElement('div');
@@ -163,6 +165,24 @@ const MainView = ({ history }) => {
           </Route>
           <Route
             exact
+            path="/directors/:director_name"
+            render={({ match }) => (
+              <Col md={8}>
+                <DirectorView directorName={match.params.director_name} jwtToken={jwtToken} onBackClick={goBack} />
+              </Col>
+            )}
+          />
+          <Route
+            exact
+            path="/genres/:genre_title"
+            render={({ match }) => (
+              <Col md={8}>
+                <GenreView genreTitle={match.params.genre_title} jwtToken={jwtToken} onBackClick={goBack} />
+              </Col>
+            )}
+          />
+          <Route
+            exact
             path="/movies/:movie_id"
             render={({ match }) => {
               const movieFoundByID = movies.find((movie) => movie._id === match.params.movie_id);
@@ -173,6 +193,7 @@ const MainView = ({ history }) => {
               );
             }}
           />
+
           <Route exact path="/movies">
             {loggedInUser
               ? <MovieList movies={movies} setSelectedMovie={null} />
