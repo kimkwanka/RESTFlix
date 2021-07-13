@@ -1,3 +1,1 @@
-import DirectorView from './DirectorView';
-
-export default DirectorView;
+export { default } from './DirectorView';

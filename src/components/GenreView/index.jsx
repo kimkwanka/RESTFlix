@@ -1,3 +1,1 @@
-import GenreView from './GenreView';
-
-export default GenreView;
+export { default } from './GenreView';

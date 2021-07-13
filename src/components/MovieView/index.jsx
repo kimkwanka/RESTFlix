@@ -1,3 +1,1 @@
-import MovieView from './MovieView';
-
-export default MovieView;
+export { default } from './MovieView';
