@@ -6,6 +6,11 @@ import './LoginView.scss';
 
 import { useStoreContext } from '../Store';
 
+const saveToLocalStorage = ({ user, token }) => {
+  localStorage.setItem('token', token);
+  localStorage.setItem('user', user);
+};
+
 const LoginView = () => {
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
@@ -25,6 +30,8 @@ const LoginView = () => {
         setStoreState({
           ...storeState, user, token, route: '/movies', errorMessages: [],
         });
+
+        saveToLocalStorage({ user, token });
       } else {
         const loginError = await res.text();
 

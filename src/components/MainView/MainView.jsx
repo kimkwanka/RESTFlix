@@ -67,10 +67,28 @@ const MainView = () => {
     setStoreState({ ...storeState, route, errorMessages: [] });
   };
 
+  const logoutCurrentUser = () => {
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
+    setStoreState({
+      user: null, token: null, errorMessages: [], route: '/',
+    });
+  };
+
   useEffect(async () => {
     if (!loggedInUser) {
+      const savedUser = localStorage.getItem('user');
+      const savedToken = localStorage.getItem('token');
+
+      if (savedUser) {
+        setStoreState({
+          ...storeState, user: savedUser, token: savedToken, route: '/movies', errorMessages: [],
+        });
+      }
+
       return;
     }
+
     const loadingSpinner = showLoadingSpinner();
 
     try {
@@ -136,6 +154,11 @@ const MainView = () => {
 
   return (
     <Container>
+      <Row className="m-3">
+        <Col className="d-flex justify-content-end" md={12}>
+          { loggedInUser ? <Button onClick={logoutCurrentUser}>Log out</Button> : null}
+        </Col>
+      </Row>
       <Row className="main-view m-3 justify-content-md-center">
         {content}
       </Row>
