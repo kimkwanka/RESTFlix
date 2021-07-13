@@ -20,7 +20,7 @@ const hideLoadingSpinner = (loadingSpinner) => {
   loadingSpinner.remove();
 };
 
-const GenreView = ({ genreTitle, jwtToken, onBackClick }) => {
+const GenreView = ({ genreName, jwtToken, onBackClick }) => {
   const [genre, getGenre] = useState({ Title: '', Description: '' });
 
   useEffect(async () => {
@@ -31,7 +31,7 @@ const GenreView = ({ genreTitle, jwtToken, onBackClick }) => {
     const loadingSpinner = showLoadingSpinner();
 
     try {
-      const res = await fetch(`https://dry-sands-45830.herokuapp.com/genres/${genreTitle}`, {
+      const res = await fetch(`https://dry-sands-45830.herokuapp.com/genres/${genreName}`, {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwtToken}`,
@@ -49,7 +49,7 @@ const GenreView = ({ genreTitle, jwtToken, onBackClick }) => {
   return (
     <Card className="d-flex flex-column align-items-center">
       <Card.Body>
-        <Card.Title>{genre.Title}</Card.Title>
+        <Card.Title>{genre.Name}</Card.Title>
         <Card.Text>{genre.Description}</Card.Text>
       </Card.Body>
       <Button className="m-4" onClick={onBackClick}>Back</Button>
@@ -58,7 +58,7 @@ const GenreView = ({ genreTitle, jwtToken, onBackClick }) => {
 };
 
 GenreView.propTypes = {
-  genreTitle: PropTypes.string.isRequired,
+  genreName: PropTypes.string.isRequired,
   jwtToken: PropTypes.string,
   onBackClick: PropTypes.func.isRequired,
 };

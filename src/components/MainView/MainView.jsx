@@ -174,10 +174,10 @@ const MainView = ({ history }) => {
           />
           <Route
             exact
-            path="/genres/:genre_title"
+            path="/genres/:genre_name"
             render={({ match }) => (
               <Col md={8}>
-                <GenreView genreTitle={match.params.genre_title} jwtToken={jwtToken} onBackClick={goBack} />
+                <GenreView genreName={match.params.genre_name} jwtToken={jwtToken} onBackClick={goBack} />
               </Col>
             )}
           />
