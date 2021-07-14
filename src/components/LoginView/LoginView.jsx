@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
+import LoadingSpinner from '../LoadingSpinner';
 
 import './LoginView.scss';
 
@@ -23,8 +24,12 @@ const LoginView = ({ history }) => {
 
   const [storeState, setStoreState] = useStoreContext();
 
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
+
   const checkLogin = async () => {
     try {
+      setIsLoggingIn(true);
+
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`, {
         method: 'POST',
         headers: {},
@@ -48,6 +53,8 @@ const LoginView = ({ history }) => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsLoggingIn(false);
     }
   };
 
@@ -58,6 +65,7 @@ const LoginView = ({ history }) => {
 
   return (
     <Form className="d-flex flex-column align-items-center">
+      <LoadingSpinner isLoading={isLoggingIn} />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" defaultValue={username} onChange={(e) => setUsername(e.target.value)} />

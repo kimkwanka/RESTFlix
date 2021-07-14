@@ -7,6 +7,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
+import LoadingSpinner from '../LoadingSpinner';
 
 import './RegistrationView.scss';
 
@@ -31,11 +32,15 @@ const RegistrationView = ({ history }) => {
 
   const [storeState, setStoreState] = useStoreContext();
 
+  const [isRegistering, setIsRegistering] = useState(false);
+
   const registerUser = async () => {
     try {
       if (!newUser) {
         return;
       }
+
+      setIsRegistering(true);
 
       const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
         method: 'POST',
@@ -69,6 +74,8 @@ const RegistrationView = ({ history }) => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -79,6 +86,7 @@ const RegistrationView = ({ history }) => {
 
   return (
     <Form className="d-flex flex-column align-items-center">
+      <LoadingSpinner isLoading={isRegistering} />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} />
