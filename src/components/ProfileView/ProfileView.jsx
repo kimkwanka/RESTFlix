@@ -1,16 +1,16 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+
+import PropTypes from 'prop-types';
 
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import PropTypes from 'prop-types';
-
 import MovieCard from '../MovieCard';
 import ErrorMessages from '../ErrorMessages';
+import LoadingSpinner from '../LoadingSpinner';
 
 import './ProfileView.scss';
 
@@ -37,19 +37,12 @@ const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
   );
 };
 
-const ProfileView = ({ history }) => {
-  const [newUser, setNewUser] = useState({
-    Username: '',
-    Password: '',
-    Email: '',
-    Birthday: '',
-  });
+FavoriteMovieList.propTypes = {
+  favoriteMovieIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
+  allMovies: PropTypes.arrayOf(PropTypes.shape()).isRequired,
+};
 
-  const setUsername = (Username) => setNewUser({ ...newUser, Username });
-  const setPassword = (Password) => setNewUser({ ...newUser, Password });
-  const setEmail = (Email) => setNewUser({ ...newUser, Email });
-  const setBirthday = (Birthday) => setNewUser({ ...newUser, Birthday });
-
+const ProfileView = () => {
   const [storeState, setStoreState] = useStoreContext();
 
   const {
@@ -57,29 +50,49 @@ const ProfileView = ({ history }) => {
   } = storeState;
 
   const {
-    Username, Password, Email, Birthday, FavoriteMovies,
+    Username, Email, Birthday, FavoriteMovies, _id,
   } = loggedInUser;
 
-  const registerUser = async () => {
+  const [newUserData, setNewUserData] = useState({ ...loggedInUser, Password: '' });
+  const [dataHasChanged, setDataHasChanged] = useState(false);
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  const updateChangedStatus = () => {
+    setDataHasChanged(newUserData.Username !== loggedInUser.Username || newUserData.Password !== '' || newUserData.Email !== loggedInUser.Email || newUserData.Birthday !== loggedInUser.Birthday);
+  };
+
+  const updateNewUserData = (key, value) => {
+    setNewUserData({ ...newUserData, [key]: value });
+  };
+
+  const setUsername = (newUsername) => updateNewUserData('Username', newUsername);
+  const setPassword = (newPassword) => updateNewUserData('Password', newPassword);
+  const setEmail = (newEmail) => updateNewUserData('Email', newEmail);
+  const setBirthday = (newBirthday) => updateNewUserData('Birthday', newBirthday);
+
+  const updateUser = async () => {
     try {
-      if (!newUser) {
+      if (!newUserData) {
         return;
       }
 
-      const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
-        method: 'POST',
+      setIsUpdating(true);
+
+      const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${_id}`, {
+        method: 'PUT',
         headers: {
           Accept: 'application/json',
           'Content-Type': 'application/json',
+          Authorization: `Bearer ${jwtToken}`,
         },
-        body: JSON.stringify(newUser),
+        body: JSON.stringify(newUserData),
       });
 
-      if (res.status === 201) {
-        await res.json();
+      if (res.status === 200) {
+        const updatedUserFromServer = await res.json();
 
-        setStoreState({ ...storeState, errorMessages: [] });
-        history.push('/');
+        setStoreState({ ...storeState, user: updatedUserFromServer, errorMessages: [] });
+        updateChangedStatus();
       }
 
       if (res.status === 400) {
@@ -98,16 +111,23 @@ const ProfileView = ({ history }) => {
       }
     } catch (err) {
       console.error(err);
+    } finally {
+      setIsUpdating(false);
     }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(newUser);
+    updateUser(newUserData);
   };
+
+  useEffect(() => {
+    updateChangedStatus();
+  }, [newUserData, loggedInUser]);
 
   return (
     <div className="profile-view">
+      <LoadingSpinner isLoading={isUpdating} />
       <h2>Profile</h2>
       <Form className="d-flex flex-column mb-5">
         <Form.Group controlId="formUsername">
@@ -116,7 +136,7 @@ const ProfileView = ({ history }) => {
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Password:</Form.Label>
-          <Form.Control type="password" defaultValue={Password} onChange={(e) => setPassword(e.target.value)} />
+          <Form.Control type="password" defaultValue="" onChange={(e) => setPassword(e.target.value)} />
         </Form.Group>
         <Form.Group controlId="formEmail">
           <Form.Label>Email:</Form.Label>
@@ -126,7 +146,7 @@ const ProfileView = ({ history }) => {
           <Form.Label>Birthday:</Form.Label>
           <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
         </Form.Group>
-        <Button className="align-self-center w-auto mt-5" type="submit" variant="primary" onClick={handleSubmit}>Update Profile</Button>
+        <Button disabled={!dataHasChanged} className="align-self-center w-auto mt-5" type="submit" variant="primary" onClick={handleSubmit}>Update Profile</Button>
         <ErrorMessages />
       </Form>
       <h2>Favorite Movies</h2>
@@ -135,10 +155,4 @@ const ProfileView = ({ history }) => {
   );
 };
 
-ProfileView.propTypes = {
-  history: PropTypes.shape({
-    push: PropTypes.func.isRequired,
-  }).isRequired,
-};
-
-export default withRouter(ProfileView);
+export default ProfileView;
