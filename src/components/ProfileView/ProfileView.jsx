@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import MovieCard from '../MovieCard';
+import ErrorMessages from '../ErrorMessages';
 
 import './ProfileView.scss';
 
@@ -126,6 +127,7 @@ const ProfileView = ({ history }) => {
           <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
         </Form.Group>
         <Button className="align-self-center w-auto mt-5" type="submit" variant="primary" onClick={handleSubmit}>Update Profile</Button>
+        <ErrorMessages />
       </Form>
       <h2>Favorite Movies</h2>
       <FavoriteMovieList allMovies={movies} favoriteMovieIDs={FavoriteMovies} />

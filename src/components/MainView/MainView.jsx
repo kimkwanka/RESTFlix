@@ -25,18 +25,6 @@ import ProfileView from '../ProfileView';
 
 import LoadingSpinner from '../LoadingSpinner';
 
-const ErrorMessages = () => {
-  const [{ errorMessages }] = useStoreContext();
-
-  return (
-    <Row className="m-4">
-      <Col>
-        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
-      </Col>
-    </Row>
-  );
-};
-
 const MovieList = ({ movies }) => (
   movies.map((movie, i) => (
     <Col className="mb-4" md={4} key={i}>
@@ -138,7 +126,6 @@ const MainView = ({ history }) => {
               ? (
                 <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
                   <LoginView />
-                  <ErrorMessages />
                   <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
                 </Col>
               )
@@ -149,7 +136,6 @@ const MainView = ({ history }) => {
               ? (
                 <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
                   <RegistrationView />
-                  <ErrorMessages />
                   <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
                 </Col>
               )
@@ -160,7 +146,6 @@ const MainView = ({ history }) => {
               ? (
                 <Col className="d-flex flex-column justify-content-center align-items-center" md={12}>
                   <ProfileView />
-                  <ErrorMessages />
                   <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
                 </Col>
               )

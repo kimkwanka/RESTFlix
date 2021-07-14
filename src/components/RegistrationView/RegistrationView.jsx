@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 
 import PropTypes from 'prop-types';
 
+import ErrorMessages from '../ErrorMessages';
+
 import './RegistrationView.scss';
 
 import { useStoreContext } from '../Store';
@@ -94,6 +96,7 @@ const RegistrationView = ({ history }) => {
         <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
       </Form.Group>
       <Button type="submit" variant="primary" onClick={handleSubmit}>Register</Button>
+      <ErrorMessages />
     </Form>
   );
 };

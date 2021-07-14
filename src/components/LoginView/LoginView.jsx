@@ -6,6 +6,8 @@ import Button from 'react-bootstrap/Button';
 
 import PropTypes from 'prop-types';
 
+import ErrorMessages from '../ErrorMessages';
+
 import './LoginView.scss';
 
 import { useStoreContext } from '../Store';
@@ -65,6 +67,7 @@ const LoginView = ({ history }) => {
         <Form.Control type="password" defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
       </Form.Group>
       <Button type="submit" variant="primary" onClick={handleSubmit}>Login</Button>
+      <ErrorMessages />
     </Form>
   );
 };
