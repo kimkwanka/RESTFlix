@@ -14,7 +14,7 @@ import LoadingSpinner from '../LoadingSpinner';
 
 import './ProfileView.scss';
 
-import { useStoreContext } from '../Store';
+import { useStore } from '../Hooks/useStoreContext';
 
 const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
   const favoriteMovies = [];
@@ -43,7 +43,7 @@ FavoriteMovieList.propTypes = {
 };
 
 const ProfileView = () => {
-  const [storeState, setStoreState] = useStoreContext();
+  const [storeState, setStoreState] = useStore();
 
   const {
     user: loggedInUser, token: jwtToken, movies,

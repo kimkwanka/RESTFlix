@@ -6,10 +6,10 @@ import Row from 'react-bootstrap/Row';
 
 import './ErrorMessages.scss';
 
-import { useStoreContext } from '../Store';
+import { useStore } from '../Hooks/useStoreContext';
 
 const ErrorMessages = () => {
-  const [{ errorMessages }] = useStoreContext();
+  const [{ errorMessages }] = useStore();
   return (
     <Row className="m-4">
       <Col>

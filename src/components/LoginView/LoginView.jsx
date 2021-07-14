@@ -14,7 +14,7 @@ import useMountedState from '../Hooks/useMountedState';
 
 import './LoginView.scss';
 
-import { useStoreContext } from '../Store';
+import { useStore } from '../Hooks/useStoreContext';
 
 const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('token', token);
@@ -25,7 +25,7 @@ const LoginView = ({ history }) => {
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
 
-  const [storeState, setStoreState] = useStoreContext();
+  const [storeState, setStoreState] = useStore();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
 

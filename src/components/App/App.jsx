@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { StoreProvider } from '../Store';
+import { StoreProvider } from '../Hooks/useStoreContext';
 import MainView from '../MainView';
 
 const App = () => (

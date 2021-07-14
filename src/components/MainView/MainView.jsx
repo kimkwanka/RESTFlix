@@ -14,7 +14,7 @@ import Button from 'react-bootstrap/Button';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainView.scss';
 
-import { useStoreContext } from '../Store';
+import { useStore } from '../Hooks/useStoreContext';
 import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
@@ -37,7 +37,7 @@ const MainView = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // const [movies, setMovies] = useState([]);
-  const [storeState, setStoreState] = useStoreContext();
+  const [storeState, setStoreState] = useStore();
 
   const {
     user: loggedInUser, token: jwtToken, movies,

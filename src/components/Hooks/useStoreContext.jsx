@@ -7,7 +7,7 @@ const initialState = {
 
 const StoreContext = createContext(initialState);
 
-const useStoreContext = () => useContext(StoreContext);
+const useStore = () => useContext(StoreContext);
 
 const StoreProvider = ({ children }) => {
   const [storeState, setStoreState] = useState(initialState);
@@ -26,4 +26,4 @@ StoreProvider.propTypes = {
   ]).isRequired,
 };
 
-export { StoreProvider, useStoreContext };
+export { StoreProvider, useStore };

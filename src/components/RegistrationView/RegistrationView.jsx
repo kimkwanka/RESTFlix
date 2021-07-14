@@ -13,7 +13,7 @@ import useMountedState from '../Hooks/useMountedState';
 
 import './RegistrationView.scss';
 
-import { useStoreContext } from '../Store';
+import { useStore } from '../Hooks/useStoreContext';
 
 const RegistrationView = ({ history }) => {
   const [newUser, setNewUser] = useState({
@@ -32,7 +32,7 @@ const RegistrationView = ({ history }) => {
     Username, Password, Email, Birthday,
   } = newUser;
 
-  const [storeState, setStoreState] = useStoreContext();
+  const [storeState, setStoreState] = useStore();
 
   const [isRegistering, setIsRegistering] = useState(false);
 
