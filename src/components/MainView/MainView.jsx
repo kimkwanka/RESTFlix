@@ -44,6 +44,7 @@ const MainView = ({ history }) => {
   } = storeState;
 
   const setRoute = (route) => {
+    setStoreState({ ...storeState, errorMessages: [] });
     history.push(route);
   };
 
