@@ -12,7 +12,7 @@ import { useStoreContext } from '../Store';
 
 const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('token', token);
-  localStorage.setItem('user', user);
+  localStorage.setItem('user', JSON.stringify(user));
 };
 
 const LoginView = ({ history }) => {

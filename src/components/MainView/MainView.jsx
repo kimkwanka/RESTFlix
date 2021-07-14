@@ -1,7 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect, useState } from 'react';
 import {
-  Route, withRouter, Switch, Redirect,
+  Route, withRouter, Switch, Redirect, Link,
 } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
@@ -21,6 +21,7 @@ import MovieCard from '../MovieCard';
 import MovieView from '../MovieView';
 import GenreView from '../GenreView';
 import DirectorView from '../DirectorView';
+import ProfileView from '../ProfileView';
 
 import LoadingSpinner from '../LoadingSpinner';
 
@@ -36,26 +37,22 @@ const ErrorMessages = () => {
   );
 };
 
-const MovieList = ({ movies, setSelectedMovie }) => {
-  const handleClick = (myMovie) => React.useCallback(() => setSelectedMovie(myMovie), [myMovie]);
-
-  return (
-    movies.map((movie, i) => (
-      <Col className="mb-4" md={4} key={i}>
-        <MovieCard key={movie._id} movie={movie} onClick={handleClick(movie)} />
-      </Col>
-    ))
-  );
-};
+const MovieList = ({ movies }) => (
+  movies.map((movie, i) => (
+    <Col className="mb-4" md={4} key={i}>
+      <MovieCard key={movie._id} movie={movie} />
+    </Col>
+  ))
+);
 
 const MainView = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const [movies, setMovies] = useState([]);
+  // const [movies, setMovies] = useState([]);
   const [storeState, setStoreState] = useStoreContext();
 
   const {
-    user: loggedInUser, token: jwtToken,
+    user: loggedInUser, token: jwtToken, movies,
   } = storeState;
 
   const setRoute = (route) => {
@@ -68,14 +65,14 @@ const MainView = ({ history }) => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
     setStoreState({
-      user: null, token: null, errorMessages: [],
+      user: null, token: null, errorMessages: [], movies: [],
     });
     history.push('/');
   };
 
   useEffect(async () => {
     if (!loggedInUser) {
-      const savedUser = localStorage.getItem('user');
+      const savedUser = JSON.parse(localStorage.getItem('user'));
       const savedToken = localStorage.getItem('token');
 
       if (savedUser) {
@@ -101,7 +98,9 @@ const MainView = ({ history }) => {
         },
       });
       const data = await res.json();
-      setMovies(data);
+      setStoreState({
+        ...storeState, movies: data,
+      });
     } catch (err) {
       console.error(err);
     } finally {
@@ -115,7 +114,9 @@ const MainView = ({ history }) => {
         ? (
           <Row className="m-3">
             <Col className="d-flex justify-content-end" md={12}>
-              <Button onClick={logoutCurrentUser}>Log out</Button>
+              <Link className="btn btn-primary mr-3" to="/movies">Movies</Link>
+              <Link className="btn btn-primary mr-5" to="/profile">Profile</Link>
+              <Button variant="secondary" onClick={logoutCurrentUser}>Log out</Button>
             </Col>
           </Row>
         ) : null}
@@ -153,6 +154,17 @@ const MainView = ({ history }) => {
                 </Col>
               )
               : <Redirect to="/movies" />}
+          </Route>
+          <Route exact path="/profile">
+            {loggedInUser
+              ? (
+                <Col className="d-flex flex-column justify-content-center align-items-center" md={12}>
+                  <ProfileView />
+                  <ErrorMessages />
+                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
+                </Col>
+              )
+              : <Redirect to="/" />}
           </Route>
           <Route
             exact
