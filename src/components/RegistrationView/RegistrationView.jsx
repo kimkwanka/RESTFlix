@@ -9,6 +9,8 @@ import PropTypes from 'prop-types';
 import ErrorMessages from '../ErrorMessages';
 import LoadingSpinner from '../LoadingSpinner';
 
+import useMountedState from '../Hooks/useMountedState';
+
 import './RegistrationView.scss';
 
 import { useStoreContext } from '../Store';
@@ -33,6 +35,8 @@ const RegistrationView = ({ history }) => {
   const [storeState, setStoreState] = useStoreContext();
 
   const [isRegistering, setIsRegistering] = useState(false);
+
+  const isMounted = useMountedState();
 
   const registerUser = async () => {
     try {
@@ -75,7 +79,10 @@ const RegistrationView = ({ history }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      setIsRegistering(false);
+      // Only mutate state when we're still mounted or else we get memory leak errors
+      if (isMounted()) {
+        setIsRegistering(false);
+      }
     }
   };
 

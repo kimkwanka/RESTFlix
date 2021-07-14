@@ -1,3 +1,4 @@
+/* eslint-disable no-underscore-dangle */
 import React, { useState } from 'react';
 import { withRouter } from 'react-router-dom';
 
@@ -8,6 +9,8 @@ import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
 import LoadingSpinner from '../LoadingSpinner';
+
+import useMountedState from '../Hooks/useMountedState';
 
 import './LoginView.scss';
 
@@ -25,6 +28,8 @@ const LoginView = ({ history }) => {
   const [storeState, setStoreState] = useStoreContext();
 
   const [isLoggingIn, setIsLoggingIn] = useState(false);
+
+  const isMounted = useMountedState();
 
   const checkLogin = async () => {
     try {
@@ -54,7 +59,10 @@ const LoginView = ({ history }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoggingIn(false);
+      // Only mutate state when we're still mounted or else we get memory leak errors
+      if (isMounted()) {
+        setIsLoggingIn(false);
+      }
     }
   };
 
