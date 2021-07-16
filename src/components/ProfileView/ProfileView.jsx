@@ -42,7 +42,7 @@ FavoriteMovieList.propTypes = {
   allMovies: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
-const ProfileView = () => {
+const ProfileView = ({ logoutCurrentUser }) => {
   const [storeState, setStoreState] = useStore();
 
   const {
@@ -73,6 +73,30 @@ const ProfileView = () => {
   const updateFormRef = useRef();
 
   const isUpdateFormInputValid = () => updateFormRef.current.reportValidity();
+
+  const deleteUser = async () => {
+    try {
+      setIsLoading(true);
+
+      const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${_id}`, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${jwtToken}`,
+        },
+      });
+
+      if (res.status === 200) {
+        logoutCurrentUser();
+      } else {
+        const userDeletionError = await res.text();
+        console.error(res.status, userDeletionError);
+      }
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const updateUser = async () => {
     try {
@@ -127,6 +151,16 @@ const ProfileView = () => {
     }
   };
 
+  const handleDelete = (e) => {
+    e.preventDefault();
+    // eslint-disable-next-line no-alert
+    const deletionConfirmed = confirm('Do you really want to delete your account? This is action is not reversible!');
+
+    if (deletionConfirmed) {
+      deleteUser();
+    }
+  };
+
   useEffect(() => {
     updateChangedStatus();
   }, [newUserData, loggedInUser]);
@@ -152,12 +186,17 @@ const ProfileView = () => {
           <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
         </Form.Group>
         <Button disabled={!dataHasChanged} className="align-self-center w-auto mt-5" type="submit" variant="primary" onClick={handleSubmit}>Update Profile</Button>
+        <Button className="align-self-end w-auto mt-5" type="submit" variant="danger" onClick={handleDelete}>DELETE Profile</Button>
         <ErrorMessages />
       </Form>
       <h2>Favorite Movies</h2>
       <FavoriteMovieList allMovies={movies} favoriteMovieIDs={FavoriteMovies} />
     </div>
   );
+};
+
+ProfileView.propTypes = {
+  logoutCurrentUser: PropTypes.func.isRequired,
 };
 
 export default ProfileView;

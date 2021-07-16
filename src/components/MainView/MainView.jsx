@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import {
   Route, withRouter, Switch, Redirect, Link,
 } from 'react-router-dom';
@@ -151,7 +151,7 @@ const MainView = ({ history }) => {
             {loggedInUser
               ? (
                 <Col className="d-flex flex-column justify-content-center align-items-center" md={12}>
-                  <ProfileView />
+                  <ProfileView logoutCurrentUser={logoutCurrentUser} />
                   <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
                 </Col>
               )
