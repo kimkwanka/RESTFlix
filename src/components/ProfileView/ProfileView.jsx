@@ -42,6 +42,11 @@ FavoriteMovieList.propTypes = {
   allMovies: PropTypes.arrayOf(PropTypes.shape()).isRequired,
 };
 
+const formatDate = (date) => {
+  const inputDate = new Date(date);
+  return inputDate.toISOString().substr(0, 10);
+};
+
 const ProfileView = ({ logoutCurrentUser }) => {
   const [storeState, setStoreState] = useStore();
 
@@ -58,7 +63,12 @@ const ProfileView = ({ logoutCurrentUser }) => {
   const [, setIsLoading] = useLoadingSpinner();
 
   const updateChangedStatus = () => {
-    setDataHasChanged(newUserData.Username !== loggedInUser.Username || newUserData.Password !== '' || newUserData.Email !== loggedInUser.Email || newUserData.Birthday !== loggedInUser.Birthday);
+    setDataHasChanged(
+      newUserData.Username !== loggedInUser.Username
+      || newUserData.Password !== ''
+      || newUserData.Email !== loggedInUser.Email
+      || formatDate(newUserData.Birthday) !== formatDate(loggedInUser.Birthday),
+    );
   };
 
   const updateNewUserData = (key, value) => {
@@ -166,9 +176,9 @@ const ProfileView = ({ logoutCurrentUser }) => {
   }, [newUserData, loggedInUser]);
 
   return (
-    <div className="profile-view">
+    <div className="profile-view w-100">
       <h2>Profile</h2>
-      <Form className="d-flex flex-column mb-5" ref={updateFormRef}>
+      <Form className="d-flex flex-column mb-5 w-100" ref={updateFormRef}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
           <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} minLength="5" pattern="^[a-zA-Z0-9]+$" />
@@ -183,14 +193,19 @@ const ProfileView = ({ logoutCurrentUser }) => {
         </Form.Group>
         <Form.Group controlId="formBirthday">
           <Form.Label>Birthday:</Form.Label>
-          <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
+          <Form.Control type="date" defaultValue={formatDate(Birthday)} onChange={(e) => setBirthday(e.target.value)} />
         </Form.Group>
         <Button disabled={!dataHasChanged} className="align-self-center w-auto mt-5" type="submit" variant="primary" onClick={handleSubmit}>Update Profile</Button>
         <Button className="align-self-end w-auto mt-5" type="submit" variant="danger" onClick={handleDelete}>DELETE Profile</Button>
         <ErrorMessages />
       </Form>
-      <h2>Favorite Movies</h2>
-      <FavoriteMovieList allMovies={movies} favoriteMovieIDs={FavoriteMovies} />
+      {FavoriteMovies.length > 0
+        ? (
+          <>
+            <h2>Favorite Movies</h2>
+            <FavoriteMovieList allMovies={movies} favoriteMovieIDs={FavoriteMovies} />
+          </>
+        ) : null}
     </div>
   );
 };

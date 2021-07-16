@@ -114,7 +114,7 @@ const RegistrationView = ({ history }) => {
       </Form.Group>
       <Form.Group controlId="formBirthday">
         <Form.Label>Birthday:</Form.Label>
-        <Form.Control type="text" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
+        <Form.Control type="date" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
       </Form.Group>
       <Button type="submit" variant="primary" onClick={handleSubmit}>Register</Button>
       <ErrorMessages />
