@@ -29,7 +29,7 @@ const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
       {
         favoriteMovies.map((movie, i) => (
           <Col className="mb-4" md={4} key={i}>
-            <MovieCard key={movie._id} movie={movie} />
+            <MovieCard key={movie._id} movie={movie} isFavorite />
           </Col>
         ))
       }

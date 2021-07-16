@@ -25,10 +25,14 @@ import ProfileView from '../ProfileView';
 
 import LoadingSpinner from '../LoadingSpinner';
 
-const MovieList = ({ movies }) => (
+const MovieList = ({ movies, favoriteMovieIDs }) => (
   movies.map((movie, i) => (
     <Col className="mb-4" md={4} key={i}>
-      <MovieCard key={movie._id} movie={movie} />
+      <MovieCard
+        key={movie._id}
+        movie={movie}
+        isFavorite={favoriteMovieIDs.indexOf(movie._id) !== -1}
+      />
     </Col>
   ))
 );
@@ -36,7 +40,6 @@ const MovieList = ({ movies }) => (
 const MainView = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  // const [movies, setMovies] = useState([]);
   const [storeState, setStoreState] = useStore();
 
   const {
@@ -192,7 +195,7 @@ const MainView = ({ history }) => {
           />
           <Route exact path="/movies">
             {loggedInUser
-              ? <MovieList movies={movies} setSelectedMovie={null} />
+              ? <MovieList movies={movies} favoriteMovieIDs={loggedInUser.FavoriteMovies} />
               : <Redirect to="/" />}
           </Route>
         </Switch>
