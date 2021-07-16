@@ -7,6 +7,7 @@ import Card from 'react-bootstrap/Card';
 import PropTypes from 'prop-types';
 
 import { useStore } from '../Hooks/useStoreContext';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './MovieCard.scss';
 
@@ -14,6 +15,7 @@ const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
 const MovieCard = ({ movie }) => {
   const [storeState, setStoreState] = useStore();
+  const [, setIsLoading] = useLoadingSpinner();
 
   const { user, token: jwtToken } = storeState;
   const { user: { _id: userID, FavoriteMovies } } = storeState;
@@ -24,6 +26,8 @@ const MovieCard = ({ movie }) => {
     try {
       // Stop button from triggering the outer <Link />
       e.preventDefault();
+
+      setIsLoading(true);
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
         method: 'POST',
@@ -49,7 +53,7 @@ const MovieCard = ({ movie }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
@@ -57,6 +61,8 @@ const MovieCard = ({ movie }) => {
     try {
       // Stop button from triggering the outer <Link />
       e.preventDefault();
+
+      setIsLoading(true);
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
         method: 'DELETE',
@@ -83,7 +89,7 @@ const MovieCard = ({ movie }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      // setIsLoading(false);
+      setIsLoading(false);
     }
   };
 
