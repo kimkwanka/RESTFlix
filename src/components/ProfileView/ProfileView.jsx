@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import PropTypes from 'prop-types';
 
@@ -70,6 +70,10 @@ const ProfileView = () => {
   const setEmail = (newEmail) => updateNewUserData('Email', newEmail);
   const setBirthday = (newBirthday) => updateNewUserData('Birthday', newBirthday);
 
+  const updateFormRef = useRef();
+
+  const isUpdateFormInputValid = () => updateFormRef.current.reportValidity();
+
   const updateUser = async () => {
     try {
       if (!newUserData) {
@@ -118,7 +122,9 @@ const ProfileView = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    updateUser(newUserData);
+    if (isUpdateFormInputValid()) {
+      updateUser(newUserData);
+    }
   };
 
   useEffect(() => {
@@ -128,10 +134,10 @@ const ProfileView = () => {
   return (
     <div className="profile-view">
       <h2>Profile</h2>
-      <Form className="d-flex flex-column mb-5">
+      <Form className="d-flex flex-column mb-5" ref={updateFormRef}>
         <Form.Group controlId="formUsername">
           <Form.Label>Username:</Form.Label>
-          <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} />
+          <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} minLength="5" pattern="^[a-zA-Z0-9]+$" />
         </Form.Group>
         <Form.Group controlId="formPassword">
           <Form.Label>Password:</Form.Label>
@@ -139,7 +145,7 @@ const ProfileView = () => {
         </Form.Group>
         <Form.Group controlId="formEmail">
           <Form.Label>Email:</Form.Label>
-          <Form.Control type="text" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} />
+          <Form.Control type="email" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} />
         </Form.Group>
         <Form.Group controlId="formBirthday">
           <Form.Label>Birthday:</Form.Label>

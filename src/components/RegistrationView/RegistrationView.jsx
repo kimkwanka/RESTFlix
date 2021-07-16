@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -37,6 +37,10 @@ const RegistrationView = ({ history }) => {
   const [, setIsLoading] = useLoadingSpinner();
 
   const isMounted = useMountedState();
+
+  const registerFormRef = useRef();
+
+  const isRegisterInputValid = () => registerFormRef.current.reportValidity();
 
   const registerUser = async () => {
     try {
@@ -88,22 +92,25 @@ const RegistrationView = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    registerUser(newUser);
+
+    if (isRegisterInputValid()) {
+      registerUser(newUser);
+    }
   };
 
   return (
-    <Form className="d-flex flex-column align-items-center">
+    <Form className="d-flex flex-column align-items-center" ref={registerFormRef}>
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} />
+        <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} required minLength="5" pattern="^[a-zA-Z0-9]+$" />
       </Form.Group>
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" defaultValue={Password} onChange={(e) => setPassword(e.target.value)} />
+        <Form.Control type="password" defaultValue={Password} onChange={(e) => setPassword(e.target.value)} required />
       </Form.Group>
       <Form.Group controlId="formEmail">
         <Form.Label>Email:</Form.Label>
-        <Form.Control type="text" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} />
+        <Form.Control type="email" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} required />
       </Form.Group>
       <Form.Group controlId="formBirthday">
         <Form.Label>Birthday:</Form.Label>

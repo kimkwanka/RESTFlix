@@ -1,5 +1,5 @@
 /* eslint-disable no-underscore-dangle */
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
 import Form from 'react-bootstrap/Form';
@@ -30,6 +30,10 @@ const LoginView = ({ history }) => {
   const [, setIsLoading] = useLoadingSpinner();
 
   const isMounted = useMountedState();
+
+  const loginFormRef = useRef();
+
+  const isLoginFormInputValid = () => loginFormRef.current.reportValidity();
 
   const checkLogin = async () => {
     try {
@@ -68,18 +72,20 @@ const LoginView = ({ history }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    checkLogin();
+    if (isLoginFormInputValid()) {
+      checkLogin();
+    }
   };
 
   return (
-    <Form className="d-flex flex-column align-items-center">
+    <Form className="d-flex flex-column align-items-center" ref={loginFormRef}>
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" defaultValue={username} onChange={(e) => setUsername(e.target.value)} />
+        <Form.Control type="text" defaultValue={username} onChange={(e) => setUsername(e.target.value)} required minLength="5" pattern="^[a-zA-Z0-9]+$" />
       </Form.Group>
       <Form.Group controlId="formPassword">
         <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" defaultValue={password} onChange={(e) => setPassword(e.target.value)} />
+        <Form.Control type="password" defaultValue={password} onChange={(e) => setPassword(e.target.value)} required />
       </Form.Group>
       <Button type="submit" variant="primary" onClick={handleSubmit}>Login</Button>
       <ErrorMessages />
