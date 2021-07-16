@@ -15,6 +15,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainView.scss';
 
 import { useStore } from '../Hooks/useStoreContext';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+
 import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
 import MovieCard from '../MovieCard';
@@ -38,7 +40,7 @@ const MovieList = ({ movies, favoriteMovieIDs }) => (
 );
 
 const MainView = ({ history }) => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useLoadingSpinner();
 
   const [storeState, setStoreState] = useStore();
 
@@ -102,6 +104,7 @@ const MainView = ({ history }) => {
 
   return (
     <Container>
+      <LoadingSpinner isLoading={isLoading} />
       { loggedInUser
         ? (
           <Row className="m-3">
@@ -113,7 +116,6 @@ const MainView = ({ history }) => {
           </Row>
         ) : null}
       <Row className="main-view m-3 justify-content-md-center">
-        <LoadingSpinner isLoading={isLoading} />
         <Switch>
           <Route exact path="/">
             {!loggedInUser

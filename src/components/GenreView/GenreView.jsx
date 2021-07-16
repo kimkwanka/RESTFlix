@@ -4,14 +4,14 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import LoadingSpinner from '../LoadingSpinner';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './GenreView.scss';
 
 const GenreView = ({ genreName, jwtToken, onBackClick }) => {
   const [genre, getGenre] = useState({ Title: '', Description: '' });
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [, setIsLoading] = useLoadingSpinner();
 
   useEffect(async () => {
     if (!jwtToken) {
@@ -38,7 +38,6 @@ const GenreView = ({ genreName, jwtToken, onBackClick }) => {
 
   return (
     <Card className="d-flex flex-column align-items-center">
-      <LoadingSpinner isLoading={isLoading} />
       <Card.Body>
         <Card.Title>{genre.Name}</Card.Title>
         <Card.Text>{genre.Description}</Card.Text>

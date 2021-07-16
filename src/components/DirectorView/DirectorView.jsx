@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
-import LoadingSpinner from '../LoadingSpinner';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './DirectorView.scss';
 
@@ -13,7 +13,7 @@ const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
     Name: '', Bio: '', Birth: '', Death: '',
   });
 
-  const [isLoading, setIsLoading] = useState(true);
+  const [, setIsLoading] = useLoadingSpinner();
 
   useEffect(async () => {
     if (!jwtToken) {
@@ -40,7 +40,6 @@ const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
 
   return (
     <Card className="d-flex flex-column align-items-center">
-      <LoadingSpinner isLoading={isLoading} />
       <Card.Body>
         <Card.Title>{director.Name}</Card.Title>
         <Card.Text>{`Year of Birth: ${director.Birth}`}</Card.Text>

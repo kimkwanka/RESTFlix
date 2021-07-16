@@ -10,11 +10,11 @@ import Button from 'react-bootstrap/Button';
 
 import MovieCard from '../MovieCard';
 import ErrorMessages from '../ErrorMessages';
-import LoadingSpinner from '../LoadingSpinner';
 
 import './ProfileView.scss';
 
 import { useStore } from '../Hooks/useStoreContext';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
   const favoriteMovies = [];
@@ -55,7 +55,7 @@ const ProfileView = () => {
 
   const [newUserData, setNewUserData] = useState({ ...loggedInUser, Password: '' });
   const [dataHasChanged, setDataHasChanged] = useState(false);
-  const [isUpdating, setIsUpdating] = useState(false);
+  const [, setIsLoading] = useLoadingSpinner();
 
   const updateChangedStatus = () => {
     setDataHasChanged(newUserData.Username !== loggedInUser.Username || newUserData.Password !== '' || newUserData.Email !== loggedInUser.Email || newUserData.Birthday !== loggedInUser.Birthday);
@@ -76,7 +76,7 @@ const ProfileView = () => {
         return;
       }
 
-      setIsUpdating(true);
+      setIsLoading(true);
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${_id}`, {
         method: 'PUT',
@@ -112,7 +112,7 @@ const ProfileView = () => {
     } catch (err) {
       console.error(err);
     } finally {
-      setIsUpdating(false);
+      setIsLoading(false);
     }
   };
 
@@ -127,7 +127,6 @@ const ProfileView = () => {
 
   return (
     <div className="profile-view">
-      <LoadingSpinner isLoading={isUpdating} />
       <h2>Profile</h2>
       <Form className="d-flex flex-column mb-5">
         <Form.Group controlId="formUsername">

@@ -8,13 +8,13 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
-import LoadingSpinner from '../LoadingSpinner';
 
 import useMountedState from '../Hooks/useMountedState';
 
 import './LoginView.scss';
 
 import { useStore } from '../Hooks/useStoreContext';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('token', token);
@@ -27,13 +27,13 @@ const LoginView = ({ history }) => {
 
   const [storeState, setStoreState] = useStore();
 
-  const [isLoggingIn, setIsLoggingIn] = useState(false);
+  const [, setIsLoading] = useLoadingSpinner();
 
   const isMounted = useMountedState();
 
   const checkLogin = async () => {
     try {
-      setIsLoggingIn(true);
+      setIsLoading(true);
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`, {
         method: 'POST',
@@ -61,7 +61,7 @@ const LoginView = ({ history }) => {
     } finally {
       // Only mutate state when we're still mounted or else we get memory leak errors
       if (isMounted()) {
-        setIsLoggingIn(false);
+        setIsLoading(false);
       }
     }
   };
@@ -73,7 +73,6 @@ const LoginView = ({ history }) => {
 
   return (
     <Form className="d-flex flex-column align-items-center">
-      <LoadingSpinner isLoading={isLoggingIn} />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" defaultValue={username} onChange={(e) => setUsername(e.target.value)} />

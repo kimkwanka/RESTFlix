@@ -7,13 +7,13 @@ import Button from 'react-bootstrap/Button';
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
-import LoadingSpinner from '../LoadingSpinner';
 
 import useMountedState from '../Hooks/useMountedState';
 
 import './RegistrationView.scss';
 
 import { useStore } from '../Hooks/useStoreContext';
+import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 const RegistrationView = ({ history }) => {
   const [newUser, setNewUser] = useState({
@@ -34,7 +34,7 @@ const RegistrationView = ({ history }) => {
 
   const [storeState, setStoreState] = useStore();
 
-  const [isRegistering, setIsRegistering] = useState(false);
+  const [, setIsLoading] = useLoadingSpinner();
 
   const isMounted = useMountedState();
 
@@ -44,7 +44,7 @@ const RegistrationView = ({ history }) => {
         return;
       }
 
-      setIsRegistering(true);
+      setIsLoading(true);
 
       const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
         method: 'POST',
@@ -81,7 +81,7 @@ const RegistrationView = ({ history }) => {
     } finally {
       // Only mutate state when we're still mounted or else we get memory leak errors
       if (isMounted()) {
-        setIsRegistering(false);
+        setIsLoading(false);
       }
     }
   };
@@ -93,7 +93,6 @@ const RegistrationView = ({ history }) => {
 
   return (
     <Form className="d-flex flex-column align-items-center">
-      <LoadingSpinner isLoading={isRegistering} />
       <Form.Group controlId="formUsername">
         <Form.Label>Username:</Form.Label>
         <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} />
