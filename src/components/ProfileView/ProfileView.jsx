@@ -164,7 +164,7 @@ const ProfileView = ({ logoutCurrentUser }) => {
   const handleDelete = (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-alert
-    const deletionConfirmed = confirm('Do you really want to delete your account? This is action is not reversible!');
+    const deletionConfirmed = confirm('Do you really want to delete your account? This action is not reversible!');
 
     if (deletionConfirmed) {
       deleteUser();
