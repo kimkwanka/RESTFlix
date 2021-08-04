@@ -6,15 +6,17 @@ import {
 
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
+import * as actions from '../../redux/actions';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainView.scss';
 
-import { useStore } from '../Hooks/useStoreContext';
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import LoginView from '../LoginView';
@@ -39,17 +41,13 @@ const MovieList = ({ movies, favoriteMovieIDs }) => (
   ))
 );
 
-const MainView = ({ history }) => {
+const MainView = ({
+  history, setMovies, movies, jwtToken, loggedInUser, setLoggedInUser, setJWTToken, setErrors,
+}) => {
   const [isLoading, setIsLoading] = useLoadingSpinner();
 
-  const [storeState, setStoreState] = useStore();
-
-  const {
-    user: loggedInUser, token: jwtToken, movies,
-  } = storeState;
-
   const setRoute = (route) => {
-    setStoreState({ ...storeState, errorMessages: [] });
+    setErrors([]);
     history.push(route);
   };
 
@@ -58,9 +56,12 @@ const MainView = ({ history }) => {
   const logoutCurrentUser = () => {
     localStorage.removeItem('user');
     localStorage.removeItem('token');
-    setStoreState({
-      user: null, token: null, errorMessages: [], movies: [],
-    });
+
+    setLoggedInUser(null);
+    setJWTToken('');
+    setMovies([]);
+    setErrors([]);
+
     history.push('/');
   };
 
@@ -70,9 +71,10 @@ const MainView = ({ history }) => {
       const savedToken = localStorage.getItem('token');
 
       if (savedUser) {
-        setStoreState({
-          ...storeState, user: savedUser, token: savedToken, errorMessages: [],
-        });
+        setLoggedInUser(savedUser);
+        setJWTToken(savedToken);
+
+        setErrors([]);
       }
 
       return;
@@ -92,9 +94,8 @@ const MainView = ({ history }) => {
         },
       });
       const data = await res.json();
-      setStoreState({
-        ...storeState, movies: data,
-      });
+
+      setMovies(data);
     } catch (err) {
       console.error(err);
     } finally {
@@ -216,4 +217,13 @@ MainView.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(MainView);
+export default connect((store) => ({
+  movies: store.movies,
+  loggedInUser: store.user,
+  jwtToken: store.token,
+}), {
+  setMovies: actions.setMovies,
+  setLoggedInUser: actions.setUser,
+  setJWTToken: actions.setToken,
+  setErrors: actions.setErrors,
+})(withRouter(MainView));

@@ -6,16 +6,17 @@ import Button from 'react-bootstrap/Button';
 
 import PropTypes from 'prop-types';
 
+import { connect } from 'react-redux';
+
 import ErrorMessages from '../ErrorMessages';
 
-import useMountedState from '../Hooks/useMountedState';
+import * as actions from '../../redux/actions';
 
 import './RegistrationView.scss';
 
-import { useStore } from '../Hooks/useStoreContext';
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
-const RegistrationView = ({ history }) => {
+const RegistrationView = ({ history, setErrors }) => {
   const [newUser, setNewUser] = useState({
     Username: '',
     Password: '',
@@ -32,11 +33,7 @@ const RegistrationView = ({ history }) => {
     Username, Password, Email, Birthday,
   } = newUser;
 
-  const [storeState, setStoreState] = useStore();
-
   const [, setIsLoading] = useLoadingSpinner();
-
-  const isMounted = useMountedState();
 
   const registerFormRef = useRef();
 
@@ -62,14 +59,14 @@ const RegistrationView = ({ history }) => {
       if (res.status === 201) {
         await res.json();
 
-        setStoreState({ ...storeState, errorMessages: [] });
+        setErrors([]);
         history.push('/');
       }
 
       if (res.status === 400) {
         const responseBodyText = await res.text();
 
-        setStoreState({ ...storeState, errorMessages: [responseBodyText] });
+        setErrors([responseBodyText]);
         console.error(responseBodyText);
       }
 
@@ -77,16 +74,13 @@ const RegistrationView = ({ history }) => {
         const responseBody = await res.json();
         const errorMessages = responseBody.errors.map((e) => e.msg);
 
-        setStoreState({ ...storeState, errorMessages });
+        setErrors(errorMessages);
         console.error(responseBody.errors);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      // Only mutate state when we're still mounted or else we get memory leak errors
-      if (isMounted()) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
   };
 
@@ -128,4 +122,6 @@ RegistrationView.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(RegistrationView);
+export default connect(null, {
+  setErrors: actions.setErrors,
+})(withRouter(RegistrationView));

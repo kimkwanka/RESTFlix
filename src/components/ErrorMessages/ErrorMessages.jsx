@@ -4,19 +4,17 @@ import React from 'react';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 
+import { connect } from 'react-redux';
+
 import './ErrorMessages.scss';
 
-import { useStore } from '../Hooks/useStoreContext';
-
-const ErrorMessages = () => {
-  const [{ errorMessages }] = useStore();
-  return (
-    <Row className="m-4">
-      <Col>
-        {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
-      </Col>
-    </Row>
-  );
-};
-
-export default ErrorMessages;
+const ErrorMessages = ({ errorMessages }) => (
+  <Row className="m-4">
+    <Col>
+      {errorMessages.map((e, i) => <p className="errorText" key={`err${i}`}>{e}</p>)}
+    </Col>
+  </Row>
+);
+export default connect((store) => ({
+  errorMessages: store.errorMessages,
+}))(ErrorMessages);

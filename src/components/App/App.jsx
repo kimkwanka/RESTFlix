@@ -1,18 +1,24 @@
 import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 
-import { StoreProvider } from '../Hooks/useStoreContext';
+import { createStore } from 'redux';
+import { Provider } from 'react-redux';
+import { devToolsEnhancer } from 'redux-devtools-extension';
+
+import reducers from '../../redux/reducers';
 import { LoadingSpinnerProvider } from '../Hooks/useLoadingSpinnerContext';
 
 import MainView from '../MainView';
 
+const store = createStore(reducers, devToolsEnhancer());
+
 const App = () => (
   <BrowserRouter>
-    <StoreProvider>
+    <Provider store={store}>
       <LoadingSpinnerProvider>
         <MainView />
       </LoadingSpinnerProvider>
-    </StoreProvider>
+    </Provider>
   </BrowserRouter>
 );
 

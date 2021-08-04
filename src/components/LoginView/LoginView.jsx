@@ -2,6 +2,8 @@
 import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -9,11 +11,10 @@ import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
 
-import useMountedState from '../Hooks/useMountedState';
+import * as actions from '../../redux/actions';
 
 import './LoginView.scss';
 
-import { useStore } from '../Hooks/useStoreContext';
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 const saveToLocalStorage = ({ user, token }) => {
@@ -21,15 +22,13 @@ const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
-const LoginView = ({ history }) => {
+const LoginView = ({
+  history, setLoggedInUser, setJWTToken, setErrors,
+}) => {
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
 
-  const [storeState, setStoreState] = useStore();
-
   const [, setIsLoading] = useLoadingSpinner();
-
-  const isMounted = useMountedState();
 
   const loginFormRef = useRef();
 
@@ -47,26 +46,21 @@ const LoginView = ({ history }) => {
       if (res.status === 200) {
         const { user, token } = await res.json();
 
-        setStoreState({
-          ...storeState, user, token, errorMessages: [],
-        });
-
+        setLoggedInUser(user);
+        setJWTToken(token);
+        setErrors([]);
         saveToLocalStorage({ user, token });
 
         history.push('/movies');
       } else {
         const loginError = await res.text();
-
-        setStoreState({ ...storeState, errorMessages: [loginError] });
+        setErrors([loginError]);
         console.error(loginError);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      // Only mutate state when we're still mounted or else we get memory leak errors
-      if (isMounted()) {
-        setIsLoading(false);
-      }
+      setIsLoading(false);
     }
   };
 
@@ -99,4 +93,11 @@ LoginView.propTypes = {
   }).isRequired,
 };
 
-export default withRouter(LoginView);
+export default connect((store) => ({
+  loggedInUser: store.user,
+  jwtToken: store.token,
+}), {
+  setLoggedInUser: actions.setUser,
+  setJWTToken: actions.setToken,
+  setErrors: actions.setErrors,
+})(withRouter(LoginView));

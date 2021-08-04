@@ -1,6 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect, useRef } from 'react';
 
+import { connect } from 'react-redux';
+
 import PropTypes from 'prop-types';
 
 import Col from 'react-bootstrap/Col';
@@ -11,9 +13,10 @@ import Button from 'react-bootstrap/Button';
 import MovieCard from '../MovieCard';
 import ErrorMessages from '../ErrorMessages';
 
+import * as actions from '../../redux/actions';
+
 import './ProfileView.scss';
 
-import { useStore } from '../Hooks/useStoreContext';
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
@@ -47,13 +50,9 @@ const formatDate = (date) => {
   return inputDate.toISOString().substr(0, 10);
 };
 
-const ProfileView = ({ logoutCurrentUser }) => {
-  const [storeState, setStoreState] = useStore();
-
-  const {
-    user: loggedInUser, token: jwtToken, movies,
-  } = storeState;
-
+const ProfileView = ({
+  logoutCurrentUser, loggedInUser, jwtToken, movies, setLoggedInUser, setErrors,
+}) => {
   const {
     Username, Email, Birthday, FavoriteMovies, _id,
   } = loggedInUser;
@@ -129,14 +128,15 @@ const ProfileView = ({ logoutCurrentUser }) => {
       if (res.status === 200) {
         const updatedUserFromServer = await res.json();
 
-        setStoreState({ ...storeState, user: updatedUserFromServer, errorMessages: [] });
+        setLoggedInUser(updatedUserFromServer);
+        setErrors([]);
         updateChangedStatus();
       }
 
       if (res.status === 400) {
         const responseBodyText = await res.text();
 
-        setStoreState({ ...storeState, errorMessages: [responseBodyText] });
+        setErrors([responseBodyText]);
         console.error(responseBodyText);
       }
 
@@ -144,7 +144,7 @@ const ProfileView = ({ logoutCurrentUser }) => {
         const responseBody = await res.json();
         const errorMessages = responseBody.errors.map((e) => e.msg);
 
-        setStoreState({ ...storeState, errorMessages });
+        setErrors(errorMessages);
         console.error(responseBody.errors);
       }
     } catch (err) {
@@ -214,4 +214,11 @@ ProfileView.propTypes = {
   logoutCurrentUser: PropTypes.func.isRequired,
 };
 
-export default ProfileView;
+export default connect((store) => ({
+  movies: store.movies,
+  loggedInUser: store.user,
+  jwtToken: store.token,
+}), {
+  setLoggedInUser: actions.setUser,
+  setErrors: actions.setErrors,
+})(ProfileView);

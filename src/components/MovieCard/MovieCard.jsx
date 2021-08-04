@@ -1,24 +1,27 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
+import { connect } from 'react-redux';
+
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 
 import PropTypes from 'prop-types';
 
-import { useStore } from '../Hooks/useStoreContext';
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './MovieCard.scss';
 
+import * as actions from '../../redux/actions';
+
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
-const MovieCard = ({ movie }) => {
-  const [storeState, setStoreState] = useStore();
+const MovieCard = ({
+  movie, loggedInUser, jwtToken, addFavoriteMovie, removeFavoriteMovie,
+}) => {
   const [, setIsLoading] = useLoadingSpinner();
 
-  const { user, token: jwtToken } = storeState;
-  const { user: { _id: userID, FavoriteMovies } } = storeState;
+  const { _id: userID, FavoriteMovies } = loggedInUser;
 
   const isFavorite = FavoriteMovies.indexOf(movie._id) !== -1;
 
@@ -37,14 +40,15 @@ const MovieCard = ({ movie }) => {
       });
 
       if (res.status === 200) {
-        FavoriteMovies.push(movieID);
+        addFavoriteMovie(movieID);
+        // FavoriteMovies.push(movieID);
 
-        setStoreState({
-          ...storeState,
-          user: {
-            ...user, FavoriteMovies,
-          },
-        });
+        // setStoreState({
+        //   ...storeState,
+        //   user: {
+        //     ...user, FavoriteMovies,
+        //   },
+        // });
       } else {
         const addFavoriteError = await res.text();
 
@@ -72,15 +76,16 @@ const MovieCard = ({ movie }) => {
       });
 
       if (res.status === 200) {
-        const indexOfMovieIDToRemove = FavoriteMovies.indexOf(movieID);
-        FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
+        removeFavoriteMovie(movieID);
+        // const indexOfMovieIDToRemove = FavoriteMovies.indexOf(movieID);
+        // FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
 
-        setStoreState({
-          ...storeState,
-          user: {
-            ...user, FavoriteMovies,
-          },
-        });
+        // setStoreState({
+        //   ...storeState,
+        //   user: {
+        //     ...user, FavoriteMovies,
+        //   },
+        // });
       } else {
         const removeFavoriteError = await res.text();
 
@@ -119,4 +124,10 @@ MovieCard.propTypes = {
   }).isRequired,
 };
 
-export default React.memo(MovieCard);
+export default connect((store) => ({
+  loggedInUser: store.user,
+  jwtToken: store.token,
+}), {
+  addFavoriteMovie: actions.addFavoriteMovie,
+  removeFavoriteMovie: actions.removeFavoriteMovie,
+})(React.memo(MovieCard));
