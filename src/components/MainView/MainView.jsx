@@ -21,25 +21,13 @@ import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
-import MovieCard from '../MovieCard';
+import MovieList from '../MovieList';
 import MovieView from '../MovieView';
 import GenreView from '../GenreView';
 import DirectorView from '../DirectorView';
 import ProfileView from '../ProfileView';
 
 import LoadingSpinner from '../LoadingSpinner';
-
-const MovieList = ({ movies, favoriteMovieIDs }) => (
-  movies.map((movie, i) => (
-    <Col className="mb-4" md={4} key={i}>
-      <MovieCard
-        key={movie._id}
-        movie={movie}
-        isFavorite={favoriteMovieIDs.indexOf(movie._id) !== -1}
-      />
-    </Col>
-  ))
-);
 
 const MainView = ({
   history, setMovies, movies, jwtToken, loggedInUser, setLoggedInUser, setJWTToken, setErrors,
