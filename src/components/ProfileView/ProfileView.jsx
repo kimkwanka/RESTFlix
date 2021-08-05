@@ -68,10 +68,6 @@ const ProfileView = ({
       || newUserData.Email !== loggedInUser.Email
       || formatDate(newUserData.Birthday) !== formatDate(loggedInUser.Birthday),
     );
-    console.log(newUserData.Email, loggedInUser.Email, dataHasChanged, newUserData.Username !== loggedInUser.Username
-      || newUserData.Password !== ''
-      || newUserData.Email !== loggedInUser.Email
-      || formatDate(newUserData.Birthday) !== formatDate(loggedInUser.Birthday));
   };
 
   const updateNewUserData = (key, value) => {
