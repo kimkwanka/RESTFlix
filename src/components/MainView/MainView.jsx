@@ -8,13 +8,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import * as actions from '../../redux/actions';
 
-import 'bootstrap/dist/css/bootstrap.min.css';
 import './MainView.scss';
 
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
@@ -92,57 +87,57 @@ const MainView = ({
   }, [jwtToken]);
 
   return (
-    <Container>
+    <div className="container">
       <LoadingSpinner isLoading={isLoading} />
       { loggedInUser
         ? (
-          <Row className="m-3">
-            <Col className="d-flex justify-content-end" md={12}>
+          <div className="m-3">
+            <div className="d-flex justify-content-end" md={12}>
               <Link className="btn btn-primary mr-3" to="/movies">Movies</Link>
               <Link className="btn btn-primary mr-5" to="/profile">Profile</Link>
-              <Button variant="secondary" onClick={logoutCurrentUser}>Log out</Button>
-            </Col>
-          </Row>
+              <button type="button" variant="secondary" onClick={logoutCurrentUser}>Log out</button>
+            </div>
+          </div>
         ) : null}
-      <Row className="main-view m-3 justify-content-md-center">
+      <div className="main-view justify-content-md-center">
         <Switch>
           <Route exact path="/">
             {!loggedInUser
               ? (
-                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
-                  <Button className="mb-3" onClick={() => setRoute('/register')}>Sign Up</Button>
-                  <Button onClick={() => setRoute('/login')}>Log in</Button>
-                </Col>
+                <div className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                  <button type="button" className="mb-3" onClick={() => setRoute('/register')}>Sign Up</button>
+                  <button type="button" onClick={() => setRoute('/login')}>Log in</button>
+                </div>
               )
               : <Redirect to="/movies" />}
           </Route>
           <Route exact path="/login">
             {!loggedInUser
               ? (
-                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                <div className="d-flex flex-column justify-content-center align-items-center" md={3}>
                   <LoginView />
-                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
-                </Col>
+                  <button type="button" variant="secondary" className="mt-4" onClick={goBack}>Back</button>
+                </div>
               )
               : <Redirect to="/movies" />}
           </Route>
           <Route exact path="/register">
             {!loggedInUser
               ? (
-                <Col className="d-flex flex-column justify-content-center align-items-center" md={3}>
+                <div className="d-flex flex-column justify-content-center align-items-center" md={3}>
                   <RegistrationView />
-                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
-                </Col>
+                  <button type="button" variant="secondary" className="mt-4" onClick={goBack}>Back</button>
+                </div>
               )
               : <Redirect to="/movies" />}
           </Route>
           <Route exact path="/profile">
             {loggedInUser
               ? (
-                <Col className="d-flex flex-column justify-content-center align-items-center" md={12}>
+                <div className="d-flex flex-column justify-content-center align-items-center" md={12}>
                   <ProfileView logoutCurrentUser={logoutCurrentUser} />
-                  <Button variant="secondary" className="mt-4" onClick={goBack}>Back</Button>
-                </Col>
+                  <button type="button" variant="secondary" className="mt-4" onClick={goBack}>Back</button>
+                </div>
               )
               : <Redirect to="/" />}
           </Route>
@@ -150,26 +145,26 @@ const MainView = ({
             exact
             path="/directors/:director_name"
             render={({ match }) => (
-              <Col md={8}>
+              <div md={8}>
                 <DirectorView
                   directorName={match.params.director_name}
                   jwtToken={jwtToken}
                   onBackClick={goBack}
                 />
-              </Col>
+              </div>
             )}
           />
           <Route
             exact
             path="/genres/:genre_name"
             render={({ match }) => (
-              <Col md={8}>
+              <div md={8}>
                 <GenreView
                   genreName={match.params.genre_name}
                   jwtToken={jwtToken}
                   onBackClick={goBack}
                 />
-              </Col>
+              </div>
             )}
           />
           <Route
@@ -178,9 +173,9 @@ const MainView = ({
             render={({ match }) => {
               const movieFoundByID = movies.find((movie) => movie._id === match.params.movie_id);
               return (
-                <Col md={8}>
+                <div md={8}>
                   <MovieView movie={movieFoundByID} onBackClick={goBack} />
-                </Col>
+                </div>
               );
             }}
           />
@@ -190,8 +185,8 @@ const MainView = ({
               : <Redirect to="/" />}
           </Route>
         </Switch>
-      </Row>
-    </Container>
+      </div>
+    </div>
   );
 };
 

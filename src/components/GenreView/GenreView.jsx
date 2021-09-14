@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './GenreView.scss';
@@ -37,13 +34,13 @@ const GenreView = ({ genreName, jwtToken, onBackClick }) => {
   }, [jwtToken]);
 
   return (
-    <Card className="d-flex flex-column align-items-center">
-      <Card.Body>
-        <Card.Title>{genre.Name}</Card.Title>
-        <Card.Text>{genre.Description}</Card.Text>
-      </Card.Body>
-      <Button className="m-4" onClick={onBackClick}>Back</Button>
-    </Card>
+    <div className="d-flex flex-column align-items-center">
+      <div className="card-Body">
+        <div className="card-Title">{genre.Name}</div>
+        <div className="card-text">{genre.Description}</div>
+      </div>
+      <button type="button" className="m-4" onClick={onBackClick}>Back</button>
+    </div>
   );
 };
 

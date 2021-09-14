@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
 
 import './DirectorView.scss';
@@ -39,15 +36,15 @@ const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
   }, [jwtToken]);
 
   return (
-    <Card className="d-flex flex-column align-items-center">
-      <Card.Body>
-        <Card.Title>{director.Name}</Card.Title>
-        <Card.Text>{`Year of Birth: ${director.Birth}`}</Card.Text>
-        {director.Death !== '' ? <Card.Text>{`Year of Death: ${director.Death}`}</Card.Text> : null}
-        <Card.Text>{director.Bio}</Card.Text>
-      </Card.Body>
-      <Button className="m-4" onClick={onBackClick}>Back</Button>
-    </Card>
+    <div className="d-flex flex-column align-items-center">
+      <div className="card-Body">
+        <div className="card-Title">{director.Name}</div>
+        <div className="card-Text">{`Year of Birth: ${director.Birth}`}</div>
+        {director.Death !== '' ? <div className="card-Text">{`Year of Death: ${director.Death}`}</div> : null}
+        <div className="card-Text">{director.Bio}</div>
+      </div>
+      <button type="button" className="m-4" onClick={onBackClick}>Back</button>
+    </div>
   );
 };
 

@@ -1,8 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import Col from 'react-bootstrap/Col';
-
 import { connect } from 'react-redux';
 
 import './MovieList.scss';
@@ -16,17 +14,17 @@ const MovieList = ({ movies, favoriteMovieIDs, visibilityFilter }) => {
     : movies;
   return (
     <>
-      <Col md={12} style={{ margin: '1em' }}>
+      <div md={12} style={{ margin: '1em' }}>
         <VisibilityFilterInput visibilityFilter={visibilityFilter} />
-      </Col>
+      </div>
       {filteredMovies.map((movie, i) => (
-        <Col className="mb-4" md={4} key={i}>
+        <div className="mb-4" md={4} key={i}>
           <MovieCard
             key={movie._id}
             movie={movie}
             isFavorite={favoriteMovieIDs.indexOf(movie._id) !== -1}
           />
-        </Col>
+        </div>
       ))}
     </>
   );

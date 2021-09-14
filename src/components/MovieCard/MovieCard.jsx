@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
 import PropTypes from 'prop-types';
 
 import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
@@ -100,17 +97,17 @@ const MovieCard = ({
 
   return (
     <Link className="movie-card h-100" to={`movies/${movie._id}`}>
-      <Card className="h-100 position-relative">
+      <div className="h-100 position-relative">
         {isFavorite ? <span className="favorite-star">★</span> : null}
-        <Card.Img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} />
+        <img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} alt={movie.Title} />
         {!isFavorite
-          ? <Button className="fav-btn align-self-end m-2 px-3 w-auto" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</Button>
-          : <Button className="fav-btn align-self-end m-2 px-3 w-auto" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</Button>}
-        <Card.Body>
-          <Card.Title>{movie.Title}</Card.Title>
-          <Card.Text>{movie.Description}</Card.Text>
-        </Card.Body>
-      </Card>
+          ? <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
+          : <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>}
+        <div className="card-body">
+          <div className="card-title">{movie.Title}</div>
+          <div className="card-text">{movie.Description}</div>
+        </div>
+      </div>
     </Link>
   );
 };

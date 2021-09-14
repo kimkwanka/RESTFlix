@@ -4,9 +4,6 @@ import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
-
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../ErrorMessages';
@@ -38,10 +35,13 @@ const LoginView = ({
     try {
       setIsLoading(true);
 
-      const res = await fetch(`https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`, {
-        method: 'POST',
-        headers: {},
-      });
+      const res = await fetch(
+        `https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`,
+        {
+          method: 'POST',
+          headers: {},
+        },
+      );
 
       if (res.status === 200) {
         const { user, token } = await res.json();
@@ -72,18 +72,34 @@ const LoginView = ({
   };
 
   return (
-    <Form className="d-flex flex-column align-items-center" ref={loginFormRef}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" defaultValue={username} onChange={(e) => setUsername(e.target.value)} required minLength="5" pattern="^[a-zA-Z0-9]+$" />
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" defaultValue={password} onChange={(e) => setPassword(e.target.value)} required />
-      </Form.Group>
-      <Button type="submit" variant="primary" onClick={handleSubmit}>Login</Button>
+    <form className="d-flex flex-column align-items-center" ref={loginFormRef}>
+      <label htmlFor="formUsername">
+        Username:
+        <input
+          id="formUsername"
+          type="text"
+          defaultValue={username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          minLength="5"
+          pattern="^[a-zA-Z0-9]+$"
+        />
+      </label>
+      <label htmlFor="formPassword">
+        Password:
+        <input
+          id="formPassword"
+          type="password"
+          defaultValue={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </label>
+      <button type="submit" variant="primary" onClick={handleSubmit}>
+        Login
+      </button>
       <ErrorMessages />
-    </Form>
+    </form>
   );
 };
 
@@ -93,11 +109,14 @@ LoginView.propTypes = {
   }).isRequired,
 };
 
-export default connect((store) => ({
-  loggedInUser: store.user,
-  jwtToken: store.token,
-}), {
-  setLoggedInUser: actions.setUser,
-  setJWTToken: actions.setToken,
-  setErrors: actions.setErrors,
-})(withRouter(LoginView));
+export default connect(
+  (store) => ({
+    loggedInUser: store.user,
+    jwtToken: store.token,
+  }),
+  {
+    setLoggedInUser: actions.setUser,
+    setJWTToken: actions.setToken,
+    setErrors: actions.setErrors,
+  },
+)(withRouter(LoginView));

@@ -1,27 +1,24 @@
-import React, { useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
+import React, { useState, useRef } from "react";
+import { withRouter } from "react-router-dom";
 
-import Form from 'react-bootstrap/Form';
-import Button from 'react-bootstrap/Button';
+import PropTypes from "prop-types";
 
-import PropTypes from 'prop-types';
+import { connect } from "react-redux";
 
-import { connect } from 'react-redux';
+import ErrorMessages from "../ErrorMessages";
 
-import ErrorMessages from '../ErrorMessages';
+import * as actions from "../../redux/actions";
 
-import * as actions from '../../redux/actions';
+import "./RegistrationView.scss";
 
-import './RegistrationView.scss';
-
-import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+import { useLoadingSpinner } from "../Hooks/useLoadingSpinnerContext";
 
 const RegistrationView = ({ history, setErrors }) => {
   const [newUser, setNewUser] = useState({
-    Username: '',
-    Password: '',
-    Email: '',
-    Birthday: '',
+    Username: "",
+    Password: "",
+    Email: "",
+    Birthday: "",
   });
 
   const setUsername = (Username) => setNewUser({ ...newUser, Username });
@@ -29,9 +26,7 @@ const RegistrationView = ({ history, setErrors }) => {
   const setEmail = (Email) => setNewUser({ ...newUser, Email });
   const setBirthday = (Birthday) => setNewUser({ ...newUser, Birthday });
 
-  const {
-    Username, Password, Email, Birthday,
-  } = newUser;
+  const { Username, Password, Email, Birthday } = newUser;
 
   const [, setIsLoading] = useLoadingSpinner();
 
@@ -47,11 +42,11 @@ const RegistrationView = ({ history, setErrors }) => {
 
       setIsLoading(true);
 
-      const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
-        method: 'POST',
+      const res = await fetch("https://dry-sands-45830.herokuapp.com/users", {
+        method: "POST",
         headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
+          Accept: "application/json",
+          "Content-Type": "application/json",
         },
         body: JSON.stringify(newUser),
       });
@@ -60,7 +55,7 @@ const RegistrationView = ({ history, setErrors }) => {
         await res.json();
 
         setErrors([]);
-        history.push('/');
+        history.push("/");
       }
 
       if (res.status === 400) {
@@ -93,26 +88,56 @@ const RegistrationView = ({ history, setErrors }) => {
   };
 
   return (
-    <Form className="d-flex flex-column align-items-center" ref={registerFormRef}>
-      <Form.Group controlId="formUsername">
-        <Form.Label>Username:</Form.Label>
-        <Form.Control type="text" defaultValue={Username} onChange={(e) => setUsername(e.target.value)} required minLength="5" pattern="^[a-zA-Z0-9]+$" />
-      </Form.Group>
-      <Form.Group controlId="formPassword">
-        <Form.Label>Password:</Form.Label>
-        <Form.Control type="password" defaultValue={Password} onChange={(e) => setPassword(e.target.value)} required />
-      </Form.Group>
-      <Form.Group controlId="formEmail">
-        <Form.Label>Email:</Form.Label>
-        <Form.Control type="email" defaultValue={Email} onChange={(e) => setEmail(e.target.value)} required />
-      </Form.Group>
-      <Form.Group controlId="formBirthday">
-        <Form.Label>Birthday:</Form.Label>
-        <Form.Control type="date" defaultValue={Birthday} onChange={(e) => setBirthday(e.target.value)} />
-      </Form.Group>
-      <Button type="submit" variant="primary" onClick={handleSubmit}>Register</Button>
+    <div
+      className="d-flex flex-column align-items-center"
+      ref={registerFormRef}
+    >
+      <label htmlFor="formUsername">
+        Username:
+        <input
+          id="formUsername"
+          type="text"
+          defaultValue={Username}
+          onChange={(e) => setUsername(e.target.value)}
+          required
+          minLength="5"
+          pattern="^[a-zA-Z0-9]+$"
+        />
+      </label>
+      <label htmlFor="formPassword">
+        Password:
+        <input
+          id="formPassword"
+          type="password"
+          defaultValue={Password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+        />
+      </label>
+      <label htmlFor="formEmail">
+        Email:
+        <input
+          id="formEmail"
+          type="email"
+          defaultValue={Email}
+          onChange={(e) => setEmail(e.target.value)}
+          required
+        />
+      </label>
+      <label htmlFor="formBirthday">
+        Birthday:
+        <input
+          id="formBirthday"
+          type="date"
+          defaultValue={Birthday}
+          onChange={(e) => setBirthday(e.target.value)}
+        />
+      </label>
+      <button type="submit" variant="primary" onClick={handleSubmit}>
+        Register
+      </button>
       <ErrorMessages />
-    </Form>
+    </div>
   );
 };
 

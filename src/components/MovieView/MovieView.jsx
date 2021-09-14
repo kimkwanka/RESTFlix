@@ -3,18 +3,15 @@ import { Link } from 'react-router-dom';
 
 import PropTypes from 'prop-types';
 
-import Button from 'react-bootstrap/Button';
-import Card from 'react-bootstrap/Card';
-
 import './MovieView.scss';
 
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
 const MovieView = ({ movie, onBackClick }) => (
-  <Card className="movie-card d-flex flex-column align-items-center">
-    <Card.Img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} />
-    <Card.Body>
-      <Card.Title>{movie.Title}</Card.Title>
+  <div className="movie-card d-flex flex-column align-items-center">
+    <img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} alt={movie.Title} />
+    <div className="card-body">
+      <div className="card-title">{movie.Title}</div>
       <p>
         Genre:&nbsp;
         <Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link>
@@ -23,10 +20,10 @@ const MovieView = ({ movie, onBackClick }) => (
         Director:&nbsp;
         <Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link>
       </p>
-      <Card.Text>{movie.Description}</Card.Text>
-    </Card.Body>
-    <Button className="m-4" onClick={onBackClick}>Back</Button>
-  </Card>
+      <div className="card-text">{movie.Description}</div>
+    </div>
+    <button type="button" className="m-4" onClick={onBackClick}>Back</button>
+  </div>
 );
 
 MovieView.propTypes = {

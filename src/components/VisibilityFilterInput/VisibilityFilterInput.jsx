@@ -1,8 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import Form from 'react-bootstrap/Form';
-
 import { connect } from 'react-redux';
 
 import './VisibilityFilterInput.scss';
@@ -10,7 +8,7 @@ import './VisibilityFilterInput.scss';
 import * as actions from '../../redux/actions';
 
 const VisibilityFilterInput = ({ visibilityFilter, setFilter }) => (
-  <Form.Control
+  <input
     onChange={(e) => setFilter(e.target.value)}
     value={visibilityFilter}
     placeholder="Search myFlix"
