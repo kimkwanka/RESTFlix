@@ -5,10 +5,10 @@ import { createStore } from 'redux';
 import { Provider } from 'react-redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
-import reducers from '../../redux/reducers';
-import { LoadingSpinnerProvider } from '../Hooks/useLoadingSpinnerContext';
+import reducers from './redux/reducers';
+import { LoadingSpinnerProvider } from './components/Hooks/useLoadingSpinnerContext';
 
-import MainView from '../MainView';
+import MainView from './components/MainView';
 
 const store = createStore(reducers, devToolsEnhancer());
 
