@@ -12,7 +12,7 @@ import * as actions from '../../redux/actions';
 
 import './LoginView.scss';
 
-import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('token', token);

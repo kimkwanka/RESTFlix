@@ -6,7 +6,7 @@ import { Provider } from 'react-redux';
 import { devToolsEnhancer } from 'redux-devtools-extension';
 
 import reducers from './redux/reducers';
-import { LoadingSpinnerProvider } from './components/Hooks/useLoadingSpinnerContext';
+import { LoadingSpinnerProvider } from './hooks/useLoadingSpinnerContext';
 
 import MainView from './components/MainView';
 

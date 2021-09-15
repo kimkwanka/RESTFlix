@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 import './DirectorView.scss';
 

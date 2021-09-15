@@ -12,7 +12,7 @@ import * as actions from '../../redux/actions';
 
 import './ProfileView.scss';
 
-import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
   const favoriteMovies = [];

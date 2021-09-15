@@ -11,7 +11,7 @@ import * as actions from "../../redux/actions";
 
 import "./RegistrationView.scss";
 
-import { useLoadingSpinner } from "../Hooks/useLoadingSpinnerContext";
+import { useLoadingSpinner } from "../../hooks/useLoadingSpinnerContext";
 
 const RegistrationView = ({ history, setErrors }) => {
   const [newUser, setNewUser] = useState({

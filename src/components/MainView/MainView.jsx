@@ -12,7 +12,7 @@ import * as actions from '../../redux/actions';
 
 import './MainView.scss';
 
-import { useLoadingSpinner } from '../Hooks/useLoadingSpinnerContext';
+import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 import LoginView from '../LoginView';
 import RegistrationView from '../RegistrationView';
