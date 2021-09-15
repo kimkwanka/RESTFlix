@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
+import { connect } from 'react-redux';
+
+import * as actions from '../../redux/actions';
 
 import './GenreView.scss';
 
-const GenreView = ({ genreName, jwtToken, onBackClick }) => {
+const GenreView = ({ jwtToken, match: { params: { genreName } }, setIsLoading }) => {
   const [genre, getGenre] = useState({ Title: '', Description: '' });
 
-  const [, setIsLoading] = useLoadingSpinner();
-
   useEffect(async () => {
-    if (!jwtToken) {
-      return;
-    }
-
     setIsLoading(true);
 
     try {
@@ -39,19 +35,22 @@ const GenreView = ({ genreName, jwtToken, onBackClick }) => {
         <div className="card-Title">{genre.Name}</div>
         <div className="card-text">{genre.Description}</div>
       </div>
-      <button type="button" className="m-4" onClick={onBackClick}>Back</button>
     </div>
   );
 };
 
 GenreView.propTypes = {
-  genreName: PropTypes.string.isRequired,
-  jwtToken: PropTypes.string,
-  onBackClick: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      genreName: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  jwtToken: PropTypes.string.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
-GenreView.defaultProps = {
-  jwtToken: '',
-};
-
-export default GenreView;
+export default connect((store) => ({
+  jwtToken: store.token,
+}), {
+  setIsLoading: actions.setIsLoading,
+})(GenreView);

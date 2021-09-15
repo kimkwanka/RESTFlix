@@ -8,7 +8,17 @@ import {
   ADD_FAVORITE_MOVIE,
   REMOVE_FAVORITE_MOVIE,
   SET_ERRORS,
+  SET_ISLOADING,
 } from '../actions';
+
+function isLoading(state = false, action) {
+  switch (action.type) {
+    case SET_ISLOADING:
+      return action.value;
+    default:
+      return state;
+  }
+}
 
 function visibilityFilter(state = '', action) {
   switch (action.type) {
@@ -69,6 +79,7 @@ const errorMessages = (state = [], action) => {
 };
 
 export default combineReducers({
+  isLoading,
   visibilityFilter,
   movies,
   user,

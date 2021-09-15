@@ -6,13 +6,11 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import ErrorMessages from '../ErrorMessages';
+import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import * as actions from '../../redux/actions';
 
 import './LoginView.scss';
-
-import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('token', token);
@@ -20,12 +18,10 @@ const saveToLocalStorage = ({ user, token }) => {
 };
 
 const LoginView = ({
-  history, setLoggedInUser, setJWTToken, setErrors,
+  history, setLoggedInUser, setJWTToken, setErrors, setIsLoading,
 }) => {
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
-
-  const [, setIsLoading] = useLoadingSpinner();
 
   const loginFormRef = useRef();
 
@@ -51,7 +47,7 @@ const LoginView = ({
         setErrors([]);
         saveToLocalStorage({ user, token });
 
-        history.push('/movies');
+        history.push('/');
       } else {
         const loginError = await res.text();
         setErrors([loginError]);
@@ -107,6 +103,10 @@ LoginView.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  setJWTToken: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  setLoggedInUser: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default connect(
@@ -118,5 +118,6 @@ export default connect(
     setLoggedInUser: actions.setUser,
     setJWTToken: actions.setToken,
     setErrors: actions.setErrors,
+    setIsLoading: actions.setIsLoading,
   },
 )(withRouter(LoginView));

@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 
 import './VisibilityFilterInput.scss';
 
-import * as actions from '../../redux/actions';
+import * as actions from '../../../../redux/actions';
 
 const VisibilityFilterInput = ({ visibilityFilter, setFilter }) => (
   <input

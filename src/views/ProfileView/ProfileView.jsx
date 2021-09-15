@@ -5,14 +5,12 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import MovieCard from '../MovieCard';
-import ErrorMessages from '../ErrorMessages';
+import MovieCard from '../../components/MovieCard/MovieCard';
+import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import * as actions from '../../redux/actions';
 
 import './ProfileView.scss';
-
-import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
 
 const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
   const favoriteMovies = [];
@@ -52,6 +50,7 @@ const ProfileView = ({
   movies,
   setLoggedInUser,
   setErrors,
+  setIsLoading,
 }) => {
   const {
     Username, Email, Birthday, FavoriteMovies, _id,
@@ -62,7 +61,6 @@ const ProfileView = ({
     Password: '',
   });
   const [dataHasChanged, setDataHasChanged] = useState(false);
-  const [, setIsLoading] = useLoadingSpinner();
 
   const updateChangedStatus = () => {
     setDataHasChanged(
@@ -272,5 +270,6 @@ export default connect(
   {
     setLoggedInUser: actions.setUser,
     setErrors: actions.setErrors,
+    setIsLoading: actions.setIsLoading,
   },
 )(ProfileView);

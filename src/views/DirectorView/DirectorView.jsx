@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
+import { connect } from 'react-redux';
+
+import * as actions from '../../redux/actions';
 
 import './DirectorView.scss';
 
-const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
+const DirectorView = ({ jwtToken, match: { params: { directorName } }, setIsLoading }) => {
   const [director, setDirector] = useState({
     Name: '', Bio: '', Birth: '', Death: '',
   });
-
-  const [, setIsLoading] = useLoadingSpinner();
 
   useEffect(async () => {
     if (!jwtToken) {
@@ -43,19 +43,22 @@ const DirectorView = ({ directorName, jwtToken, onBackClick }) => {
         {director.Death !== '' ? <div className="card-Text">{`Year of Death: ${director.Death}`}</div> : null}
         <div className="card-Text">{director.Bio}</div>
       </div>
-      <button type="button" className="m-4" onClick={onBackClick}>Back</button>
     </div>
   );
 };
 
 DirectorView.propTypes = {
-  directorName: PropTypes.string.isRequired,
-  jwtToken: PropTypes.string,
-  onBackClick: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      directorName: PropTypes.string.isRequired,
+    }).isRequired,
+  }).isRequired,
+  jwtToken: PropTypes.string.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
-DirectorView.defaultProps = {
-  jwtToken: '',
-};
-
-export default DirectorView;
+export default connect((store) => ({
+  jwtToken: store.token,
+}), {
+  setIsLoading: actions.setIsLoading,
+})(DirectorView);

@@ -5,6 +5,7 @@ export const ADD_FAVORITE_MOVIE = 'ADD_FAVORITE_MOVIE';
 export const REMOVE_FAVORITE_MOVIE = 'REMOVE_FAVORITE_MOVIE';
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_ERRORS = 'SET_ERRORS';
+export const SET_ISLOADING = 'SET_ISLOADING';
 
 export function setMovies(value) {
   return { type: SET_MOVIES, value };
@@ -32,4 +33,8 @@ export function setToken(value) {
 
 export function setErrors(value) {
   return { type: SET_ERRORS, value };
+}
+
+export function setIsLoading(value) {
+  return { type: SET_ISLOADING, value };
 }

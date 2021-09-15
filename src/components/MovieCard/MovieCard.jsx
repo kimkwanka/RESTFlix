@@ -5,8 +5,6 @@ import { connect } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
-import { useLoadingSpinner } from '../../hooks/useLoadingSpinnerContext';
-
 import './MovieCard.scss';
 
 import * as actions from '../../redux/actions';
@@ -14,10 +12,8 @@ import * as actions from '../../redux/actions';
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
 const MovieCard = ({
-  movie, loggedInUser, jwtToken, addFavoriteMovie, removeFavoriteMovie,
+  movie, loggedInUser, jwtToken, addFavoriteMovie, removeFavoriteMovie, setIsLoading,
 }) => {
-  const [, setIsLoading] = useLoadingSpinner();
-
   const { _id: userID, FavoriteMovies } = loggedInUser;
 
   const isFavorite = FavoriteMovies.indexOf(movie._id) !== -1;
@@ -38,14 +34,6 @@ const MovieCard = ({
 
       if (res.status === 200) {
         addFavoriteMovie(movieID);
-        // FavoriteMovies.push(movieID);
-
-        // setStoreState({
-        //   ...storeState,
-        //   user: {
-        //     ...user, FavoriteMovies,
-        //   },
-        // });
       } else {
         const addFavoriteError = await res.text();
 
@@ -74,15 +62,6 @@ const MovieCard = ({
 
       if (res.status === 200) {
         removeFavoriteMovie(movieID);
-        // const indexOfMovieIDToRemove = FavoriteMovies.indexOf(movieID);
-        // FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
-
-        // setStoreState({
-        //   ...storeState,
-        //   user: {
-        //     ...user, FavoriteMovies,
-        //   },
-        // });
       } else {
         const removeFavoriteError = await res.text();
 
@@ -119,6 +98,14 @@ MovieCard.propTypes = {
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
   }).isRequired,
+  loggedInUser: PropTypes.shape({
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+    _id: PropTypes.string.isRequired,
+  }).isRequired,
+  jwtToken: PropTypes.string.isRequired,
+  addFavoriteMovie: PropTypes.func.isRequired,
+  removeFavoriteMovie: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default connect((store) => ({
@@ -127,4 +114,5 @@ export default connect((store) => ({
 }), {
   addFavoriteMovie: actions.addFavoriteMovie,
   removeFavoriteMovie: actions.removeFavoriteMovie,
+  setIsLoading: actions.setIsLoading,
 })(React.memo(MovieCard));

@@ -1,25 +1,23 @@
 import React from 'react';
-import { BrowserRouter } from 'react-router-dom';
+import PropTypes from 'prop-types';
 
-import { createStore } from 'redux';
-import { Provider } from 'react-redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { connect } from 'react-redux';
 
-import reducers from './redux/reducers';
-import { LoadingSpinnerProvider } from './hooks/useLoadingSpinnerContext';
+import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
-import MainView from './components/MainView';
+import Routes from './Routes';
 
-const store = createStore(reducers, devToolsEnhancer());
-
-const App = () => (
-  <BrowserRouter>
-    <Provider store={store}>
-      <LoadingSpinnerProvider>
-        <MainView />
-      </LoadingSpinnerProvider>
-    </Provider>
-  </BrowserRouter>
+const App = ({ isLoading }) => (
+  <>
+    <LoadingSpinner isLoading={isLoading} />
+    {Routes}
+  </>
 );
 
-export default App;
+App.propTypes = {
+  isLoading: PropTypes.bool.isRequired,
+};
+
+export default connect((_store) => ({
+  isLoading: _store.isLoading,
+}))(App);

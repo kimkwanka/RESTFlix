@@ -1,24 +1,22 @@
-import React, { useState, useRef } from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState, useRef } from 'react';
+import { withRouter } from 'react-router-dom';
 
-import PropTypes from "prop-types";
+import PropTypes from 'prop-types';
 
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 
-import ErrorMessages from "../ErrorMessages";
+import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
-import * as actions from "../../redux/actions";
+import * as actions from '../../redux/actions';
 
-import "./RegistrationView.scss";
+import './RegistrationView.scss';
 
-import { useLoadingSpinner } from "../../hooks/useLoadingSpinnerContext";
-
-const RegistrationView = ({ history, setErrors }) => {
+const RegistrationView = ({ history, setErrors, setIsLoading }) => {
   const [newUser, setNewUser] = useState({
-    Username: "",
-    Password: "",
-    Email: "",
-    Birthday: "",
+    Username: '',
+    Password: '',
+    Email: '',
+    Birthday: '',
   });
 
   const setUsername = (Username) => setNewUser({ ...newUser, Username });
@@ -26,9 +24,9 @@ const RegistrationView = ({ history, setErrors }) => {
   const setEmail = (Email) => setNewUser({ ...newUser, Email });
   const setBirthday = (Birthday) => setNewUser({ ...newUser, Birthday });
 
-  const { Username, Password, Email, Birthday } = newUser;
-
-  const [, setIsLoading] = useLoadingSpinner();
+  const {
+    Username, Password, Email, Birthday,
+  } = newUser;
 
   const registerFormRef = useRef();
 
@@ -42,11 +40,11 @@ const RegistrationView = ({ history, setErrors }) => {
 
       setIsLoading(true);
 
-      const res = await fetch("https://dry-sands-45830.herokuapp.com/users", {
-        method: "POST",
+      const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
+        method: 'POST',
         headers: {
-          Accept: "application/json",
-          "Content-Type": "application/json",
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
         },
         body: JSON.stringify(newUser),
       });
@@ -55,7 +53,7 @@ const RegistrationView = ({ history, setErrors }) => {
         await res.json();
 
         setErrors([]);
-        history.push("/");
+        history.push('/');
       }
 
       if (res.status === 400) {
@@ -149,4 +147,5 @@ RegistrationView.propTypes = {
 
 export default connect(null, {
   setErrors: actions.setErrors,
+  setIsLoading: actions.setIsLoading,
 })(withRouter(RegistrationView));
