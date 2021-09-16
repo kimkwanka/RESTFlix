@@ -13,6 +13,8 @@ import VisibilityFilterInput from './VisibilityFilterInput/VisibilityFilterInput
 import useFetch from '../../../hooks/useFetch';
 
 const MovieList = () => {
+  useFetch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
+
   const visibilityFilter = useSelector((state) => state.visibilityFilter);
   const movies = useSelector((state) => state.movies);
   const favoriteMovies = useSelector((state) => state.user.FavoriteMovies);
@@ -20,8 +22,6 @@ const MovieList = () => {
   const filteredMovies = visibilityFilter !== ''
     ? movies.filter((movie) => movie.Title.toLowerCase().includes(visibilityFilter.toLowerCase()))
     : movies;
-
-  useFetch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
 
   return (
     <>
