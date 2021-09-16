@@ -2,13 +2,15 @@
 import React, { useState, useRef } from 'react';
 import { withRouter } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
-import * as actions from '../../redux/actions';
+import {
+  setUser, setToken, setErrors, setIsLoading,
+} from '../../redux/actions';
 
 import './LoginView.scss';
 
@@ -17,9 +19,9 @@ const saveToLocalStorage = ({ user, token }) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
-const LoginView = ({
-  history, setLoggedInUser, setJWTToken, setErrors, setIsLoading,
-}) => {
+const LoginView = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [username, setUsername] = useState('NewTestUser3');
   const [password, setPassword] = useState('test123');
 
@@ -29,7 +31,7 @@ const LoginView = ({
 
   const checkLogin = async () => {
     try {
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch(
         `https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`,
@@ -42,21 +44,22 @@ const LoginView = ({
       if (res.status === 200) {
         const { user, token } = await res.json();
 
-        setLoggedInUser(user);
-        setJWTToken(token);
-        setErrors([]);
+        dispatch(setUser(user));
+        dispatch(setToken(token));
+        dispatch(setErrors([]));
         saveToLocalStorage({ user, token });
 
         history.push('/');
       } else {
         const loginError = await res.text();
-        setErrors([loginError]);
+
+        dispatch(setErrors([loginError]));
         console.error(loginError);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -103,21 +106,6 @@ LoginView.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  setJWTToken: PropTypes.func.isRequired,
-  setErrors: PropTypes.func.isRequired,
-  setLoggedInUser: PropTypes.func.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
 };
 
-export default connect(
-  (store) => ({
-    loggedInUser: store.user,
-    jwtToken: store.token,
-  }),
-  {
-    setLoggedInUser: actions.setUser,
-    setJWTToken: actions.setToken,
-    setErrors: actions.setErrors,
-    setIsLoading: actions.setIsLoading,
-  },
-)(withRouter(LoginView));
+export default withRouter(LoginView);

@@ -1,27 +1,23 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import './VisibilityFilterInput.scss';
 
-import * as actions from '../../../../redux/actions';
+import { setFilter } from '../../../../redux/actions';
 
-const VisibilityFilterInput = ({ visibilityFilter, setFilter }) => (
-  <input
-    onChange={(e) => setFilter(e.target.value)}
-    value={visibilityFilter}
-    placeholder="Search myFlix"
-  />
-);
+const VisibilityFilterInput = () => {
+  const visibilityFilter = useSelector((state) => state.visibilityFilter);
+  const dispatch = useDispatch();
 
-VisibilityFilterInput.propTypes = {
-  visibilityFilter: PropTypes.string.isRequired,
-  setFilter: PropTypes.func.isRequired,
+  return (
+    <input
+      onChange={(e) => dispatch(setFilter(e.target.value))}
+      value={visibilityFilter}
+      placeholder="Search myFlix"
+    />
+  );
 };
 
-export default connect((store) => ({
-  visibilityFilter: store.visibilityFilter,
-}),
-{ setFilter: actions.setFilter })(VisibilityFilterInput);
+export default VisibilityFilterInput;

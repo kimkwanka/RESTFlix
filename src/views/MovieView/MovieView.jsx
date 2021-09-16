@@ -3,13 +3,14 @@ import PropTypes from 'prop-types';
 
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import './MovieView.scss';
 
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
-const MovieView = ({ movies, match: { params: { movieID } } }) => {
+const MovieView = ({ match: { params: { movieID } } }) => {
+  const movies = useSelector((state) => state.movies);
   const movie = movies.find((m) => m._id === movieID);
 
   return (
@@ -32,7 +33,6 @@ const MovieView = ({ movies, match: { params: { movieID } } }) => {
 };
 
 MovieView.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.shape).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
       movieID: PropTypes.string.isRequired,
@@ -40,6 +40,4 @@ MovieView.propTypes = {
   }).isRequired,
 };
 
-export default connect((store) => ({
-  movies: store.movies,
-}))(MovieView);
+export default MovieView;

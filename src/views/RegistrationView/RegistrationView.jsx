@@ -3,15 +3,17 @@ import PropTypes from 'prop-types';
 
 import { withRouter } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
-import * as actions from '../../redux/actions';
+import { setErrors, setIsLoading } from '../../redux/actions';
 
 import './RegistrationView.scss';
 
-const RegistrationView = ({ history, setErrors, setIsLoading }) => {
+const RegistrationView = ({ history }) => {
+  const dispatch = useDispatch();
+
   const [newUser, setNewUser] = useState({
     Username: '',
     Password: '',
@@ -38,7 +40,7 @@ const RegistrationView = ({ history, setErrors, setIsLoading }) => {
         return;
       }
 
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
         method: 'POST',
@@ -52,28 +54,27 @@ const RegistrationView = ({ history, setErrors, setIsLoading }) => {
       if (res.status === 201) {
         await res.json();
 
-        setErrors([]);
+        dispatch(setErrors([]));
         history.push('/');
       }
 
       if (res.status === 400) {
         const responseBodyText = await res.text();
 
-        setErrors([responseBodyText]);
+        dispatch(setErrors([responseBodyText]));
         console.error(responseBodyText);
       }
 
       if (res.status === 422) {
         const responseBody = await res.json();
         const errorMessages = responseBody.errors.map((e) => e.msg);
-
-        setErrors(errorMessages);
+        dispatch(setErrors(errorMessages));
         console.error(responseBody.errors);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(true));
     }
   };
 
@@ -143,11 +144,6 @@ RegistrationView.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
-  setErrors: PropTypes.func.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
 };
 
-export default connect(null, {
-  setErrors: actions.setErrors,
-  setIsLoading: actions.setIsLoading,
-})(withRouter(RegistrationView));
+export default withRouter(RegistrationView);

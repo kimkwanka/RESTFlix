@@ -1,19 +1,22 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { connect } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
 
-import * as actions from '../../redux/actions';
+import { setIsLoading, addFavoriteMovie, removeFavoriteMovie } from '../../redux/actions';
 
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
-const MovieCard = ({
-  movie, loggedInUser, jwtToken, addFavoriteMovie, removeFavoriteMovie, setIsLoading,
-}) => {
+const MovieCard = ({ movie }) => {
+  const dispatch = useDispatch();
+
+  const loggedInUser = useSelector((state) => state.user);
+  const jwtToken = useSelector((state) => state.token);
+
   const { _id: userID, FavoriteMovies } = loggedInUser;
 
   const isFavorite = FavoriteMovies.indexOf(movie._id) !== -1;
@@ -23,7 +26,7 @@ const MovieCard = ({
       // Stop button from triggering the outer <Link />
       e.preventDefault();
 
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
         method: 'POST',
@@ -33,7 +36,7 @@ const MovieCard = ({
       });
 
       if (res.status === 200) {
-        addFavoriteMovie(movieID);
+        dispatch(addFavoriteMovie(movieID));
       } else {
         const addFavoriteError = await res.text();
 
@@ -42,7 +45,7 @@ const MovieCard = ({
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -51,7 +54,7 @@ const MovieCard = ({
       // Stop button from triggering the outer <Link />
       e.preventDefault();
 
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
         method: 'DELETE',
@@ -61,7 +64,7 @@ const MovieCard = ({
       });
 
       if (res.status === 200) {
-        removeFavoriteMovie(movieID);
+        dispatch(removeFavoriteMovie(movieID));
       } else {
         const removeFavoriteError = await res.text();
 
@@ -70,7 +73,7 @@ const MovieCard = ({
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -98,21 +101,6 @@ MovieCard.propTypes = {
     Description: PropTypes.string.isRequired,
     ImagePath: PropTypes.string.isRequired,
   }).isRequired,
-  loggedInUser: PropTypes.shape({
-    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-    _id: PropTypes.string.isRequired,
-  }).isRequired,
-  jwtToken: PropTypes.string.isRequired,
-  addFavoriteMovie: PropTypes.func.isRequired,
-  removeFavoriteMovie: PropTypes.func.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
 };
 
-export default connect((store) => ({
-  loggedInUser: store.user,
-  jwtToken: store.token,
-}), {
-  addFavoriteMovie: actions.addFavoriteMovie,
-  removeFavoriteMovie: actions.removeFavoriteMovie,
-  setIsLoading: actions.setIsLoading,
-})(React.memo(MovieCard));
+export default React.memo(MovieCard);

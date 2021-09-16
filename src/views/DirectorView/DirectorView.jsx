@@ -1,39 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
-
-import * as actions from '../../redux/actions';
+import { useFetchAndCallback } from '../../hooks/useFetch';
 
 import './DirectorView.scss';
 
-const DirectorView = ({ jwtToken, match: { params: { directorName } }, setIsLoading }) => {
+const DirectorView = ({ match: { params: { directorName } } }) => {
   const [director, setDirector] = useState({
     Name: '', Bio: '', Birth: '', Death: '',
   });
 
-  useEffect(async () => {
-    if (!jwtToken) {
-      return;
-    }
-
-    setIsLoading(true);
-
-    try {
-      const res = await fetch(`https://dry-sands-45830.herokuapp.com/directors/${directorName}`, {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      });
-      const data = await res.json();
-      setDirector(data);
-    } catch (err) {
-      console.error(err);
-    } finally {
-      setIsLoading(false);
-    }
-  }, [jwtToken]);
+  useFetchAndCallback(`https://dry-sands-45830.herokuapp.com/directors/${directorName}`, setDirector);
 
   return (
     <div className="d-flex flex-column align-items-center">
@@ -53,12 +30,6 @@ DirectorView.propTypes = {
       directorName: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  jwtToken: PropTypes.string.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
 };
 
-export default connect((store) => ({
-  jwtToken: store.token,
-}), {
-  setIsLoading: actions.setIsLoading,
-})(DirectorView);
+export default DirectorView;

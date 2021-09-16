@@ -1,23 +1,19 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 
 import Routes from './Routes';
 
-const App = ({ isLoading }) => (
-  <>
-    <LoadingSpinner isLoading={isLoading} />
-    {Routes}
-  </>
-);
-
-App.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+const App = () => {
+  const isLoading = useSelector((state) => state.isLoading);
+  return (
+    <>
+      <LoadingSpinner isLoading={isLoading} />
+      {Routes}
+    </>
+  );
 };
 
-export default connect((_store) => ({
-  isLoading: _store.isLoading,
-}))(App);
+export default App;
