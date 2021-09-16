@@ -10,10 +10,10 @@ import './MoviesList.scss';
 import MovieCard from '../../../components/MovieCard/MovieCard';
 import VisibilityFilterInput from './VisibilityFilterInput/VisibilityFilterInput';
 
-import useFetch from '../../../hooks/useFetch';
+import { useFetchAndDispatch } from '../../../hooks/useFetch';
 
 const MovieList = () => {
-  useFetch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
+  useFetchAndDispatch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
 
   const visibilityFilter = useSelector((state) => state.visibilityFilter);
   const movies = useSelector((state) => state.movies);

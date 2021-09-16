@@ -8,7 +8,7 @@ import { setIsLoading } from '../redux/actions';
 // Check for more details:
 // https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
 
-const useFetch = (url, action, method = 'GET') => {
+const useFetch = (dispatchOnComplete) => (url, actionCreatorOrCallback, method = 'GET') => {
   const jwtToken = useSelector((state) => state.token);
   const dispatch = useDispatch();
 
@@ -25,7 +25,11 @@ const useFetch = (url, action, method = 'GET') => {
         });
         const data = await res.json();
 
-        dispatch(action(data));
+        if (dispatchOnComplete) {
+          dispatch(actionCreatorOrCallback(data));
+        } else {
+          actionCreatorOrCallback(data);
+        }
       } catch (err) {
         console.error(err);
       } finally {
@@ -34,9 +38,11 @@ const useFetch = (url, action, method = 'GET') => {
     };
 
     fetchData();
+    return () => {};
   }, []);
-
-  return () => {};
 };
 
-export default useFetch;
+const useFetchAndDispatch = useFetch(true);
+const useFetchAndCallback = useFetch(false);
+
+export { useFetchAndDispatch, useFetchAndCallback };
