@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
-import { withRouter } from 'react-router-dom';
-
 import PropTypes from 'prop-types';
+
+import { withRouter } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
@@ -143,6 +143,8 @@ RegistrationView.propTypes = {
   history: PropTypes.shape({
     push: PropTypes.func.isRequired,
   }).isRequired,
+  setErrors: PropTypes.func.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
 };
 
 export default connect(null, {

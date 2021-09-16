@@ -1,9 +1,10 @@
 /* eslint-disable react/no-array-index-key */
+/* eslint no-restricted-globals: ["error"] */
+
 import React, { useState, useEffect, useRef } from 'react';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
-
-import PropTypes from 'prop-types';
 
 import MovieCard from '../../components/MovieCard/MovieCard';
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
@@ -255,6 +256,21 @@ const ProfileView = ({
       ) : null}
     </div>
   );
+};
+
+ProfileView.propTypes = {
+  movies: PropTypes.arrayOf(PropTypes.shape).isRequired,
+  loggedInUser: PropTypes.shape({
+    _id: PropTypes.string.isRequired,
+    Username: PropTypes.string.isRequired,
+    Email: PropTypes.string.isRequired,
+    Birthday: PropTypes.string.isRequired,
+    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
+  }).isRequired,
+  jwtToken: PropTypes.string.isRequired,
+  setIsLoading: PropTypes.func.isRequired,
+  setErrors: PropTypes.func.isRequired,
+  setLoggedInUser: PropTypes.func.isRequired,
 };
 
 ProfileView.propTypes = {

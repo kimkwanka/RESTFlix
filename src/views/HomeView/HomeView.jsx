@@ -8,6 +8,7 @@ import { connect } from 'react-redux';
 import MovieList from './MovieList/MovieList';
 
 const HomeView = ({ loggedInUser }) => {
+  // eslint-disable-next-line no-console
   console.log('HomeView', loggedInUser);
   return (
     loggedInUser

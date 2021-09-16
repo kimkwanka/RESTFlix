@@ -1,5 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
@@ -12,6 +13,11 @@ const ErrorMessages = ({ errorMessages }) => (
     </div>
   </div>
 );
+
+ErrorMessages.propTypes = {
+  errorMessages: PropTypes.arrayOf(PropTypes.shape).isRequired,
+};
+
 export default connect((store) => ({
   errorMessages: store.errorMessages,
 }))(ErrorMessages);
