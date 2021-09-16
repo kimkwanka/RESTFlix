@@ -11,20 +11,18 @@ import './MovieList.scss';
 import MovieCard from '../../../components/MovieCard/MovieCard';
 import VisibilityFilterInput from './VisibilityFilterInput';
 
-import useFetchMovies from './useFetchMovies';
+import useFetchMovies from '../../../hooks/useFetchMovies';
 
 const MovieList = ({
   movies,
   loggedInUser: { FavoriteMovies },
-  setMovies,
-  jwtToken,
   visibilityFilter,
 }) => {
   const filteredMovies = visibilityFilter !== ''
     ? movies.filter((movie) => movie.Title.toLowerCase().includes(visibilityFilter.toLowerCase()))
     : movies;
 
-  useFetchMovies(jwtToken, setMovies);
+  useFetchMovies();
 
   return (
     <>
@@ -50,8 +48,6 @@ MovieList.propTypes = {
     FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
   }),
   visibilityFilter: PropTypes.string.isRequired,
-  setMovies: PropTypes.func.isRequired,
-  jwtToken: PropTypes.string.isRequired,
 };
 
 MovieList.defaultProps = {

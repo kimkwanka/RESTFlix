@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 
 import { connect } from 'react-redux';
 
+import useFetchMovies from '../../hooks/useFetchMovies';
+
 import MovieCard from '../../components/MovieCard/MovieCard';
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
@@ -45,7 +47,6 @@ const formatDate = (date) => {
 };
 
 const ProfileView = ({
-  logoutCurrentUser,
   loggedInUser,
   jwtToken,
   movies,
@@ -100,7 +101,7 @@ const ProfileView = ({
       );
 
       if (res.status === 200) {
-        logoutCurrentUser();
+        setLoggedInUser(null);
       } else {
         const userDeletionError = await res.text();
         console.error(res.status, userDeletionError);
@@ -184,6 +185,8 @@ const ProfileView = ({
     updateChangedStatus();
   }, [newUserData, loggedInUser]);
 
+  useFetchMovies();
+
   return (
     <div className="profile-view w-100">
       <h2>Profile</h2>
@@ -245,7 +248,7 @@ const ProfileView = ({
         </button>
         <ErrorMessages />
       </form>
-      {FavoriteMovies.length > 0 ? (
+      {movies.length > 0 && FavoriteMovies.length > 0 ? (
         <>
           <h2>Favorite Movies</h2>
           <FavoriteMovieList
@@ -271,10 +274,6 @@ ProfileView.propTypes = {
   setIsLoading: PropTypes.func.isRequired,
   setErrors: PropTypes.func.isRequired,
   setLoggedInUser: PropTypes.func.isRequired,
-};
-
-ProfileView.propTypes = {
-  logoutCurrentUser: PropTypes.func.isRequired,
 };
 
 export default connect(
