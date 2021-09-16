@@ -1,59 +1,26 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-
 import React, { useState, useEffect, useRef } from 'react';
-import PropTypes from 'prop-types';
 
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 
-import useFetchMovies from '../../hooks/useFetchMovies';
+import {
+  setIsLoading, setUser, setErrors,
+} from '../../redux/actions';
 
-import MovieCard from '../../components/MovieCard/MovieCard';
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
-import * as actions from '../../redux/actions';
-
-import './ProfileView.scss';
-
-const FavoriteMovieList = ({ favoriteMovieIDs, allMovies }) => {
-  const favoriteMovies = [];
-
-  favoriteMovieIDs.forEach((favoriteMovieID) => {
-    const movieFoundById = allMovies.find(
-      (movie) => movie._id === favoriteMovieID,
-    );
-    favoriteMovies.push(movieFoundById);
-  });
-
-  return (
-    <div>
-      {favoriteMovies.map((movie, i) => (
-        <div className="mb-4" md={4} key={i}>
-          <MovieCard key={movie._id} movie={movie} isFavorite />
-        </div>
-      ))}
-    </div>
-  );
-};
-
-FavoriteMovieList.propTypes = {
-  favoriteMovieIDs: PropTypes.arrayOf(PropTypes.string).isRequired,
-  allMovies: PropTypes.arrayOf(PropTypes.shape()).isRequired,
-};
+import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
 
 const formatDate = (date) => {
   const inputDate = new Date(date);
   return inputDate.toISOString().substr(0, 10);
 };
 
-const ProfileView = ({
-  loggedInUser,
-  jwtToken,
-  movies,
-  setLoggedInUser,
-  setErrors,
-  setIsLoading,
-}) => {
+const ProfileView = () => {
+  const loggedInUser = useSelector((state) => state.user);
+  const jwtToken = useSelector((state) => state.token);
+
   const {
     Username, Email, Birthday, FavoriteMovies, _id,
   } = loggedInUser;
@@ -101,7 +68,7 @@ const ProfileView = ({
       );
 
       if (res.status === 200) {
-        setLoggedInUser(null);
+        setUser(null);
       } else {
         const userDeletionError = await res.text();
         console.error(res.status, userDeletionError);
@@ -137,7 +104,7 @@ const ProfileView = ({
       if (res.status === 200) {
         const updatedUserFromServer = await res.json();
 
-        setLoggedInUser(updatedUserFromServer);
+        setUser(updatedUserFromServer);
         setErrors([]);
       }
 
@@ -184,8 +151,6 @@ const ProfileView = ({
   useEffect(() => {
     updateChangedStatus();
   }, [newUserData, loggedInUser]);
-
-  useFetchMovies();
 
   return (
     <div className="profile-view w-100">
@@ -248,43 +213,14 @@ const ProfileView = ({
         </button>
         <ErrorMessages />
       </form>
-      {movies.length > 0 && FavoriteMovies.length > 0 ? (
+      {FavoriteMovies.length > 0 ? (
         <>
           <h2>Favorite Movies</h2>
-          <FavoriteMovieList
-            allMovies={movies}
-            favoriteMovieIDs={FavoriteMovies}
-          />
+          <FavoriteMovieList />
         </>
       ) : null}
     </div>
   );
 };
 
-ProfileView.propTypes = {
-  movies: PropTypes.arrayOf(PropTypes.shape).isRequired,
-  loggedInUser: PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    Username: PropTypes.string.isRequired,
-    Email: PropTypes.string.isRequired,
-    Birthday: PropTypes.string.isRequired,
-    FavoriteMovies: PropTypes.arrayOf(PropTypes.string).isRequired,
-  }).isRequired,
-  jwtToken: PropTypes.string.isRequired,
-  setIsLoading: PropTypes.func.isRequired,
-  setErrors: PropTypes.func.isRequired,
-  setLoggedInUser: PropTypes.func.isRequired,
-};
-
-export default connect(
-  (store) => ({
-    movies: store.movies,
-    loggedInUser: store.user,
-    jwtToken: store.token,
-  }),
-  {
-    setLoggedInUser: actions.setUser,
-    setErrors: actions.setErrors,
-    setIsLoading: actions.setIsLoading,
-  },
-)(ProfileView);
+export default (ProfileView);
