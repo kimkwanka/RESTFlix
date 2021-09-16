@@ -2,7 +2,7 @@
 /* eslint no-restricted-globals: ["error"] */
 import { useState, useEffect, useRef } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { setIsLoading, setUser, setErrors } from '../../redux/actions';
 
@@ -12,6 +12,7 @@ const formatDate = (date) => {
 };
 
 const useProfileView = () => {
+  const dispatch = useDispatch();
   const loggedInUser = useSelector((state) => state.user);
   const jwtToken = useSelector((state) => state.token);
 
@@ -47,7 +48,7 @@ const useProfileView = () => {
 
   const deleteUser = async () => {
     try {
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch(
         `https://dry-sands-45830.herokuapp.com/users/${_id}`,
@@ -60,7 +61,7 @@ const useProfileView = () => {
       );
 
       if (res.status === 200) {
-        setUser(null);
+        dispatch(setUser(null));
       } else {
         const userDeletionError = await res.text();
         console.error(res.status, userDeletionError);
@@ -68,7 +69,7 @@ const useProfileView = () => {
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -78,7 +79,7 @@ const useProfileView = () => {
         return;
       }
 
-      setIsLoading(true);
+      dispatch(setIsLoading(true));
 
       const res = await fetch(
         `https://dry-sands-45830.herokuapp.com/users/${_id}`,
@@ -96,14 +97,14 @@ const useProfileView = () => {
       if (res.status === 200) {
         const updatedUserFromServer = await res.json();
 
-        setUser(updatedUserFromServer);
-        setErrors([]);
+        dispatch(setUser(updatedUserFromServer));
+        dispatch(setErrors([]));
       }
 
       if (res.status === 400) {
         const responseBodyText = await res.text();
 
-        setErrors([responseBodyText]);
+        dispatch(setErrors([responseBodyText]));
         console.error(responseBodyText);
       }
 
@@ -111,13 +112,13 @@ const useProfileView = () => {
         const responseBody = await res.json();
         const errorMessages = responseBody.errors.map((e) => e.msg);
 
-        setErrors(errorMessages);
+        dispatch(setErrors(errorMessages));
         console.error(responseBody.errors);
       }
     } catch (err) {
       console.error(err);
     } finally {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
     }
   };
 
