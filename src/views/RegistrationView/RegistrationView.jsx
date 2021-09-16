@@ -1,7 +1,7 @@
 import React, { useState, useRef } from 'react';
 import PropTypes from 'prop-types';
 
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
@@ -74,7 +74,7 @@ const RegistrationView = ({ history }) => {
     } catch (err) {
       console.error(err);
     } finally {
-      dispatch(setIsLoading(true));
+      dispatch(setIsLoading(false));
     }
   };
 
@@ -87,56 +87,62 @@ const RegistrationView = ({ history }) => {
   };
 
   return (
-    <div
-      className="d-flex flex-column align-items-center"
-      ref={registerFormRef}
-    >
-      <label htmlFor="formUsername">
-        Username:
-        <input
-          id="formUsername"
-          type="text"
-          defaultValue={Username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-          minLength="5"
-          pattern="^[a-zA-Z0-9]+$"
-        />
-      </label>
-      <label htmlFor="formPassword">
-        Password:
-        <input
-          id="formPassword"
-          type="password"
-          defaultValue={Password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-      </label>
-      <label htmlFor="formEmail">
-        Email:
-        <input
-          id="formEmail"
-          type="email"
-          defaultValue={Email}
-          onChange={(e) => setEmail(e.target.value)}
-          required
-        />
-      </label>
-      <label htmlFor="formBirthday">
-        Birthday:
-        <input
-          id="formBirthday"
-          type="date"
-          defaultValue={Birthday}
-          onChange={(e) => setBirthday(e.target.value)}
-        />
-      </label>
-      <button type="submit" variant="primary" onClick={handleSubmit}>
-        Register
-      </button>
-      <ErrorMessages />
-    </div>
+    <>
+      <form
+        className="d-flex flex-column align-items-center"
+        ref={registerFormRef}
+      >
+        <label htmlFor="formUsername">
+          Username:
+          <input
+            id="formUsername"
+            type="text"
+            defaultValue={Username}
+            onChange={(e) => setUsername(e.target.value)}
+            required
+            minLength="5"
+            pattern="^[a-zA-Z0-9]+$"
+          />
+        </label>
+        <label htmlFor="formPassword">
+          Password:
+          <input
+            id="formPassword"
+            type="password"
+            defaultValue={Password}
+            onChange={(e) => setPassword(e.target.value)}
+            required
+          />
+        </label>
+        <label htmlFor="formEmail">
+          Email:
+          <input
+            id="formEmail"
+            type="email"
+            defaultValue={Email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </label>
+        <label htmlFor="formBirthday">
+          Birthday:
+          <input
+            id="formBirthday"
+            type="date"
+            defaultValue={Birthday}
+            onChange={(e) => setBirthday(e.target.value)}
+          />
+        </label>
+        <button type="submit" variant="primary" onClick={handleSubmit}>
+          Register
+        </button>
+        <ErrorMessages />
+      </form>
+      <p>
+        Already have an account?
+        <Link to="/login"> Sign in</Link>
+      </p>
+    </>
   );
 };
 
