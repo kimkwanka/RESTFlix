@@ -10,11 +10,6 @@ import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
 
-const formatDate = (date) => {
-  const inputDate = new Date(date);
-  return inputDate.toISOString().substr(0, 10);
-};
-
 const ProfileView = () => {
   const loggedInUser = useSelector((state) => state.user);
   const {
@@ -22,6 +17,7 @@ const ProfileView = () => {
   } = loggedInUser;
 
   const {
+    formatDate,
     handleSubmit,
     handleDelete,
     setEmail,
