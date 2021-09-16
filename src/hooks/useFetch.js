@@ -1,37 +1,42 @@
 import { useEffect } from 'react';
-import { useSelector, useDispatch, shallowEqual } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { setMovies } from '../redux/actions';
+import { setIsLoading } from '../redux/actions';
 
 // Note the declaration and immediate execution of the async function inside useEffect().
 // Declaration of this function outside of useEffect would necessitate useCallback for memoization.
 // Check for more details:
 // https://stackoverflow.com/questions/53332321/react-hook-warnings-for-async-function-in-useeffect-useeffect-function-must-ret
 
-const useFetchMovies = () => {
-  const jwtToken = useSelector((state) => state.token, shallowEqual);
+const useFetch = (url, action, method = 'GET') => {
+  const jwtToken = useSelector((state) => state.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchData = async () => {
       try {
-        const res = await fetch('https://dry-sands-45830.herokuapp.com/movies/', {
-          method: 'GET',
+        dispatch(setIsLoading(true));
+
+        const res = await fetch(url, {
+          method,
           headers: {
             Authorization: `Bearer ${jwtToken}`,
           },
         });
         const data = await res.json();
 
-        dispatch(setMovies(data));
+        dispatch(action(data));
       } catch (err) {
         console.error(err);
+      } finally {
+        dispatch(setIsLoading(false));
       }
     };
-    fetchMovies(jwtToken, dispatch);
+
+    fetchData();
   }, []);
 
   return () => {};
 };
 
-export default useFetchMovies;
+export default useFetch;
