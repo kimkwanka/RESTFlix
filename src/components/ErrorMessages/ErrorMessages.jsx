@@ -5,10 +5,8 @@ import { useSelector } from 'react-redux';
 
 import './ErrorMessages.scss';
 
-const selectErrorMessages = (state) => state.errorMessages;
-
 const ErrorMessages = () => {
-  const errorMessages = useSelector(selectErrorMessages);
+  const errorMessages = useSelector((state) => state.errorMessages);
 
   return (
     <div className="m-4">
