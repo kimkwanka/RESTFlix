@@ -34,7 +34,7 @@ const App = () => {
       ) : null}
 
       <LoadingSpinner isLoading={isLoading} />
-      {Routes}
+      <Routes />
     </>
   );
 };
