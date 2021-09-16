@@ -5,14 +5,14 @@ import { Redirect } from 'react-router-dom';
 
 import { connect } from 'react-redux';
 
-import MovieList from './MovieList/MovieList';
+import MoviesList from './MoviesList/MoviesList';
 
 const HomeView = ({ loggedInUser }) => {
   // eslint-disable-next-line no-console
   console.log('HomeView', loggedInUser);
   return (
     loggedInUser
-      ? <MovieList />
+      ? <MoviesList />
       : <Redirect to="/login" />
   );
 };
