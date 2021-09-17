@@ -3,15 +3,16 @@ import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
 
-import { createStore } from 'redux';
 import { Provider } from 'react-redux';
-import { devToolsEnhancer } from 'redux-devtools-extension';
+import { configureStore } from '@reduxjs/toolkit';
 
-import reducers from './redux/reducers';
+import rootReducer from './redux/reducers';
 
 import App from './App';
 
-const store = createStore(reducers, devToolsEnhancer());
+const store = configureStore({
+  reducer: rootReducer,
+});
 
 ReactDOM.render(
   <BrowserRouter>
