@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { setErrors, setIsLoading } from '../../redux/actions';
+import { setErrors, setIsLoading } from '../../redux';
 
 import './RegistrationView.scss';
 

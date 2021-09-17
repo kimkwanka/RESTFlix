@@ -7,10 +7,10 @@ import { useSelector } from 'react-redux';
 import MoviesList from './MoviesList/MoviesList';
 
 const HomeView = () => {
-  const loggedInUser = useSelector((state) => state.user);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   return (
-    loggedInUser
+    isLoggedIn
       ? <MoviesList />
       : <Redirect to="/login" />
   );

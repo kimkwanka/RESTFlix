@@ -5,11 +5,8 @@ import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 import {
-  setUser,
-  setToken,
-  setErrors,
-  setIsLoading,
-} from '../../redux/actions';
+  loginUser, setIsLoading, setErrors,
+} from '../../redux';
 
 import './LoginView.scss';
 
@@ -44,8 +41,7 @@ const useLoginView = () => {
       if (res.status === 200) {
         const { user, token } = await res.json();
 
-        dispatch(setUser(user));
-        dispatch(setToken(token));
+        dispatch(loginUser({ user, token }));
         dispatch(setErrors([]));
         saveToLocalStorage({ user, token });
 

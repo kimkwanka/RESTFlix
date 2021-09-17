@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { setMovies } from '../../../redux/actions';
+import { setMovies } from '../../../redux';
 
 import { useFetchAndDispatch } from '../../../hooks/useFetch';
 
@@ -15,7 +15,7 @@ const FavoriteMoviesList = () => {
   useFetchAndDispatch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
 
   const movies = useSelector((state) => state.movies);
-  const favoriteMovieIDs = useSelector((state) => state.user.FavoriteMovies);
+  const favoriteMovieIDs = useSelector((state) => state.user.data.FavoriteMovies);
   const favoriteMoviesArray = [];
 
   if (movies.length > 0) {

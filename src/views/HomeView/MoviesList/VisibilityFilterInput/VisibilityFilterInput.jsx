@@ -5,10 +5,10 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './VisibilityFilterInput.scss';
 
-import { setFilter } from '../../../../redux/actions';
+import { setFilter } from '../../../../redux';
 
 const VisibilityFilterInput = () => {
-  const visibilityFilter = useSelector((state) => state.visibilityFilter);
+  const visibilityFilter = useSelector((state) => state.ui.visibilityFilter);
   const dispatch = useDispatch();
 
   return (

@@ -4,7 +4,9 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { setIsLoading, setUser, setErrors } from '../../redux/actions';
+import {
+  setIsLoading, updateUserData, logoutUser, setErrors,
+} from '../../redux';
 
 const formatDate = (date) => {
   const inputDate = new Date(date);
@@ -14,23 +16,23 @@ const formatDate = (date) => {
 const useProfileView = () => {
   const dispatch = useDispatch();
 
-  const loggedInUser = useSelector((state) => state.user);
-  const jwtToken = useSelector((state) => state.token);
+  const currentUserData = useSelector((state) => state.user.data);
+  const jwtToken = useSelector((state) => state.user.token);
 
-  const { _id } = loggedInUser;
+  const { _id } = currentUserData;
 
   const [newUserData, setNewUserData] = useState({
-    ...loggedInUser,
+    ...currentUserData,
     Password: '',
   });
   const [dataHasChanged, setDataHasChanged] = useState(false);
 
   const updateChangedStatus = () => {
     setDataHasChanged(
-      newUserData.Username !== loggedInUser.Username
+      newUserData.Username !== currentUserData.Username
         || newUserData.Password !== ''
-        || newUserData.Email !== loggedInUser.Email
-        || formatDate(newUserData.Birthday) !== formatDate(loggedInUser.Birthday),
+        || newUserData.Email !== currentUserData.Email
+        || formatDate(newUserData.Birthday) !== formatDate(currentUserData.Birthday),
     );
   };
 
@@ -62,7 +64,7 @@ const useProfileView = () => {
       );
 
       if (res.status === 200) {
-        dispatch(setUser(null));
+        dispatch(logoutUser());
       } else {
         const userDeletionError = await res.text();
         console.error(res.status, userDeletionError);
@@ -96,9 +98,9 @@ const useProfileView = () => {
       );
 
       if (res.status === 200) {
-        const updatedUserFromServer = await res.json();
+        const updatedUserDataFromServer = await res.json();
 
-        dispatch(setUser(updatedUserFromServer));
+        dispatch(updateUserData(updatedUserDataFromServer));
         dispatch(setErrors([]));
       }
 
@@ -144,7 +146,7 @@ const useProfileView = () => {
 
   useEffect(() => {
     updateChangedStatus();
-  }, [newUserData, loggedInUser]);
+  }, [newUserData, currentUserData]);
 
   return {
     formatDate,

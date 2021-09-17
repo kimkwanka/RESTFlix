@@ -3,7 +3,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { setMovies } from '../../../redux/actions';
+import { setMovies } from '../../../redux';
 
 import './MoviesList.scss';
 
@@ -15,9 +15,9 @@ import { useFetchAndDispatch } from '../../../hooks/useFetch';
 const MovieList = () => {
   useFetchAndDispatch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
 
-  const visibilityFilter = useSelector((state) => state.visibilityFilter);
+  const visibilityFilter = useSelector((state) => state.ui.visibilityFilter);
   const movies = useSelector((state) => state.movies);
-  const favoriteMovies = useSelector((state) => state.user.FavoriteMovies);
+  const favoriteMovies = useSelector((state) => state.user.data.FavoriteMovies);
 
   const filteredMovies = visibilityFilter !== ''
     ? movies.filter((movie) => movie.Title.toLowerCase().includes(visibilityFilter.toLowerCase()))

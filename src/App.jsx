@@ -9,12 +9,12 @@ import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import Routes from './Routes';
 
 const App = () => {
-  const isLoading = useSelector((state) => state.isLoading);
-  const loggedInUser = useSelector((state) => state.user);
+  const isLoading = useSelector((state) => state.ui.isLoading);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
   return (
     <>
-      {loggedInUser ? (
+      {isLoggedIn ? (
         <header>
           <nav>
             <h1 className="logo">myFlix</h1>

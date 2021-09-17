@@ -12,14 +12,14 @@ import DirectorView from './views/DirectorView/DirectorView';
 import ProfileView from './views/ProfileView/ProfileView';
 
 const Routes = () => {
-  const loggedInUser = useSelector((state) => state.user);
+  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
   // Redirect all routes except /login and /register when not logged in
 
   return (
     <Switch>
       <Route exact path="/login" component={LoginView} />
       <Route exact path="/register" component={RegistrationView} />
-      {!loggedInUser && <Redirect from="*" to="/login" />}
+      {!isLoggedIn && <Redirect from="*" to="/login" />}
       <Route exact path="/" component={HomeView} />
       <Route exact path="/movies/:movieID" component={MovieView} />
       <Route exact path="/genres/:genreName" component={GenreView} />

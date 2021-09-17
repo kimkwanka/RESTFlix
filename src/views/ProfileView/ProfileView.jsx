@@ -11,10 +11,10 @@ import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
 
 const ProfileView = () => {
-  const loggedInUser = useSelector((state) => state.user);
+  const currentUserData = useSelector((state) => state.user.data);
   const {
     Username, Email, Birthday, FavoriteMovies,
-  } = loggedInUser;
+  } = currentUserData;
 
   const {
     formatDate,

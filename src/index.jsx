@@ -6,7 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { configureStore } from '@reduxjs/toolkit';
 
-import rootReducer from './redux/reducers';
+import rootReducer from './redux';
 
 import App from './App';
 

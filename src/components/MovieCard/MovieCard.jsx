@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
 
-import { setIsLoading, addFavoriteMovie, removeFavoriteMovie } from '../../redux/actions';
+import { setIsLoading, addFavoriteMovie, removeFavoriteMovie } from '../../redux';
 
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
@@ -15,9 +15,9 @@ const MovieCard = ({ movie }) => {
   const dispatch = useDispatch();
 
   const loggedInUser = useSelector((state) => state.user);
-  const jwtToken = useSelector((state) => state.token);
+  const jwtToken = loggedInUser.token;
 
-  const { _id: userID, FavoriteMovies } = loggedInUser;
+  const { _id: userID, FavoriteMovies } = loggedInUser.data;
 
   const isFavorite = FavoriteMovies.indexOf(movie._id) !== -1;
 
