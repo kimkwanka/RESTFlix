@@ -1,14 +1,15 @@
 import React from 'react';
-import PropTypes from 'prop-types';
+
+import { useSelector } from 'react-redux';
 
 import './LoadingSpinner.scss';
 
-const LoadingSpinner = ({ isLoading }) => (
-  isLoading ? <div className="loading-spinner" /> : null
-);
+const LoadingSpinner = () => {
+  const isLoading = useSelector((state) => state.ui.isLoading);
 
-LoadingSpinner.propTypes = {
-  isLoading: PropTypes.bool.isRequired,
+  return (
+    isLoading ? <div className="loading-spinner" /> : null
+  );
 };
 
 export default LoadingSpinner;
