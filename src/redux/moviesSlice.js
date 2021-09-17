@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
-  async (_, { getState }) => {
+  async (_, { getState, rejectWithValue }) => {
     const { movies } = getState();
 
     if (movies.length > 0) {
@@ -11,18 +11,23 @@ export const fetchMovies = createAsyncThunk(
     }
 
     const jwtToken = getState().user.token;
-    const response = await fetch(
-      'https://dry-sands-45830.herokuapp.com/movies/',
-      {
-        method: 'GET',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      },
-    );
 
-    const fetchedMovies = response.json();
-    return fetchedMovies;
+    try {
+      const response = await fetch(
+        'https://dry-sands-45830.herokuapp.com/movies/',
+        {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        },
+      );
+      const fetchedMovies = response.json();
+      return fetchedMovies;
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.toString());
+    }
   },
 );
 
