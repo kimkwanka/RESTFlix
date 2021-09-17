@@ -5,6 +5,7 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     isLoading: false,
+    isRequestPending: false,
     visibilityFilter: '',
   },
   reducers: {
@@ -17,8 +18,31 @@ const uiSlice = createSlice({
   },
 });
 
-const { actions, reducer } = uiSlice;
+const pendingRequestReducer = (state = false, action) => {
+  const actionTypeStr = action.type.toString();
+
+  if (actionTypeStr.endsWith('/pending')) {
+    return true;
+  }
+  if (actionTypeStr.endsWith('/fulfilled')) {
+    return false;
+  }
+  return state;
+};
+
+const { actions, reducer: uiSliceReducer } = uiSlice;
 
 export const { setIsLoading, setVisibilityFilter } = actions;
 
-export default reducer;
+const combinedUIReducer = (state = {
+  isLoading: false,
+  isRequestPending: false,
+  visibilityFilter: '',
+}, action) => {
+  const nextState = uiSliceReducer(state, action);
+  const isRequestPending = pendingRequestReducer(state.isRequestPending, action);
+
+  return { ...nextState, isRequestPending };
+};
+
+export default combinedUIReducer;

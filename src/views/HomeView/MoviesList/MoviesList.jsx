@@ -1,19 +1,22 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { setMovies } from '../../../redux';
+import { fetchMovies } from '../../../redux';
 
 import './MoviesList.scss';
 
 import MovieCard from '../../../components/MovieCard/MovieCard';
 import VisibilityFilterInput from './VisibilityFilterInput/VisibilityFilterInput';
 
-import { useFetchAndDispatch } from '../../../hooks/useFetch';
-
 const MovieList = () => {
-  useFetchAndDispatch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+    return () => {};
+  }, []);
 
   const visibilityFilter = useSelector((state) => state.ui.visibilityFilter);
   const movies = useSelector((state) => state.movies);

@@ -1,18 +1,21 @@
 /* eslint-disable react/no-array-index-key */
-import React from 'react';
+import React, { useEffect } from 'react';
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
-import { setMovies } from '../../../redux';
-
-import { useFetchAndDispatch } from '../../../hooks/useFetch';
+import { fetchMovies } from '../../../redux';
 
 import MovieCard from '../../../components/MovieCard/MovieCard';
 
 import './FavoriteMoviesList.scss';
 
 const FavoriteMoviesList = () => {
-  useFetchAndDispatch('https://dry-sands-45830.herokuapp.com/movies/', setMovies);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchMovies());
+    return () => {};
+  }, []);
 
   const movies = useSelector((state) => state.movies);
   const favoriteMovieIDs = useSelector((state) => state.user.data.FavoriteMovies);
