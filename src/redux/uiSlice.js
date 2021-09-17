@@ -24,9 +24,11 @@ const pendingRequestReducer = (state = false, action) => {
   if (actionTypeStr.endsWith('/pending')) {
     return true;
   }
-  if (actionTypeStr.endsWith('/fulfilled')) {
+
+  if (actionTypeStr.endsWith('/fulfilled') || actionTypeStr.endsWith('/rejected')) {
     return false;
   }
+
   return state;
 };
 
