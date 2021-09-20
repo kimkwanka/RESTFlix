@@ -87,7 +87,7 @@ const ProfileView = () => {
         >
           DELETE Profile
         </button>
-        <ErrorMessages />
+        <ErrorMessages errorType="profileErrors" />
       </form>
       {FavoriteMovies.length > 0 ? (
         <>

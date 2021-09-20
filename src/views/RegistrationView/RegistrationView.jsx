@@ -72,7 +72,7 @@ const RegistrationView = () => {
         <button type="submit" variant="primary" onClick={handleSubmit}>
           Register
         </button>
-        <ErrorMessages />
+        <ErrorMessages errorType="registerErrors" />
       </form>
       <p>
         Already have an account?

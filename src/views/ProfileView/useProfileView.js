@@ -4,9 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import {
-  setIsLoading, updateUserData, logoutUser, setErrors,
-} from '../../redux';
+import { updateUserData, deleteUser } from '../../redux';
 
 const formatDate = (date) => {
   const inputDate = new Date(date);
@@ -17,9 +15,6 @@ const useProfileView = () => {
   const dispatch = useDispatch();
 
   const currentUserData = useSelector((state) => state.user.data);
-  const jwtToken = useSelector((state) => state.user.token);
-
-  const { _id } = currentUserData;
 
   const [newUserData, setNewUserData] = useState({
     ...currentUserData,
@@ -32,7 +27,8 @@ const useProfileView = () => {
       newUserData.Username !== currentUserData.Username
         || newUserData.Password !== ''
         || newUserData.Email !== currentUserData.Email
-        || formatDate(newUserData.Birthday) !== formatDate(currentUserData.Birthday),
+        || formatDate(newUserData.Birthday)
+          !== formatDate(currentUserData.Birthday),
     );
   };
 
@@ -49,90 +45,14 @@ const useProfileView = () => {
 
   const isUpdateFormInputValid = () => updateFormRef.current.reportValidity();
 
-  const deleteUser = async () => {
-    try {
-      dispatch(setIsLoading(true));
-
-      const res = await fetch(
-        `https://dry-sands-45830.herokuapp.com/users/${_id}`,
-        {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${jwtToken}`,
-          },
-        },
-      );
-
-      if (res.status === 200) {
-        dispatch(logoutUser());
-      } else {
-        const userDeletionError = await res.text();
-        console.error(res.status, userDeletionError);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  };
-
-  const updateUser = async () => {
-    try {
-      if (!newUserData) {
-        return;
-      }
-
-      dispatch(setIsLoading(true));
-
-      const res = await fetch(
-        `https://dry-sands-45830.herokuapp.com/users/${_id}`,
-        {
-          method: 'PUT',
-          headers: {
-            Accept: 'application/json',
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${jwtToken}`,
-          },
-          body: JSON.stringify(newUserData),
-        },
-      );
-
-      if (res.status === 200) {
-        const updatedUserDataFromServer = await res.json();
-
-        dispatch(updateUserData(updatedUserDataFromServer));
-        dispatch(setErrors([]));
-      }
-
-      if (res.status === 400) {
-        const responseBodyText = await res.text();
-
-        dispatch(setErrors([responseBodyText]));
-        console.error(responseBodyText);
-      }
-
-      if (res.status === 422) {
-        const responseBody = await res.json();
-        const errorMessages = responseBody.errors.map((e) => e.msg);
-
-        dispatch(setErrors(errorMessages));
-        console.error(responseBody.errors);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  };
-
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isUpdateFormInputValid()) {
-      updateUser(newUserData);
+      dispatch(updateUserData(newUserData));
     }
   };
 
-  const handleDelete = (e) => {
+  const handleDelete = async (e) => {
     e.preventDefault();
     // eslint-disable-next-line no-alert
     const deletionConfirmed = confirm(
@@ -140,7 +60,7 @@ const useProfileView = () => {
     );
 
     if (deletionConfirmed) {
-      deleteUser();
+      dispatch(deleteUser());
     }
   };
 

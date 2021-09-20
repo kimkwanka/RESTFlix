@@ -50,7 +50,7 @@ const LoginView = () => {
         <button type="submit" variant="primary" onClick={handleSubmit}>
           Login
         </button>
-        <ErrorMessages />
+        <ErrorMessages errorType="loginErrors" />
       </form>
       <p>
         Don’t have an account?

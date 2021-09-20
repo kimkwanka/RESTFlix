@@ -4,9 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import {
-  loginUser, setIsLoading, setErrors,
-} from '../../redux';
+import { loginUser } from '../../redux';
 
 import './LoginView.scss';
 
@@ -26,43 +24,18 @@ const useLoginView = () => {
 
   const isLoginFormInputValid = () => loginFormRef.current.reportValidity();
 
-  const checkLogin = async () => {
-    try {
-      dispatch(setIsLoading(true));
-
-      const res = await fetch(
-        `https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`,
-        {
-          method: 'POST',
-          headers: {},
-        },
-      );
-
-      if (res.status === 200) {
-        const { user, token } = await res.json();
-
-        dispatch(loginUser({ user, token }));
-        dispatch(setErrors([]));
-        saveToLocalStorage({ user, token });
-
-        history.push('/');
-      } else {
-        const loginError = await res.text();
-
-        dispatch(setErrors([loginError]));
-        console.error(loginError);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
-      checkLogin();
+      try {
+        const { user, token } = await dispatch(loginUser({ username, password })).unwrap();
+
+        history.push('/');
+        saveToLocalStorage({ user, token });
+      } catch {
+        // Error is dealt with inside loginUser thunk
+        // but unwrap() bubbles it up again, so just catch and ignore it.
+      }
     }
   };
 

@@ -1,12 +1,13 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 
 import './ErrorMessages.scss';
 
-const ErrorMessages = () => {
-  const errorMessages = useSelector((state) => state.errors);
+const ErrorMessages = ({ errorType }) => {
+  const errorMessages = useSelector((state) => state.errors[errorType]);
 
   return (
     <div className="m-4">
@@ -19,6 +20,10 @@ const ErrorMessages = () => {
       </div>
     </div>
   );
+};
+
+ErrorMessages.propTypes = {
+  errorType: PropTypes.string.isRequired,
 };
 
 export default ErrorMessages;

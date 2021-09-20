@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { setErrors, setIsLoading } from '../../redux';
+import { registerUser } from '../../redux';
 
 import './RegistrationView.scss';
 
@@ -12,75 +12,38 @@ const RegistrationView = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [newUser, setNewUser] = useState({
+  const [newUserData, setnewUserData] = useState({
     Username: '',
     Password: '',
     Email: '',
     Birthday: '',
   });
 
-  const setUsername = (Username) => setNewUser({ ...newUser, Username });
-  const setPassword = (Password) => setNewUser({ ...newUser, Password });
-  const setEmail = (Email) => setNewUser({ ...newUser, Email });
-  const setBirthday = (Birthday) => setNewUser({ ...newUser, Birthday });
+  const setUsername = (Username) => setnewUserData({ ...newUserData, Username });
+  const setPassword = (Password) => setnewUserData({ ...newUserData, Password });
+  const setEmail = (Email) => setnewUserData({ ...newUserData, Email });
+  const setBirthday = (Birthday) => setnewUserData({ ...newUserData, Birthday });
 
   const {
     Username, Password, Email, Birthday,
-  } = newUser;
+  } = newUserData;
 
   const registerFormRef = useRef();
 
   const isRegisterInputValid = () => registerFormRef.current.reportValidity();
 
-  const registerUser = async () => {
-    try {
-      if (!newUser) {
-        return;
-      }
-
-      dispatch(setIsLoading(true));
-
-      const res = await fetch('https://dry-sands-45830.herokuapp.com/users', {
-        method: 'POST',
-        headers: {
-          Accept: 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newUser),
-      });
-
-      if (res.status === 201) {
-        await res.json();
-
-        dispatch(setErrors([]));
-        history.push('/');
-      }
-
-      if (res.status === 400) {
-        const responseBodyText = await res.text();
-
-        dispatch(setErrors([responseBodyText]));
-        console.error(responseBodyText);
-      }
-
-      if (res.status === 422) {
-        const responseBody = await res.json();
-        const errorMessages = responseBody.errors.map((e) => e.msg);
-        dispatch(setErrors(errorMessages));
-        console.error(responseBody.errors);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
-  };
-
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (isRegisterInputValid()) {
-      registerUser(newUser);
+      try {
+        await dispatch(registerUser(newUserData)).unwrap();
+
+        history.push('/');
+      } catch {
+        // Error is dealt with inside registerUser thunk
+        // but unwrap() bubbles it up again, so just catch and ignore it.
+      }
     }
   };
 
