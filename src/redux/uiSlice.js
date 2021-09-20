@@ -6,14 +6,14 @@ const uiSlice = createSlice({
   initialState: {
     isLoading: false,
     isRequestPending: false,
-    visibilityFilter: '',
+    searchTerm: '',
   },
   reducers: {
     setIsLoading(state, action) {
       state.isLoading = action.payload;
     },
-    setVisibilityFilter(state, action) {
-      state.visibilityFilter = action.payload;
+    setSearchTerm(state, action) {
+      state.searchTerm = action.payload;
     },
   },
 });
@@ -34,12 +34,12 @@ const pendingRequestReducer = (state = false, action) => {
 
 const { actions, reducer: uiSliceReducer } = uiSlice;
 
-export const { setIsLoading, setVisibilityFilter } = actions;
+export const { setIsLoading, setSearchTerm } = actions;
 
 const combinedUIReducer = (state = {
   isLoading: false,
   isRequestPending: false,
-  visibilityFilter: '',
+  searchTerm: '',
 }, action) => {
   const nextState = uiSliceReducer(state, action);
   const isRequestPending = pendingRequestReducer(state.isRequestPending, action);

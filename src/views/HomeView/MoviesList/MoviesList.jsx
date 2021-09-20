@@ -8,7 +8,7 @@ import { fetchMovies } from '../../../redux';
 import './MoviesList.scss';
 
 import MovieCard from '../../../components/MovieCard/MovieCard';
-import VisibilityFilterInput from './VisibilityFilterInput/VisibilityFilterInput';
+import SearchBar from './SearchBar/SearchBar';
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -18,18 +18,18 @@ const MovieList = () => {
     return () => {};
   }, []);
 
-  const visibilityFilter = useSelector((state) => state.ui.visibilityFilter);
+  const searchTerm = useSelector((state) => state.ui.searchTerm);
   const movies = useSelector((state) => state.movies);
   const favoriteMovies = useSelector((state) => state.user.data.FavoriteMovies);
 
-  const filteredMovies = visibilityFilter !== ''
-    ? movies.filter((movie) => movie.Title.toLowerCase().includes(visibilityFilter.toLowerCase()))
+  const filteredMovies = searchTerm !== ''
+    ? movies.filter((movie) => movie.Title.toLowerCase().includes(searchTerm.toLowerCase()))
     : movies;
 
   return (
     <>
       <div md={12} style={{ margin: '1em' }}>
-        <VisibilityFilterInput visibilityFilter={visibilityFilter} />
+        <SearchBar searchTerm={searchTerm} />
       </div>
       {filteredMovies.map((movie, i) => (
         <div className="mb-4" md={4} key={i}>
