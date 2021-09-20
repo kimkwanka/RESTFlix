@@ -31,7 +31,7 @@ const MovieCard = ({ movie }) => {
     <Link className="movie-card h-100" to={`movies/${movie._id}`}>
       <div className="h-100 position-relative">
         {isFavorite ? <span className="favorite-star">★</span> : null}
-        <img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} alt={movie.Title} />
+        <img className="card-img" crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} alt={movie.Title} />
         {!isFavorite
           ? <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
           : <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>}
