@@ -7,74 +7,24 @@ import PropTypes from 'prop-types';
 
 import './MovieCard.scss';
 
-import { setIsLoading, addFavoriteMovie, removeFavoriteMovie } from '../../redux';
+import { addMovieToFavorites, removeMovieFromFavorites } from '../../redux';
 
 const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
 
 const MovieCard = ({ movie }) => {
   const dispatch = useDispatch();
 
-  const loggedInUser = useSelector((state) => state.user);
-  const jwtToken = loggedInUser.token;
-
-  const { _id: userID, FavoriteMovies } = loggedInUser.data;
-
+  const FavoriteMovies = useSelector((state) => state.user.data.FavoriteMovies);
   const isFavorite = FavoriteMovies.indexOf(movie._id) !== -1;
 
-  const addToFavorites = async (e, movieID) => {
-    try {
-      // Stop button from triggering the outer <Link />
-      e.preventDefault();
-
-      dispatch(setIsLoading(true));
-
-      const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
-        method: 'POST',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      });
-
-      if (res.status === 200) {
-        dispatch(addFavoriteMovie(movieID));
-      } else {
-        const addFavoriteError = await res.text();
-
-        console.error(addFavoriteError);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
+  const addToFavorites = (e, movieID) => {
+    e.preventDefault();
+    dispatch(addMovieToFavorites(movieID));
   };
 
-  const removeFromFavorites = async (e, movieID) => {
-    try {
-      // Stop button from triggering the outer <Link />
-      e.preventDefault();
-
-      dispatch(setIsLoading(true));
-
-      const res = await fetch(`https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`, {
-        method: 'DELETE',
-        headers: {
-          Authorization: `Bearer ${jwtToken}`,
-        },
-      });
-
-      if (res.status === 200) {
-        dispatch(removeFavoriteMovie(movieID));
-      } else {
-        const removeFavoriteError = await res.text();
-
-        console.error(removeFavoriteError);
-      }
-    } catch (err) {
-      console.error(err);
-    } finally {
-      dispatch(setIsLoading(false));
-    }
+  const removeFromFavorites = (e, movieID) => {
+    e.preventDefault();
+    dispatch(removeMovieFromFavorites(movieID));
   };
 
   return (

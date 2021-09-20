@@ -1,5 +1,67 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+
+export const addMovieToFavorites = createAsyncThunk(
+  'user/addMovieToFavorites',
+  async (movieID, { getState, rejectWithValue }) => {
+    const jwtToken = getState().user.token;
+    const userID = getState().user.data._id;
+
+    try {
+      const response = await fetch(
+        `https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        return movieID;
+      }
+      const addFavoriteError = await response.text();
+
+      console.error(addFavoriteError);
+      return rejectWithValue(addFavoriteError);
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.toString());
+    }
+  },
+);
+
+export const removeMovieFromFavorites = createAsyncThunk(
+  'user/removeMovieFromFavorites',
+  async (movieID, { getState, rejectWithValue }) => {
+    const jwtToken = getState().user.token;
+    const userID = getState().user.data._id;
+
+    try {
+      const response = await fetch(
+        `https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Bearer ${jwtToken}`,
+          },
+        },
+      );
+
+      if (response.status === 200) {
+        return movieID;
+      }
+      const addFavoriteError = await response.text();
+
+      console.error(addFavoriteError);
+      return rejectWithValue(addFavoriteError);
+    } catch (err) {
+      console.error(err);
+      return rejectWithValue(err.toString());
+    }
+  },
+);
 
 const userSlice = createSlice({
   name: 'user',
@@ -19,27 +81,35 @@ const userSlice = createSlice({
         isLoggedIn: true,
       };
     },
-    logoutUser(state, action) {
+    logoutUser() {
       return {
         data: {},
         token: '',
         isLoggedIn: false,
       };
     },
-    addFavoriteMovie(state, action) {
-      state.data.FavoriteMovies.push(action.payload);
-    },
-    removeFavoriteMovie(state, action) {
-      const indexOfMovieIDToRemove = state.data.FavoriteMovies.indexOf(action.payload);
-      state.data.FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
-    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(addMovieToFavorites.fulfilled,
+      (state, action) => {
+        state.data.FavoriteMovies.push(action.payload);
+      });
+    builder.addCase(removeMovieFromFavorites.fulfilled,
+      (state, action) => {
+        const indexOfMovieIDToRemove = state.data.FavoriteMovies.indexOf(
+          action.payload,
+        );
+        state.data.FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
+      });
   },
 });
 
 const { actions, reducer } = userSlice;
 
 export const {
-  loginUser, logoutUser, addFavoriteMovie, removeFavoriteMovie, updateUserData,
+  loginUser,
+  logoutUser,
+  updateUserData,
 } = actions;
 
 export default reducer;
