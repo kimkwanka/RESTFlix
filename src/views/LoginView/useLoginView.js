@@ -8,8 +8,7 @@ import { loginUser } from '../../redux';
 
 import './LoginView.scss';
 
-const saveToLocalStorage = ({ user, token }) => {
-  localStorage.setItem('token', token);
+const saveToLocalStorage = (user) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
@@ -31,7 +30,7 @@ const useLoginView = () => {
         const { user, token } = await dispatch(loginUser({ username, password })).unwrap();
 
         history.push('/');
-        saveToLocalStorage({ user, token });
+        saveToLocalStorage({ data: user, token });
       } catch {
         // Error is dealt with inside loginUser thunk
         // but unwrap() bubbles it up again, so just catch and ignore it.

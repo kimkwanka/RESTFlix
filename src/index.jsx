@@ -10,8 +10,18 @@ import rootReducer from './redux';
 
 import App from './App';
 
+const preloadedUser = {
+  ...JSON.parse(localStorage.getItem('user')),
+  isLoggedIn: true,
+};
+
+const preloadedState = preloadedUser.token
+  ? { user: preloadedUser }
+  : {};
+
 const store = configureStore({
   reducer: rootReducer,
+  preloadedState,
 });
 
 ReactDOM.render(

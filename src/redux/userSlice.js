@@ -129,6 +129,8 @@ export const deleteUser = createAsyncThunk(
       if (response.status === 200) {
         const deletionMsg = await response.text();
 
+        localStorage.removeItem('user');
+
         return deletionMsg;
       }
 
@@ -206,6 +208,13 @@ export const removeMovieFromFavorites = createAsyncThunk(
   },
 );
 
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  (_) => {
+    localStorage.removeItem('user');
+  },
+);
+
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -213,15 +222,7 @@ const userSlice = createSlice({
     token: '',
     isLoggedIn: false,
   },
-  reducers: {
-    logoutUser() {
-      return {
-        data: {},
-        token: '',
-        isLoggedIn: false,
-      };
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(addMovieToFavorites.fulfilled,
       (state, action) => {
@@ -250,13 +251,15 @@ const userSlice = createSlice({
         token: '',
         isLoggedIn: false,
       }));
+    builder.addCase(logoutUser.pending,
+      (_, __) => ({
+        data: {},
+        token: '',
+        isLoggedIn: false,
+      }));
   },
 });
 
-const { actions, reducer } = userSlice;
-
-export const {
-  logoutUser,
-} = actions;
+const { reducer } = userSlice;
 
 export default reducer;
