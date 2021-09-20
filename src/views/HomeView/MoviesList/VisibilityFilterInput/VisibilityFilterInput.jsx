@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './VisibilityFilterInput.scss';
 
-import { setFilter } from '../../../../redux';
+import { setVisibilityFilter } from '../../../../redux';
 
 const VisibilityFilterInput = () => {
   const visibilityFilter = useSelector((state) => state.ui.visibilityFilter);
@@ -13,7 +13,7 @@ const VisibilityFilterInput = () => {
 
   return (
     <input
-      onChange={(e) => dispatch(setFilter(e.target.value))}
+      onChange={(e) => dispatch(setVisibilityFilter(e.target.value))}
       value={visibilityFilter}
       placeholder="Search myFlix"
     />
