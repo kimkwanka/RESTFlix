@@ -4,6 +4,7 @@
   "license": "MIT",
   "dependencies": {
     "@reduxjs/toolkit": "^1.6.1",
+    "dotenv": "^10.0.0",
     "modern-css-reset": "^1.4.0",
     "prop-types": "^15.7.2",
     "react": "^17.0.2",

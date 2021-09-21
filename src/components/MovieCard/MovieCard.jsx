@@ -9,7 +9,7 @@ import './MovieCard.scss';
 
 import { addMovieToFavorites, removeMovieFromFavorites } from '../../redux';
 
-const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
+const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
 const MovieCard = ({ movie }) => {
   const dispatch = useDispatch();

@@ -3,11 +3,13 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { thunkFetch } from './utils/thunkFetch';
 
+const API_URL = process.env.MOVIE_API_URL;
+
 export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ username, password }, thunkAPI) => thunkFetch({
     thunkAPI,
-    url: `https://dry-sands-45830.herokuapp.com/login?Username=${username}&Password=${password}`,
+    url: `${API_URL}/login?Username=${username}&Password=${password}`,
     method: 'POST',
     useAuth: false,
   }),
@@ -17,7 +19,7 @@ export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (newUserData, thunkAPI) => thunkFetch({
     thunkAPI,
-    url: 'https://dry-sands-45830.herokuapp.com/users',
+    url: `${API_URL}/users`,
     method: 'POST',
     useAuth: false,
     body: JSON.stringify(newUserData),
@@ -31,7 +33,7 @@ export const updateUserData = createAsyncThunk(
 
     return thunkFetch({
       thunkAPI,
-      url: `https://dry-sands-45830.herokuapp.com/users/${userID}`,
+      url: `${API_URL}/users/${userID}`,
       method: 'PUT',
       body: JSON.stringify(newUserData),
     });
@@ -45,7 +47,7 @@ export const deleteUser = createAsyncThunk(
 
     return thunkFetch({
       thunkAPI,
-      url: `https://dry-sands-45830.herokuapp.com/users/${userID}`,
+      url: `${API_URL}/users/${userID}`,
       method: 'DELETE',
     });
   },
@@ -58,7 +60,7 @@ export const addMovieToFavorites = createAsyncThunk(
 
     return thunkFetch({
       thunkAPI,
-      url: `https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`,
+      url: `${API_URL}/users/${userID}/movies/${movieID}`,
       method: 'POST',
       meta: movieID,
     });
@@ -72,7 +74,7 @@ export const removeMovieFromFavorites = createAsyncThunk(
 
     return thunkFetch({
       thunkAPI,
-      url: `https://dry-sands-45830.herokuapp.com/users/${userID}/movies/${movieID}`,
+      url: `${API_URL}/users/${userID}/movies/${movieID}`,
       method: 'DELETE',
       meta: movieID,
     });

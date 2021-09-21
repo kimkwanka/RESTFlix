@@ -7,7 +7,7 @@ import { useSelector } from 'react-redux';
 
 import './MovieView.scss';
 
-const imgRoot = 'https://dry-sands-45830.herokuapp.com/img/';
+const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
 const MovieView = ({ match: { params: { movieID } } }) => {
   const movies = useSelector((state) => state.movies);

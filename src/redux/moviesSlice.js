@@ -3,9 +3,11 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { thunkFetch } from './utils/thunkFetch';
 
+const API_URL = process.env.MOVIE_API_URL;
+
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
-  async (_, thunkAPI) => thunkFetch({ thunkAPI, url: 'https://dry-sands-45830.herokuapp.com/movies/' }),
+  async (_, thunkAPI) => thunkFetch({ thunkAPI, url: `${API_URL}/movies/` }),
 );
 
 const moviesSlice = createSlice({
