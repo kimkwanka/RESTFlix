@@ -1,16 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useFetchAndCallback } from '../../hooks/useFetch';
+import { useSelector } from 'react-redux';
 
 import './DirectorView.scss';
 
-const DirectorView = ({ match: { params: { directorName } } }) => {
-  const [director, setDirector] = useState({
-    Name: '', Bio: '', Birth: '', Death: '',
-  });
+const selectDirectorByName = ((state, directorName) => {
+  const movieWithDirector = state.movies.find((movie) => movie.Director.Name === directorName);
+  return movieWithDirector.Director;
+});
 
-  useFetchAndCallback(`https://dry-sands-45830.herokuapp.com/directors/${directorName}`, setDirector);
+const DirectorView = ({ match: { params: { directorName } } }) => {
+  const director = useSelector((state) => selectDirectorByName(state, directorName));
 
   return (
     <div className="d-flex flex-column align-items-center">

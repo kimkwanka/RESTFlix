@@ -1,14 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
-import { useFetchAndCallback } from '../../hooks/useFetch';
+import { useSelector } from 'react-redux';
 
 import './GenreView.scss';
 
-const GenreView = ({ match: { params: { genreName } } }) => {
-  const [genre, setGenre] = useState({ Title: '', Description: '' });
+const selectGenreByName = ((state, genreName) => {
+  const movieWithGenre = state.movies.find((movie) => movie.Genre.Name === genreName);
+  return movieWithGenre.Genre;
+});
 
-  useFetchAndCallback(`https://dry-sands-45830.herokuapp.com/genres/${genreName}`, setGenre);
+const GenreView = ({ match: { params: { genreName } } }) => {
+  const genre = useSelector((state) => selectGenreByName(state, genreName));
 
   return (
     <div className="d-flex flex-column align-items-center">
