@@ -4,14 +4,10 @@ import { createSlice } from '@reduxjs/toolkit';
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
-    isLoading: false,
     isRequestPending: false,
     searchTerm: '',
   },
   reducers: {
-    setIsLoading(state, action) {
-      state.isLoading = action.payload;
-    },
     setSearchTerm(state, action) {
       state.searchTerm = action.payload;
     },
@@ -34,10 +30,9 @@ const pendingRequestReducer = (state = false, action) => {
 
 const { actions, reducer: uiSliceReducer } = uiSlice;
 
-export const { setIsLoading, setSearchTerm } = actions;
+export const { setSearchTerm } = actions;
 
 const combinedUIReducer = (state = {
-  isLoading: false,
   isRequestPending: false,
   searchTerm: '',
 }, action) => {
