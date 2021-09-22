@@ -35,7 +35,7 @@ export const thunkFetch = async ({
 
     const responseErrors = isText
       ? [await response.text()]
-      : response.json().errors.map((e) => e.msg);
+      : (await response.json()).errors.map((e) => e.msg);
 
     console.error(responseErrors);
 
