@@ -18,13 +18,13 @@ const favoriteMoviesList = () => {
   }, []);
 
   const movies = useSelector((state) => state.movies);
-  const favoriteMovieIDs = useSelector((state) => state.user.data.favoriteMovies);
+  const favoriteMovieIds = useSelector((state) => state.user.data.favoriteMovies);
   const favoriteMoviesArray = [];
 
   if (movies.length > 0) {
-    favoriteMovieIDs.forEach((favoriteMovieID) => {
+    favoriteMovieIds.forEach((favoriteMovieId) => {
       const movieFoundById = movies.find(
-        (movie) => movie._id === favoriteMovieID,
+        (movie) => movie._id === favoriteMovieId,
       );
       favoriteMoviesArray.push(movieFoundById);
     });

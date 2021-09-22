@@ -29,11 +29,11 @@ export const registerUser = createAsyncThunk(
 export const updateUserData = createAsyncThunk(
   'user/updateUserData',
   async (newUserData, thunkAPI) => {
-    const userID = thunkAPI.getState().user.data._id;
+    const userId = thunkAPI.getState().user.data._id;
 
     return thunkFetch({
       thunkAPI,
-      url: `${API_URL}/users/${userID}`,
+      url: `${API_URL}/users/${userId}`,
       method: 'PUT',
       body: JSON.stringify(newUserData),
     });
@@ -43,11 +43,11 @@ export const updateUserData = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, thunkAPI) => {
-    const userID = thunkAPI.getState().user.data._id;
+    const userId = thunkAPI.getState().user.data._id;
 
     return thunkFetch({
       thunkAPI,
-      url: `${API_URL}/users/${userID}`,
+      url: `${API_URL}/users/${userId}`,
       method: 'DELETE',
     });
   },
@@ -55,28 +55,28 @@ export const deleteUser = createAsyncThunk(
 
 export const addMovieToFavorites = createAsyncThunk(
   'user/addMovieToFavorites',
-  async (movieID, thunkAPI) => {
-    const userID = thunkAPI.getState().user.data._id;
+  async (movieId, thunkAPI) => {
+    const userId = thunkAPI.getState().user.data._id;
 
     return thunkFetch({
       thunkAPI,
-      url: `${API_URL}/users/${userID}/movies/${movieID}`,
+      url: `${API_URL}/users/${userId}/movies/${movieId}`,
       method: 'POST',
-      meta: movieID,
+      meta: movieId,
     });
   },
 );
 
 export const removeMovieFromFavorites = createAsyncThunk(
   'user/removeMovieFromFavorites',
-  async (movieID, thunkAPI) => {
-    const userID = thunkAPI.getState().user.data._id;
+  async (movieId, thunkAPI) => {
+    const userId = thunkAPI.getState().user.data._id;
 
     return thunkFetch({
       thunkAPI,
-      url: `${API_URL}/users/${userID}/movies/${movieID}`,
+      url: `${API_URL}/users/${userId}/movies/${movieId}`,
       method: 'DELETE',
-      meta: movieID,
+      meta: movieId,
     });
   },
 );
@@ -98,10 +98,10 @@ const userSlice = createSlice({
       state.data.favoriteMovies.push(action.meta.arg);
     });
     builder.addCase(removeMovieFromFavorites.fulfilled, (state, action) => {
-      const indexOfMovieIDToRemove = state.data.favoriteMovies.indexOf(
+      const indexOfMovieIdToRemove = state.data.favoriteMovies.indexOf(
         action.meta.arg,
       );
-      state.data.favoriteMovies.splice(indexOfMovieIDToRemove, 1);
+      state.data.favoriteMovies.splice(indexOfMovieIdToRemove, 1);
     });
     builder.addCase(loginUser.fulfilled, (state, action) => ({
       data: action.payload.user,

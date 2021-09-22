@@ -9,9 +9,9 @@ import './MovieView.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
-const MovieView = ({ match: { params: { movieID } } }) => {
+const MovieView = ({ match: { params: { movieId } } }) => {
   const movies = useSelector((state) => state.movies);
-  const movie = movies.find((m) => m._id === movieID);
+  const movie = movies.find((m) => m._id === movieId);
 
   return (
     <div className="movie-card d-flex flex-column align-items-center">
@@ -35,7 +35,7 @@ const MovieView = ({ match: { params: { movieID } } }) => {
 MovieView.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      movieID: PropTypes.string.isRequired,
+      movieId: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
 };

@@ -24,7 +24,7 @@ const Routes = () => {
       <Route exact path="/register" component={RegistrationView} />
       {!isLoggedIn && <Redirect from="*" to="/login" />}
       <Route exact path="/" component={HomeView} />
-      <Route exact path="/movies/:movieID" component={MovieView} />
+      <Route exact path="/movies/:movieId" component={MovieView} />
       <Route exact path="/genres/:genreName" component={GenreView} />
       <Route exact path="/directors/:directorName" component={DirectorView} />
       <Route exact path="/profile" component={ProfileView} />

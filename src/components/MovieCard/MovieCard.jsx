@@ -17,14 +17,14 @@ const MovieCard = ({ movie }) => {
   const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
 
-  const addToFavorites = (e, movieID) => {
+  const addToFavorites = (e, movieId) => {
     e.preventDefault();
-    dispatch(addMovieToFavorites(movieID));
+    dispatch(addMovieToFavorites(movieId));
   };
 
-  const removeFromFavorites = (e, movieID) => {
+  const removeFromFavorites = (e, movieId) => {
     e.preventDefault();
-    dispatch(removeMovieFromFavorites(movieID));
+    dispatch(removeMovieFromFavorites(movieId));
   };
 
   return (
