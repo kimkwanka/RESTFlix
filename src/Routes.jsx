@@ -16,18 +16,24 @@ const Routes = () => {
   // Redirect /login and /register to / if logged in.
   // Redirect all routes to /login (except /login and /register) when not logged in.
 
+  const areMoviesLoaded = useSelector((state) => state.movies.length > 0);
+  // Redirect Movie, Genre and DirectorView to / when movies haven't been fetched yet.
+
   return (
     <Switch>
       {isLoggedIn && <Redirect from="/login" to="/" />}
-      <Route exact path="/login" component={LoginView} />
       {isLoggedIn && <Redirect from="/register" to="/" />}
+      <Route exact path="/login" component={LoginView} />
       <Route exact path="/register" component={RegistrationView} />
+
       {!isLoggedIn && <Redirect from="*" to="/login" />}
       <Route exact path="/" component={HomeView} />
+      <Route exact path="/profile" component={ProfileView} />
+
+      {!areMoviesLoaded && <Redirect from="*" to="/" />}
       <Route exact path="/movies/:movieId" component={MovieView} />
       <Route exact path="/genres/:genreName" component={GenreView} />
       <Route exact path="/directors/:directorName" component={DirectorView} />
-      <Route exact path="/profile" component={ProfileView} />
     </Switch>
   );
 };
