@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import './GenreView.scss';
 
 const selectGenreByName = ((state, genreName) => {
-  const movieWithGenre = state.movies.find((movie) => movie.Genre.Name === genreName);
-  return movieWithGenre.Genre;
+  const movieWithGenre = state.movies.find((movie) => movie.genre.name === genreName);
+  return movieWithGenre.genre;
 });
 
 const GenreView = ({ match: { params: { genreName } } }) => {
@@ -16,8 +16,8 @@ const GenreView = ({ match: { params: { genreName } } }) => {
   return (
     <div className="d-flex flex-column align-items-center">
       <div className="card-Body">
-        <div className="card-Title">{genre.Name}</div>
-        <div className="card-text">{genre.Description}</div>
+        <div className="card-Title">{genre.name}</div>
+        <div className="card-text">{genre.description}</div>
       </div>
     </div>
   );

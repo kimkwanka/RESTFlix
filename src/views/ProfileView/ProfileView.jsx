@@ -13,7 +13,7 @@ import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
 const ProfileView = () => {
   const currentUserData = useSelector((state) => state.user.data);
   const {
-    Username, Email, Birthday, FavoriteMovies,
+    username, email, birthday, favoriteMovies,
   } = currentUserData;
 
   const {
@@ -37,7 +37,7 @@ const ProfileView = () => {
           <input
             id="formUsername"
             type="text"
-            defaultValue={Username}
+            defaultValue={username}
             onChange={(e) => setUsername(e.target.value)}
             minLength="5"
             pattern="^[a-zA-Z0-9]+$"
@@ -57,7 +57,7 @@ const ProfileView = () => {
           <input
             id="formEmail"
             type="email"
-            defaultValue={Email}
+            defaultValue={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
@@ -66,7 +66,7 @@ const ProfileView = () => {
           <input
             id="formBirthday"
             type="date"
-            defaultValue={formatDate(Birthday)}
+            defaultValue={formatDate(birthday)}
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
@@ -89,7 +89,7 @@ const ProfileView = () => {
         </button>
         <ErrorMessages errorType="profileErrors" />
       </form>
-      {FavoriteMovies.length > 0 ? (
+      {favoriteMovies.length > 0 ? (
         <>
           <h2>Favorite Movies</h2>
           <FavoriteMovieList />

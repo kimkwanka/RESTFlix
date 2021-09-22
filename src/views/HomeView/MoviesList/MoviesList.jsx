@@ -20,7 +20,7 @@ const MovieList = () => {
 
   const searchTerm = useSelector((state) => state.ui.searchTerm);
   const movies = useSelector((state) => state.movies);
-  const favoriteMovies = useSelector((state) => state.user.data.FavoriteMovies);
+  const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
 
   const filteredMovies = searchTerm !== ''
     ? movies.filter((movie) => movie.Title.toLowerCase().includes(searchTerm.toLowerCase()))

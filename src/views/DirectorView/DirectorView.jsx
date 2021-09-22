@@ -6,8 +6,8 @@ import { useSelector } from 'react-redux';
 import './DirectorView.scss';
 
 const selectDirectorByName = ((state, directorName) => {
-  const movieWithDirector = state.movies.find((movie) => movie.Director.Name === directorName);
-  return movieWithDirector.Director;
+  const movieWithDirector = state.movies.find((movie) => movie.director.name === directorName);
+  return movieWithDirector.director;
 });
 
 const DirectorView = ({ match: { params: { directorName } } }) => {
@@ -16,10 +16,10 @@ const DirectorView = ({ match: { params: { directorName } } }) => {
   return (
     <div className="d-flex flex-column align-items-center">
       <div className="card-Body">
-        <div className="card-Title">{director.Name}</div>
-        <div className="card-Text">{`Year of Birth: ${director.Birth}`}</div>
-        {director.Death !== '' ? <div className="card-Text">{`Year of Death: ${director.Death}`}</div> : null}
-        <div className="card-Text">{director.Bio}</div>
+        <div className="card-Title">{director.name}</div>
+        <div className="card-Text">{`Year of Birth: ${director.birth}`}</div>
+        {director.Death && <div className="card-Text">{`Year of Death: ${director.death}`}</div>}
+        <div className="card-Text">{director.bio}</div>
       </div>
     </div>
   );

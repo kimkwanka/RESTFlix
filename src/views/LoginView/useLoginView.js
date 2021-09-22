@@ -16,7 +16,7 @@ const useLoginView = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [username, setUsername] = useState('NewTestUser3');
+  const [username, setUsername] = useState('FlyingBanana');
   const [password, setPassword] = useState('test123');
 
   const loginFormRef = useRef();

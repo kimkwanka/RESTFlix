@@ -18,17 +18,17 @@ const useProfileView = () => {
 
   const [newUserData, setNewUserData] = useState({
     ...currentUserData,
-    Password: '',
+    password: '',
   });
   const [dataHasChanged, setDataHasChanged] = useState(false);
 
   const updateChangedStatus = () => {
     setDataHasChanged(
-      newUserData.Username !== currentUserData.Username
-        || newUserData.Password !== ''
-        || newUserData.Email !== currentUserData.Email
-        || formatDate(newUserData.Birthday)
-          !== formatDate(currentUserData.Birthday),
+      newUserData.username !== currentUserData.username
+        || newUserData.password !== ''
+        || newUserData.email !== currentUserData.email
+        || formatDate(newUserData.birthday)
+          !== formatDate(currentUserData.birthday),
     );
   };
 
@@ -36,10 +36,10 @@ const useProfileView = () => {
     setNewUserData({ ...newUserData, [key]: value });
   };
 
-  const setUsername = (newUsername) => updateNewUserData('Username', newUsername);
-  const setPassword = (newPassword) => updateNewUserData('Password', newPassword);
-  const setEmail = (newEmail) => updateNewUserData('Email', newEmail);
-  const setBirthday = (newBirthday) => updateNewUserData('Birthday', newBirthday);
+  const setUsername = (newUsername) => updateNewUserData('username', newUsername);
+  const setPassword = (newPassword) => updateNewUserData('password', newPassword);
+  const setEmail = (newEmail) => updateNewUserData('email', newEmail);
+  const setBirthday = (newBirthday) => updateNewUserData('birthday', newBirthday);
 
   const updateFormRef = useRef();
 

@@ -15,18 +15,18 @@ const MovieView = ({ match: { params: { movieID } } }) => {
 
   return (
     <div className="movie-card d-flex flex-column align-items-center">
-      <img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.ImagePath}`} alt={movie.Title} />
+      <img crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
       <div className="card-body">
-        <div className="card-title">{movie.Title}</div>
+        <div className="card-title">{movie.title}</div>
         <p>
           Genre:&nbsp;
-          <Link to={`/genres/${movie.Genre.Name}`}>{movie.Genre.Name}</Link>
+          <Link to={`/genres/${movie.genre.name}`}>{movie.genre.name}</Link>
         </p>
         <p>
           Director:&nbsp;
-          <Link to={`/directors/${movie.Director.Name}`}>{movie.Director.Name}</Link>
+          <Link to={`/directors/${movie.director.name}`}>{movie.director.name}</Link>
         </p>
-        <div className="card-text">{movie.Description}</div>
+        <div className="card-text">{movie.description}</div>
       </div>
     </div>
   );

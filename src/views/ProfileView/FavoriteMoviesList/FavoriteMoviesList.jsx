@@ -9,7 +9,7 @@ import MovieCard from '../../../components/MovieCard/MovieCard';
 
 import './FavoriteMoviesList.scss';
 
-const FavoriteMoviesList = () => {
+const favoriteMoviesList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const FavoriteMoviesList = () => {
   }, []);
 
   const movies = useSelector((state) => state.movies);
-  const favoriteMovieIDs = useSelector((state) => state.user.data.FavoriteMovies);
+  const favoriteMovieIDs = useSelector((state) => state.user.data.favoriteMovies);
   const favoriteMoviesArray = [];
 
   if (movies.length > 0) {
@@ -41,4 +41,4 @@ const FavoriteMoviesList = () => {
   );
 };
 
-export default FavoriteMoviesList;
+export default favoriteMoviesList;

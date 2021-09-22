@@ -12,20 +12,20 @@ const RegistrationView = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const [newUserData, setnewUserData] = useState({
-    Username: '',
-    Password: '',
-    Email: '',
-    Birthday: '',
+  const [newUserData, setNewUserData] = useState({
+    username: '',
+    password: '',
+    email: '',
+    birthday: null,
   });
 
-  const setUsername = (Username) => setnewUserData({ ...newUserData, Username });
-  const setPassword = (Password) => setnewUserData({ ...newUserData, Password });
-  const setEmail = (Email) => setnewUserData({ ...newUserData, Email });
-  const setBirthday = (Birthday) => setnewUserData({ ...newUserData, Birthday });
+  const setUsername = (username) => setNewUserData({ ...newUserData, username });
+  const setPassword = (password) => setNewUserData({ ...newUserData, password });
+  const setEmail = (email) => setNewUserData({ ...newUserData, email });
+  const setBirthday = (birthday) => setNewUserData({ ...newUserData, birthday });
 
   const {
-    Username, Password, Email, Birthday,
+    username, password, email, birthday,
   } = newUserData;
 
   const registerFormRef = useRef();
@@ -48,10 +48,10 @@ const RegistrationView = () => {
   };
 
   return {
-    Username,
-    Password,
-    Email,
-    Birthday,
+    username,
+    password,
+    email,
+    birthday,
     handleSubmit,
     setUsername,
     setPassword,

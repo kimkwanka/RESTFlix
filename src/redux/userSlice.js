@@ -9,7 +9,7 @@ export const loginUser = createAsyncThunk(
   'user/loginUser',
   async ({ username, password }, thunkAPI) => thunkFetch({
     thunkAPI,
-    url: `${API_URL}/login?Username=${username}&Password=${password}`,
+    url: `${API_URL}/login?username=${username}&password=${password}`,
     method: 'POST',
     useAuth: false,
   }),
@@ -95,13 +95,13 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(addMovieToFavorites.fulfilled, (state, action) => {
-      state.data.FavoriteMovies.push(action.meta.arg);
+      state.data.favoriteMovies.push(action.meta.arg);
     });
     builder.addCase(removeMovieFromFavorites.fulfilled, (state, action) => {
-      const indexOfMovieIDToRemove = state.data.FavoriteMovies.indexOf(
+      const indexOfMovieIDToRemove = state.data.favoriteMovies.indexOf(
         action.meta.arg,
       );
-      state.data.FavoriteMovies.splice(indexOfMovieIDToRemove, 1);
+      state.data.favoriteMovies.splice(indexOfMovieIDToRemove, 1);
     });
     builder.addCase(loginUser.fulfilled, (state, action) => ({
       data: action.payload.user,

@@ -10,10 +10,10 @@ import './RegistrationView.scss';
 
 const RegistrationView = () => {
   const {
-    Username,
-    Password,
-    Email,
-    Birthday,
+    username,
+    password,
+    email,
+    birthday,
     handleSubmit,
     setUsername,
     setPassword,
@@ -33,7 +33,7 @@ const RegistrationView = () => {
           <input
             id="formUsername"
             type="text"
-            defaultValue={Username}
+            defaultValue={username}
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength="5"
@@ -45,7 +45,7 @@ const RegistrationView = () => {
           <input
             id="formPassword"
             type="password"
-            defaultValue={Password}
+            defaultValue={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
@@ -55,7 +55,7 @@ const RegistrationView = () => {
           <input
             id="formEmail"
             type="email"
-            defaultValue={Email}
+            defaultValue={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -65,7 +65,7 @@ const RegistrationView = () => {
           <input
             id="formBirthday"
             type="date"
-            defaultValue={Birthday}
+            defaultValue={birthday}
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
