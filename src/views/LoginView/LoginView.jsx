@@ -47,7 +47,7 @@ const LoginView = () => {
           />
         </label>
         <button type="submit" variant="primary" onClick={handleSubmit}>
-          Sign In &#x25ba;
+          Sign In
         </button>
         <ErrorMessages errorType="loginErrors" />
       </form>
