@@ -4,7 +4,8 @@
 }
 
 .movie-card {
-  margin-bottom: var(--s2);
+  background: var(--mutedBlack);
+  border-radius: var(--s1);
   position: relative;
 }
 
@@ -13,11 +14,16 @@
 }
 
 .movie-card__img {
-  border-radius: var(--s1);
+  border-radius: var(--s1) var(--s1) 0 0;
   height: 196px;
   object-fit: cover;
   object-position: 0 10%;
   width: 100%;
+}
+
+.movie-card__body {
+  margin-top: var(--s1);
+  padding: var(--s1)
 }
 
 .movie-card__title {
@@ -26,9 +32,10 @@
 }
 
 .movie-card__genre {
+  color: var(--mutedText);
   font-size: 14px;
   font-weight: normal;
-  color: var(--mutedText);
+  margin-top: var(--s1);
 }
 
 .movie-card__favorite-star {
