@@ -14,9 +14,11 @@ const App = () => (
     <header>
       <NavBar />
     </header>
-    <main className="container">
-      <LoadingSpinner />
-      <Routes />
+    <main>
+      <div className="container">
+        <LoadingSpinner />
+        <Routes />
+      </div>
     </main>
   </>
 );
