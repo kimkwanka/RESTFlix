@@ -10,6 +10,8 @@ import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
 
+import './ProfileView.scss';
+
 const ProfileView = () => {
   const currentUserData = useSelector((state) => state.user.data);
   const {
@@ -29,9 +31,9 @@ const ProfileView = () => {
   } = useProfileView();
 
   return (
-    <div className="profile-view w-100">
-      <h2>Profile</h2>
-      <form className="d-flex flex-column mb-5 w-100" ref={updateFormRef}>
+    <div className="profile-view">
+      <h1>Profile</h1>
+      <form className="profile-view__form" ref={updateFormRef}>
         <label htmlFor="formUsername">
           Username:
           <input
@@ -70,23 +72,23 @@ const ProfileView = () => {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
-        <button
-          disabled={!dataHasChanged}
-          className="align-self-center w-auto mt-5"
-          type="submit"
-          variant="primary"
-          onClick={handleSubmit}
-        >
-          Update Profile
-        </button>
-        <button
-          className="align-self-end w-auto mt-5"
-          type="submit"
-          variant="danger"
-          onClick={handleDelete}
-        >
-          DELETE Profile
-        </button>
+        <div className="profile-view__button-wrapper">
+          <button
+            disabled={!dataHasChanged}
+            className="profile-view__update-button"
+            type="submit"
+            onClick={handleSubmit}
+          >
+            &#x21bb; Update Profile
+          </button>
+          <button
+            className="profile-view__delete-button"
+            type="submit"
+            onClick={handleDelete}
+          >
+            &#10006; Delete Profile
+          </button>
+        </div>
         <ErrorMessages errorType="profileErrors" />
       </form>
       {favoriteMovies.length > 0 ? (

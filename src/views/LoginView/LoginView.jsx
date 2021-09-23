@@ -7,8 +7,6 @@ import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import useLoginView from './useLoginView';
 
-import './LoginView.scss';
-
 const LoginView = () => {
   const {
     username,
@@ -20,9 +18,10 @@ const LoginView = () => {
   } = useLoginView();
 
   return (
-    <>
+    <div className="login-view">
+      <h1 className="login-view__heading">Sign In</h1>
       <form
-        className="d-flex flex-column align-items-center"
+        className="login-view__form"
         ref={loginFormRef}
       >
         <label htmlFor="formUsername">
@@ -48,7 +47,7 @@ const LoginView = () => {
           />
         </label>
         <button type="submit" variant="primary" onClick={handleSubmit}>
-          Login
+          Sign In &#x25ba;
         </button>
         <ErrorMessages errorType="loginErrors" />
       </form>
@@ -56,7 +55,7 @@ const LoginView = () => {
         Don’t have an account?&nbsp;
         <Link to="/register">Sign up</Link>
       </p>
-    </>
+    </div>
   );
 };
 

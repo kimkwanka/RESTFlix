@@ -3,11 +3,15 @@
   --contentMaxWidth: 1280px;
   --textCol: #fff;
   --linkCol: #fff;
+  --textColDisabled: rgba(255, 255, 255, 0.4);
   --mutedText: rgba(255, 255, 255, 0.7);
   --mutedBlack: rgba(0,0,0,0.1);
   --primaryCol: #00D1FF;
+  --disabledCol: #43687c;
   --gradientCol1: #1c709d;
   --gradientCol2: #761d7d;
+  --buttonGradientCol1: #F97565;
+  --buttonGradientCol2: #EB4985;
   --s1: 8px;
   --s2: 16px;
   --s3: 24px;
@@ -47,17 +51,92 @@ main {
   display: flex;
   flex: 1;
   flex-direction: column;
-  justify-content: center;
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
   width: 100%;
 }
 
-a {
+a:not([class]) {
   color: var(--primaryCol);
   text-decoration: none;
-  
   &:hover {
-    text-decoration: underline;
+    color: var(--buttonGradientCol1);
   }
+}
+
+input {
+  background: var(--mutedBlack);
+  border: 1px solid transparent;
+  border-radius: var(--s1);
+  caret-color: var(--mutedText);
+  color: var(--textCol);
+  margin-bottom: var(--s2);
+  margin-top: var(--s1);
+  padding: var(--s1) var(--s3);
+  outline: none;
+
+  &:focus {
+    border: 1px solid var(--primaryCol);
+  }
+}
+
+// https://stackoverflow.com/questions/61083813/how-to-avoid-internal-autofill-selected-style-to-be-applied
+input:-webkit-autofill,
+input:-webkit-autofill:focus {
+  transition: background-color 600000s 0s, color 600000s 0s;
+}
+
+::-webkit-calendar-picker-indicator {
+  filter: invert(1);
+}
+
+input::placeholder {
+  color: var(--mutedText);
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+}
+
+button, .button {
+  background: linear-gradient(135deg, var(--buttonGradientCol1) 0%,var(--buttonGradientCol2 ) 100%);
+  border: none;
+  border-radius: var(--s1);
+  color: var(--textCol);
+  cursor: pointer;
+  font-weight: bold !important;
+  padding: var(--s1) var(--s3);
+  outline: none;
+
+  &:hover {
+    background: var(--primaryCol)
+  }
+
+  &:disabled {
+    background: var(--disabledCol);
+    color: var(--textColDisabled);
+    cursor: default;
+  }
+}
+
+.login-view,
+.register-view {
+  align-self: center;
+  border-radius: var(--s1);
+  background: var(--mutedBlack);
+  margin: auto 0;
+  padding: var(--s4);
+
+  button {
+    margin: var(--s3) 0;
+    width: 100%;
+  }
+}
+
+.login-view__heading,
+.register-view__heading {
+  margin-bottom: var(--s4);
 }

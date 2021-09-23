@@ -1,5 +1,4 @@
 .movie-card__wrapper-link {
-  text-decoration: none;
   color: inherit;
 }
 
@@ -13,7 +12,7 @@
 }
 
 .movie-card__img {
-  border-radius: 8px;
+  border-radius: var(--s1);
   height: 196px;
   object-fit: cover;
   object-position: 0 10%;

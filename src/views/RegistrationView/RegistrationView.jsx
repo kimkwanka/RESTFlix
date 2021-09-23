@@ -6,8 +6,6 @@ import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
 import useRegistrationView from './useRegistrationView';
 
-import './RegistrationView.scss';
-
 const RegistrationView = () => {
   const {
     username,
@@ -23,7 +21,8 @@ const RegistrationView = () => {
   } = useRegistrationView();
 
   return (
-    <>
+    <div className="register-view">
+      <h1 className="register-view__heading">Sign Up</h1>
       <form
         className="d-flex flex-column align-items-center"
         ref={registerFormRef}
@@ -70,7 +69,7 @@ const RegistrationView = () => {
           />
         </label>
         <button type="submit" variant="primary" onClick={handleSubmit}>
-          Register
+          Sign Up
         </button>
         <ErrorMessages errorType="registerErrors" />
       </form>
@@ -78,7 +77,7 @@ const RegistrationView = () => {
         Already have an account?&nbsp;
         <Link to="/login">Sign in</Link>
       </p>
-    </>
+    </div>
   );
 };
 

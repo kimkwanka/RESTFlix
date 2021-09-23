@@ -6,8 +6,6 @@ import { useDispatch } from 'react-redux';
 
 import { registerUser } from '../../redux';
 
-import './RegistrationView.scss';
-
 const RegistrationView = () => {
   const history = useHistory();
   const dispatch = useDispatch();

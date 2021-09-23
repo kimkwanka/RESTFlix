@@ -13,7 +13,7 @@ const ErrorMessages = ({ errorType }) => {
     <div className="m-4">
       <div>
         {errorMessages.map((e, i) => (
-          <p className="errorText" key={`err${i}`}>
+          <p className="error-text" key={`err${i}`}>
             {e}
           </p>
         ))}

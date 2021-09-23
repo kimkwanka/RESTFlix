@@ -28,20 +28,37 @@ const NavBar = () => {
       </h1>
       {isLoggedIn && (
         <>
-        <SearchBar />
-        <ul>
-          <li>
-            <NavLink className="navbar__link" activeClassName="navbar__link--active" to="/" exact>Home</NavLink>
-          </li>
-          <li>
-            <NavLink className="navbar__link" activeClassName="navbar__link--active" to="/profile">Profile</NavLink>
-          </li>
-          <li>
-            <a className="navbar__link" href="/logout" onClick={handleLogoutClick}>
-              Logout
-            </a>
-          </li>
-        </ul>
+          <SearchBar />
+          <ul>
+            <li>
+              <NavLink
+                className="navbar__link"
+                activeClassName="navbar__link--active"
+                to="/"
+                exact
+              >
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="navbar__link"
+                activeClassName="navbar__link--active"
+                to="/profile"
+              >
+                Profile
+              </NavLink>
+            </li>
+            <li>
+              <a
+                className="button logout-button"
+                href="/logout"
+                onClick={handleLogoutClick}
+              >
+                &#x23FB; Logout
+              </a>
+            </li>
+          </ul>
         </>
       )}
     </nav>

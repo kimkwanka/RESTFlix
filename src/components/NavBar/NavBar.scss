@@ -4,8 +4,8 @@
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
   justify-content: space-between;
-  padding: var(--s1) var(--s3);
-
+  padding: var(--s2) var(--s3);
+  flex-wrap: wrap;
   ul {
     list-style-type: none;
     padding: 0;
@@ -26,6 +26,7 @@
 
   &:hover {
     color: var(--primaryCol);
+    text-decoration: none;
   }
 }
 
@@ -34,10 +35,14 @@
 }
 
 .logo {
-  flex: 1;
   font-size: 36px;
 
   span {
     color: var(--primaryCol);
   }
+}
+
+a.button.logout-button {
+  margin-left: var(--s5);
+  text-decoration: none;
 }

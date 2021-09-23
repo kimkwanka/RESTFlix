@@ -1,0 +1,32 @@
+.profile-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: var(--s3);
+  width: 100%;
+}
+
+.profile-view__form {
+  position: relative;
+  border-radius: var(--s1);
+  background: var(--mutedBlack);
+  padding: var(--s4);
+  margin: var(--s3) 0 var(--s6) 0;
+}
+
+.profile-view__button-wrapper {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  margin-top: var(--s3);
+}
+
+.profile-view__delete-button {
+  color: var(--primaryCol);
+  background: var(--mutedBlack);
+
+  &:hover {
+    color: white;
+    background: red;
+  }
+}

@@ -6,8 +6,6 @@ import { useDispatch } from 'react-redux';
 
 import { loginUser } from '../../redux';
 
-import './LoginView.scss';
-
 const saveToLocalStorage = (user) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
