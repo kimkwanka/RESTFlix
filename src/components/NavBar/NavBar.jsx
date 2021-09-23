@@ -27,13 +27,13 @@ const NavBar = () => {
       {isLoggedIn && (
         <ul>
           <li>
-            <NavLink className="navbar-link" activeClassName="navbar-link__active" to="/" exact>Home</NavLink>
+            <NavLink className="navbar__link" activeClassName="navbar__link--active" to="/" exact>Home</NavLink>
           </li>
           <li>
-            <NavLink className="navbar-link" activeClassName="navbar-link__active" to="/profile">Profile</NavLink>
+            <NavLink className="navbar__link" activeClassName="navbar__link--active" to="/profile">Profile</NavLink>
           </li>
           <li>
-            <a className="navbar-link" href="/logout" onClick={handleLogoutClick}>
+            <a className="navbar__link" href="/logout" onClick={handleLogoutClick}>
               Logout
             </a>
           </li>

@@ -13,7 +13,7 @@
   }
 }
 
-.navbar-link {
+.navbar__link {
   color: var(--linkCol);
   font-size: 20px;
   font-weight: bold;
@@ -25,7 +25,7 @@
   }
 }
 
-.navbar-link__active {
+.navbar__link--active {
   box-shadow: 0 2px var(--primaryCol);
 }
 
