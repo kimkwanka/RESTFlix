@@ -5,13 +5,19 @@ import NavBar from './components/NavBar/NavBar';
 
 import Routes from './Routes';
 
+import 'modern-css-reset';
+
+import './App.scss';
+
 const App = () => (
   <>
     <header>
       <NavBar />
     </header>
-    <LoadingSpinner />
-    <Routes />
+    <main className="container">
+      <LoadingSpinner />
+      <Routes />
+    </main>
   </>
 );
 

@@ -1,0 +1,38 @@
+.navbar {
+  display: flex;
+  margin: 0 auto;
+  max-width: var(--contentMaxWidth);
+  justify-content: space-between;
+
+  ul {
+    list-style-type: none;
+  }
+
+  li {
+    display: inline;
+  }
+}
+
+.navbar-link {
+  color: var(--linkCol);
+  font-size: 20px;
+  font-weight: bold;
+  margin-left: var(--s3);
+  text-decoration: none;
+
+  &:hover {
+    color: var(--primaryCol);
+  }
+}
+
+.navbar-link__active {
+  box-shadow: 0 2px var(--primaryCol);
+}
+
+.logo {
+  font-size: 36px;
+
+  span {
+    color: var(--primaryCol);
+  }
+}

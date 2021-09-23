@@ -1,0 +1,41 @@
+// Use CSS variables instead of SCSS variables so we can use them in other files without the need to export/import
+:root {
+  --contentMaxWidth: 1280px;
+  --textCol: #fff;
+  --linkCol: #fff;
+  --primaryCol: #00D1FF;
+  --gradientCol1: #1c709d;
+  --gradientCol2: #761d7d;
+  --s1: 8px;
+  --s2: 16px;
+  --s3: 24px;
+  --s4: 32px;
+  --s5: 48px;
+  --s6: 64px;
+}
+
+// System font stack
+* {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji",
+    "Segoe UI Symbol";
+}
+
+body {
+  background: linear-gradient(111.34deg, var(--gradientCol1) 0%,var(--gradientCol2) 100%);
+  color: var(--textCol);
+}
+
+#root {
+  min-height: 100vh;
+}
+
+main {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  max-width: var(--contentMaxWidth);
+  min-height: 100vh;
+}

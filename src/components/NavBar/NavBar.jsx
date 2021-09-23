@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { logoutUser } from '../../redux';
 
@@ -13,23 +13,33 @@ const NavBar = () => {
 
   const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
 
+  const handleLogoutClick = (e) => {
+    e.preventDefault();
+    dispatch(logoutUser());
+  };
+
   return (
-    isLoggedIn ? (
-      <nav>
-        <h1 className="logo">myFlix</h1>
+    <nav className="navbar">
+      <h1 className="logo">
+        <span>my</span>
+        Flix
+      </h1>
+      {isLoggedIn && (
         <ul>
           <li>
-            <Link to="/">Home</Link>
+            <NavLink className="navbar-link" activeClassName="navbar-link__active" to="/" exact>Home</NavLink>
           </li>
           <li>
-            <Link to="/profile">Profile</Link>
+            <NavLink className="navbar-link" activeClassName="navbar-link__active" to="/profile">Profile</NavLink>
           </li>
           <li>
-            <a href="/logout" onClick={() => dispatch(logoutUser())}>Logout</a>
+            <a className="navbar-link" href="/logout" onClick={handleLogoutClick}>
+              Logout
+            </a>
           </li>
         </ul>
-      </nav>
-    ) : null
+      )}
+    </nav>
   );
 };
 
