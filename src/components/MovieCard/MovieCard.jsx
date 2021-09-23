@@ -30,7 +30,7 @@ const MovieCard = ({ movie }) => {
   return (
     <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
       <div className="movie-card">
-        {isFavorite ? <span className="movie-card__favorite-star">★</span> : null}
+        {isFavorite ? <span className="movie-card__favorite-star">&#9733;</span> : null}
         <img className="movie-card__img" crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
         {/* {!isFavorite
           ? <button type="button" className="movie-card__fav-btn" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
