@@ -64,16 +64,25 @@ a:not([class]) {
   }
 }
 
+label {
+  display: flex;
+  flex-direction: column;
+  font-weight: bold;
+  margin: 0;
+  padding: 0;
+}
+
 input {
   background: var(--mutedBlack);
   border: 1px solid transparent;
   border-radius: var(--s1);
   caret-color: var(--mutedText);
   color: var(--textCol);
+  font-weight: normal;
   margin-bottom: var(--s2);
   margin-top: var(--s1);
-  padding: var(--s1) var(--s3);
   outline: none;
+  padding: var(--s1) var(--s3);
 
   &:focus {
     border: 1px solid var(--primaryCol);
@@ -94,13 +103,6 @@ input::placeholder {
   color: var(--mutedText);
 }
 
-label {
-  display: flex;
-  flex-direction: column;
-  margin: 0;
-  padding: 0;
-}
-
 button, .button {
   background: linear-gradient(135deg, var(--buttonGradientCol1) 0%,var(--buttonGradientCol2 ) 100%);
   border: none;
@@ -108,8 +110,8 @@ button, .button {
   color: var(--textCol);
   cursor: pointer;
   font-weight: bold !important;
-  padding: var(--s1) var(--s3);
   outline: none;
+  padding: var(--s1) var(--s3);
 
   &:hover {
     background: var(--primaryCol)
@@ -131,8 +133,12 @@ button, .button {
   padding: var(--s4);
 
   button {
-    margin: var(--s3) 0;
+    margin: var(--s4) 0;
     width: 100%;
+  }
+
+  p{
+    text-align: center;
   }
 }
 
