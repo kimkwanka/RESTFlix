@@ -31,11 +31,9 @@ const favoriteMoviesList = () => {
   }
 
   return (
-    <div>
-      {favoriteMoviesArray.map((movie, i) => (
-        <div className="mb-4" md={4} key={i}>
-          <MovieCard key={movie._id} movie={movie} isFavorite />
-        </div>
+    <div className="fav-movies-list">
+      {favoriteMoviesArray.map((movie) => (
+        <MovieCard key={movie._id} movie={movie} isFavorite />
       ))}
     </div>
   );

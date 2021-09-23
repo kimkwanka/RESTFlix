@@ -28,16 +28,16 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <Link className="movie-card h-100" to={`movies/${movie._id}`}>
-      <div className="h-100 position-relative">
-        {isFavorite ? <span className="favorite-star">★</span> : null}
-        <img className="card-img" crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
-        {!isFavorite
-          ? <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
-          : <button type="button" className="fav-btn align-self-end m-2 px-3 w-auto" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>}
-        <div className="card-body">
-          <div className="card-title">{movie.title}</div>
-          <div className="card-text">{movie.description}</div>
+    <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
+      <div className="movie-card">
+        {isFavorite ? <span className="movie-card__favorite-star">★</span> : null}
+        <img className="movie-card__img" crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
+        {/* {!isFavorite
+          ? <button type="button" className="movie-card__fav-btn" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
+          : <button type="button" className="movie-card__fav-btn" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>} */}
+        <div className="movie-card__body">
+          <div className="movie-card__title">{movie.title}</div>
+          <div className="movie-card__genre">{movie.genre.name}</div>
         </div>
       </div>
     </Link>
@@ -50,6 +50,9 @@ MovieCard.propTypes = {
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     imageUrl: PropTypes.string.isRequired,
+    genre: PropTypes.shape({
+      name: PropTypes.string.isRequired,
+    }),
   }).isRequired,
 };
 

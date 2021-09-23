@@ -31,15 +31,15 @@ const MovieList = () => {
       <div md={12} style={{ margin: '1em' }}>
         <SearchBar searchTerm={searchTerm} />
       </div>
-      {filteredMovies.map((movie, i) => (
-        <div className="mb-4" md={4} key={i}>
+      <div className="movies-list">
+        {filteredMovies.map((movie) => (
           <MovieCard
             key={movie._id}
             movie={movie}
             isFavorite={favoriteMovies.indexOf(movie._id) !== -1}
           />
-        </div>
-      ))}
+        ))}
+      </div>
     </>
   );
 };
