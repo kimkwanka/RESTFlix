@@ -31,10 +31,10 @@ const MovieCard = ({ movie }) => {
     <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
       <div className="movie-card">
         {isFavorite ? <span className="movie-card__favorite-star">&#9733;</span> : null}
-        <img className="movie-card__img" crossOrigin="anonymous" variant="top" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
+        <img className="movie-card__img" crossOrigin="anonymous" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
         {/* {!isFavorite
-          ? <button type="button" className="movie-card__fav-btn" variant="success" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
-          : <button type="button" className="movie-card__fav-btn" variant="outline-danger" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>} */}
+          ? <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
+          : <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>} */}
         <div className="movie-card__body">
           <div className="movie-card__title">{movie.title}</div>
           <div className="movie-card__genre">{movie.genre.name}</div>
