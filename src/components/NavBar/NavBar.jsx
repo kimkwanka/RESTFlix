@@ -6,6 +6,8 @@ import { NavLink } from 'react-router-dom';
 
 import { logoutUser } from '../../redux';
 
+import SearchBar from './SearchBar/SearchBar';
+
 import './NavBar.scss';
 
 const NavBar = () => {
@@ -25,6 +27,8 @@ const NavBar = () => {
         Flix
       </h1>
       {isLoggedIn && (
+        <>
+        <SearchBar />
         <ul>
           <li>
             <NavLink className="navbar__link" activeClassName="navbar__link--active" to="/" exact>Home</NavLink>
@@ -38,6 +42,7 @@ const NavBar = () => {
             </a>
           </li>
         </ul>
+        </>
       )}
     </nav>
   );

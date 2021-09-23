@@ -3,6 +3,8 @@
   --contentMaxWidth: 1280px;
   --textCol: #fff;
   --linkCol: #fff;
+  --mutedText: rgba(255, 255, 255, 0.7);
+  --mutedBlack: rgba(0,0,0,0.1);
   --primaryCol: #00D1FF;
   --gradientCol1: #1c709d;
   --gradientCol2: #761d7d;
@@ -33,7 +35,7 @@ body {
 }
 
 main {
-  background: rgba(0,0,0,0.1);
+  background: var(--mutedBlack);
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -41,7 +43,7 @@ main {
 
 .container {
   align-items: center;
-  background: rgba(0,0,0,0.1);
+  background: var(--mutedBlack);
   display: flex;
   flex: 1;
   flex-direction: column;

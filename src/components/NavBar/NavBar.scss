@@ -1,4 +1,5 @@
 .navbar {
+  align-items: center;
   display: flex;
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
@@ -7,6 +8,8 @@
 
   ul {
     list-style-type: none;
+    padding: 0;
+    margin: 0;
   }
 
   li {
@@ -27,10 +30,11 @@
 }
 
 .navbar__link--active {
-  box-shadow: 0 2px var(--primaryCol);
+  box-shadow: 0 1px var(--primaryCol);
 }
 
 .logo {
+  flex: 1;
   font-size: 36px;
 
   span {

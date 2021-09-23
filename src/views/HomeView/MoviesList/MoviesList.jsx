@@ -8,7 +8,6 @@ import { fetchMovies } from '../../../redux';
 import './MoviesList.scss';
 
 import MovieCard from '../../../components/MovieCard/MovieCard';
-import SearchBar from './SearchBar/SearchBar';
 
 const MovieList = () => {
   const dispatch = useDispatch();
@@ -23,24 +22,19 @@ const MovieList = () => {
   const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
 
   const filteredMovies = searchTerm !== ''
-    ? movies.filter((movie) => movie.Title.toLowerCase().includes(searchTerm.toLowerCase()))
+    ? movies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase()))
     : movies;
 
   return (
-    <>
-      <div md={12} style={{ margin: '1em' }}>
-        <SearchBar searchTerm={searchTerm} />
-      </div>
-      <div className="movies-list">
-        {filteredMovies.map((movie) => (
-          <MovieCard
-            key={movie._id}
-            movie={movie}
-            isFavorite={favoriteMovies.indexOf(movie._id) !== -1}
-          />
-        ))}
-      </div>
-    </>
+    <div className="movies-list">
+      {filteredMovies.map((movie) => (
+        <MovieCard
+          key={movie._id}
+          movie={movie}
+          isFavorite={favoriteMovies.indexOf(movie._id) !== -1}
+        />
+      ))}
+    </div>
   );
 };
 
