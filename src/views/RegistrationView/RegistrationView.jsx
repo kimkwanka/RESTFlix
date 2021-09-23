@@ -75,8 +75,8 @@ const RegistrationView = () => {
         <ErrorMessages errorType="registerErrors" />
       </form>
       <p>
-        Already have an account?
-        <Link to="/login"> Sign in</Link>
+        Already have an account?&nbsp;
+        <Link to="/login">Sign in</Link>
       </p>
     </>
   );

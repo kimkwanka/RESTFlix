@@ -52,3 +52,12 @@ main {
   max-width: var(--contentMaxWidth);
   width: 100%;
 }
+
+a {
+  color: var(--primaryCol);
+  text-decoration: none;
+  
+  &:hover {
+    text-decoration: underline;
+  }
+}

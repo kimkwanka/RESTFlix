@@ -53,8 +53,8 @@ const LoginView = () => {
         <ErrorMessages errorType="loginErrors" />
       </form>
       <p>
-        Don’t have an account?
-        <Link to="/register"> Sign up</Link>
+        Don’t have an account?&nbsp;
+        <Link to="/register">Sign up</Link>
       </p>
     </>
   );
