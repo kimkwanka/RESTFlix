@@ -18,6 +18,8 @@
   --s4: 32px;
   --s5: 48px;
   --s6: 64px;
+  --transitionSpeed: 0.3s;
+  --transitionTiming: ease-out;
 }
 
 // System font stack
@@ -56,6 +58,9 @@ main {
   width: 100%;
 }
 
+a {
+  transition: all var(--transitionSpeed) var(--transitionTiming);
+}
 a:not([class]) {
   color: var(--primaryCol);
   text-decoration: none;
@@ -83,7 +88,11 @@ input {
   margin-top: var(--s1);
   outline: none;
   padding: var(--s1) var(--s3);
+  transition: border var(--transitionSpeed) var(--transitionTiming);
 
+  &:hover {
+    border: 1px solid var(--secondaryCol);
+  }
   &:focus {
     border: 1px solid var(--primaryCol);
   }
@@ -115,6 +124,7 @@ button, .button {
   font-weight: bold !important;
   outline: none;
   padding: var(--s1) var(--s3);
+  transition: all var(--transitionSpeed) var(--transitionTiming);
 
   &:hover {
     background: var(--primaryCol)
