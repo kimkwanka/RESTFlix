@@ -109,6 +109,9 @@ button, .button {
   border-radius: var(--s1);
   color: var(--textCol);
   cursor: pointer;
+  display: inline-block;
+  font-size: 20px;
+  line-height: 1.6;
   font-weight: bold !important;
   outline: none;
   padding: var(--s1) var(--s3);
