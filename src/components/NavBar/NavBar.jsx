@@ -51,11 +51,11 @@ const NavBar = () => {
             </li>
             <li>
               <a
-                className="button logout-button"
+                className="button clear logout-button"
                 href="/logout"
                 onClick={handleLogoutClick}
               >
-                &#x23FB; Logout
+                &#x23FB; Sign Out
               </a>
             </li>
           </ul>

@@ -20,13 +20,3 @@
   justify-content: space-between;
   margin-top: var(--s3);
 }
-
-.profile-view__delete-button {
-  color: var(--primaryCol);
-  background: var(--mutedBlack);
-
-  &:hover {
-    color: white;
-    background: red;
-  }
-}

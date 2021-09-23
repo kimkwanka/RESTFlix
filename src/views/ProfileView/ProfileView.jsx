@@ -82,7 +82,7 @@ const ProfileView = () => {
             &#x21bb; Update Profile
           </button>
           <button
-            className="profile-view__delete-button"
+            className="profile-view__delete-button clear"
             type="submit"
             onClick={handleDelete}
           >
