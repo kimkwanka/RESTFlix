@@ -55,7 +55,7 @@ const NavBar = () => {
                 href="/logout"
                 onClick={handleLogoutClick}
               >
-                &#x23FB; Sign Out
+                Sign Out
               </a>
             </li>
           </ul>
