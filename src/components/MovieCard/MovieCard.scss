@@ -22,18 +22,28 @@
 }
 
 .movie-card__body {
-  margin-top: var(--s1);
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
   padding: var(--s1)
 }
 
 .movie-card__title {
   font-size: 18px;
   font-weight: bold;
+  padding: var(--s1);
 }
 
 .movie-card__genre {
   color: var(--mutedText);
-  font-size: 14px;
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: var(--s1);
+}
+
+.movie-card__rating {
+  color: orange;
+  font-size: 16px;
   font-weight: normal;
   margin-top: var(--s1);
 }

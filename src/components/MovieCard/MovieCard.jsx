@@ -35,9 +35,11 @@ const MovieCard = ({ movie }) => {
         {/* {!isFavorite
           ? <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
           : <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>} */}
+
+        <div className="movie-card__title">{movie.title}</div>
         <div className="movie-card__body">
-          <div className="movie-card__title">{movie.title}</div>
           <div className="movie-card__genre">{movie.genre.name}</div>
+          <div className="movie-card__rating">&#9733; 6.8</div>
         </div>
       </div>
     </Link>
