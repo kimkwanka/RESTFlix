@@ -157,6 +157,18 @@ button.clear,
   }
 }
 
+button.clear--secondary,
+.button.clear--secondary {
+  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ),  var(--gradientCol1 ), var(--primaryCol ));
+  background-size: 400% 100%;
+  color: var(--mutedText);
+
+  &:hover {
+    color: white;
+    background-position: 100% 0%;
+  }
+}
+
 .login-view,
 .register-view {
   align-self: center;

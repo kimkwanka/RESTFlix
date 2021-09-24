@@ -28,21 +28,64 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
-      <div className="movie-card">
-        {isFavorite ? <span className="movie-card__favorite-star">&#9733;</span> : null}
-        <img className="movie-card__img" crossOrigin="anonymous" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
-        {/* {!isFavorite
-          ? <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => addToFavorites(e, movie._id)}>+ Add favorite</button>
-          : <button type="button" className="movie-card__fav-btn" size="sm" onClick={(e) => removeFromFavorites(e, movie._id)}>- Remove favorite</button>} */}
-
-        <div className="movie-card__title">{movie.title}</div>
-        <div className="movie-card__body">
-          <div className="movie-card__genre">{movie.genre.name}</div>
-          <div className="movie-card__rating">&#9733; 6.8</div>
+    <div className="movie-card">
+      <div className="movie-modal">
+        {isFavorite ? (
+          <span className="movie-card__favorite-heart">&#x2661;</span>
+        ) : null}
+        <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
+          <img
+            className="movie-card__img"
+            crossOrigin="anonymous"
+            src={`${imgRoot}${movie.imageUrl}`}
+            alt={movie.title}
+          />
+        </Link>
+        <div className="movie-modal__content">
+          <div className="movie-modal__upper">
+            <div className="movie-card__title">{movie.title}</div>
+            {!isFavorite ? (
+              <button
+                type="button"
+                className="movie-modal__fav-btn clear"
+                size="sm"
+                onClick={(e) => addToFavorites(e, movie._id)}
+              >
+                &#10010; &#x2661;
+              </button>
+            ) : (
+              <button
+                type="button"
+                className="movie-modal__fav-btn clear--secondary"
+                size="sm"
+                onClick={(e) => removeFromFavorites(e, movie._id)}
+              >
+                &#8722; &#x2661;
+              </button>
+            )}
+          </div>
+          <div className="movie-card__body">
+            <div className="movie-card__description">{movie.description}</div>
+            <div className="movie-card__details">
+              <div className="movie-card__genre">{movie.genre.name}</div>
+              <div className="movie-card__rating">&#9733; 6.8</div>
+            </div>
+          </div>
         </div>
       </div>
-    </Link>
+      {isFavorite ? (
+        <span className="movie-card__favorite-heart">&#x2661;</span>
+      ) : null}
+      <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
+        <img
+          className="movie-card__img"
+          crossOrigin="anonymous"
+          src={`${imgRoot}${movie.imageUrl}`}
+          alt={movie.title}
+        />
+      </Link>
+      <div className="movie-card__title">{movie.title}</div>
+    </div>
   );
 };
 
