@@ -1,8 +1,8 @@
 .search-bar {
   align-items: center;
-  justify-content: center;
   display: flex;
   flex-direction: row;
+  justify-content: center;
 }
 
 .search-bar__input {
@@ -11,9 +11,13 @@
   border-radius: 999px;
   caret-color: var(--mutedText);
   color: var(--textCol);
-  margin: 0 var(--s3) 0 var(--s2);
-  padding: var(--s1) var(--s3);
+  margin: 0;
+  max-width: 0; // Transition max-width to not have weird "jumps" when transitioning
+  opacity: 0;
   outline: none;
+  padding: var(--s1) var(--s3) var(--s1) var(--s5);
+  pointer-events: none; // Disable pointer events when hidden so you can click the open button easier (they overlap)
+  transition: max-width var(--transitionSpeed) ease, opacity var(--transitionSpeed) ease;
 
   &:focus {
     border: 1px solid var(--primaryCol);
@@ -24,7 +28,29 @@
   color: var(--mutedText);
 }
 
-.search-bar__icon {
+.search-bar__open-button__icon {
   color: var(--mutedText);
   font-size: 36px;
 }
+
+.search-bar__open-button {
+  background: transparent;
+  border-radius: 0;
+  margin: 0;
+  padding: 0 var(--s2);
+  transform: translateX(90px);
+  transition: transform var(--transitionSpeed) ease;
+}
+
+.search-bar--opened .search-bar__open-button {
+  pointer-events: none;
+  transform: translateX(56px);
+}
+
+.search-bar--opened .search-bar__input {
+  max-width: 500px;
+  opacity: 1;
+  pointer-events: auto;
+  transition: max-width var(--transitionSpeed) ease, opacity var(--transitionSpeed) ease;
+}
+

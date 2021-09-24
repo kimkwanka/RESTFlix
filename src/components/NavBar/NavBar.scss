@@ -35,8 +35,8 @@
 }
 
 .logo {
+  flex-grow: 1;
   font-size: 36px;
-
   span {
     color: var(--primaryCol);
   }
