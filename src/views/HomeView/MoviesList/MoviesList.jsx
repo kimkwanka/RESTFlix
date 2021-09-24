@@ -5,11 +5,11 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchMovies } from '../../../redux';
 
-import './MoviesList.scss';
-
 import MovieCard from '../../../components/MovieCard/MovieCard';
 
-const MovieList = () => {
+import './MoviesList.scss';
+
+const MoviesList = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -38,4 +38,4 @@ const MovieList = () => {
   );
 };
 
-export default (MovieList);
+export default (MoviesList);
