@@ -10,7 +10,7 @@ import './MovieModal.scss';
 import { addMovieToFavorites, removeMovieFromFavorites } from '../../../redux';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
-const videoRoot = `${process.env.MOVIE_API_URL}/vid/`;
+const videoRoot = `${process.env.MOVIE_API_URL}/video/`;
 
 const MovieModal = ({ movie }) => {
   const dispatch = useDispatch();
