@@ -1,0 +1,144 @@
+.movie-modal__wrapper-link {
+  color: inherit;
+  display: flex;
+  position: relative;
+  text-decoration: none;
+}
+
+.movie-card {
+  background: var(--mutedBlack);
+  border-radius: var(--s1);
+  overflow: hidden;
+  position: relative;
+
+  &:hover {
+    overflow: visible;
+  }
+}
+
+.movie-modal__img {
+  border-radius: var(--s1) var(--s1) 0 0;
+  height: 196px;
+  object-fit: cover;
+  object-position: 0 10%;
+  width: 100%;
+}
+
+.movie-modal__title {
+  font-size: 18px;
+  font-weight: bold;
+  padding: var(--s2);
+}
+
+.movie-modal__fav-btn {
+  font-size: 20px;
+  margin-right: var(--s2);
+  margin-top: var(--s2);
+  padding: 0 var(--s2);
+  white-space:nowrap;
+}
+
+.movie-modal__upper {
+  align-items: flex-start;
+  display: flex;
+  justify-content: space-between;
+}
+
+.movie-modal__body {
+  padding: var(--s2)
+}
+
+.movie-modal__details {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+
+.movie-modal__genre {
+  color: var(--mutedText);
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: var(--s1);
+}
+
+.movie-modal__rating {
+  color: orange;
+  font-size: 16px;
+  font-weight: normal;
+  margin-top: var(--s1);
+}
+
+.movie-modal__favorite-heart {
+  background: linear-gradient(111.34deg, var(--buttonGradientCol1) 0%, var(--buttonGradientCol2 ) 100%);
+  border-radius: 50%;
+  height: 40px;
+  position: absolute;
+  right: var(--s1);
+  top: var(--s1);
+  width: 40px;
+  z-index: 999;
+}
+
+.movie-modal__favorite-heart::after {
+  color: var(--textCol);
+  content: "♡";
+  font-size: 48px;
+  line-height: 22px;
+  position: absolute;
+  right: 8px;
+  top: var(--s1);
+}
+
+.movie-modal {
+  border-radius: var(--s1);
+  position: absolute;
+  transition: all 0s ease-in;
+  visibility: hidden;
+}
+.movie-card:hover .movie-modal {
+  transform: scale(1.10);
+  transition: transform var(--transitionSpeed) ease-in;
+  visibility: visible;
+  z-index: 100;
+}
+
+.movie-modal__content {
+  background: linear-gradient(111.34deg, var(--gradientCol1) 0%,var(--gradientCol2) 100%);
+  border-radius: 0 0 var(--s1) var(--s1);
+  max-height: 0;
+  overflow: hidden;
+  position: relative;
+  transition: max-height 0s ease-in;
+}
+.movie-card:hover .movie-modal__content {
+  max-height: 1000px;
+  transition: max-height var(--transitionSpeed) ease-in;
+}
+
+.movie-modal__video {
+  border-radius: var(--s1) var(--s1) 0 0;
+  height: 196px;
+  object-fit: cover;
+  object-position: 50% 0;
+  opacity: 0;
+  transition: opacity 0s ease-in;
+  width: 100%;
+}
+
+.movie-card:hover .movie-modal__video {
+  opacity: 1;
+  transition: opacity 1s ease-in;
+  z-index: 777;
+}
+
+.movie-modal .movie-modal__img {
+  border-radius: var(--s1) var(--s1) 0 0;
+  height: 196px;
+  left: 0;
+  object-fit: cover;
+  object-position: 0 10%;
+  position: absolute;
+  top: 0;
+  width: 100%;
+}
