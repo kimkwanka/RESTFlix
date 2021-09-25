@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,12 +10,17 @@ import './MovieCard.scss';
 import { addMovieToFavorites, removeMovieFromFavorites } from '../../redux';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
+const videoRoot = `${process.env.MOVIE_API_URL}/vid/`;
 
 const MovieCard = ({ movie }) => {
   const dispatch = useDispatch();
 
   const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
+
+  const previewVideo = useRef(null);
+
+  const [isHovered, setIsHovered] = useState(false);
 
   const addToFavorites = (e, movieId) => {
     e.preventDefault();
@@ -27,13 +32,23 @@ const MovieCard = ({ movie }) => {
     dispatch(removeMovieFromFavorites(movieId));
   };
 
+  if (previewVideo.current) {
+    if (isHovered) {
+      previewVideo.current.play();
+    } else {
+      previewVideo.current.pause();
+    }
+  }
+  const videoUrl = movie.imageUrl.split('.')[0];
+
   return (
-    <div className="movie-card">
+    <div className="movie-card" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className="movie-modal">
         {isFavorite ? (
           <span className="movie-card__favorite-heart">&#x2661;</span>
         ) : null}
         <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
+          <video ref={previewVideo} className="movie-modal__video" src={`${videoRoot}${videoUrl}.webm`} crossOrigin="anonymous" muted loop type="video/webm" />
           <img
             className="movie-card__img"
             crossOrigin="anonymous"
