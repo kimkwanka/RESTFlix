@@ -5,14 +5,14 @@
   --linkCol: #fff;
   --textColDisabled: rgba(255, 255, 255, 0.4);
   --mutedText: rgba(255, 255, 255, 0.7);
-  --mutedBlack: rgba(0,0,0,0.1);
-  --primaryCol: #00D1FF;
-  --secondaryCol: #F97565;
+  --mutedBlack: rgba(0, 0, 0, 0.1);
+  --primaryCol: #00d1ff;
+  --secondaryCol: #f97565;
   --disabledCol: #43687c;
   --gradientCol1: #1c709d;
   --gradientCol2: #761d7d;
-  --buttonGradientCol1: #F97565;
-  --buttonGradientCol2: #EB4985;
+  --buttonGradientCol1: #f97565;
+  --buttonGradientCol2: #eb4985;
   --s1: 8px;
   --s2: 16px;
   --s3: 24px;
@@ -31,7 +31,11 @@
 }
 
 body {
-  background: linear-gradient(111.34deg, var(--gradientCol1) 0%,var(--gradientCol2) 100%);
+  background: linear-gradient(
+    111.34deg,
+    var(--gradientCol1) 0%,
+    var(--gradientCol2) 100%
+  );
   color: var(--textCol);
 }
 
@@ -59,7 +63,7 @@ main {
   width: 100%;
 }
 
-::selection { 
+::selection {
   background: var(--secondaryCol);
 }
 
@@ -119,9 +123,16 @@ input::placeholder {
   color: var(--mutedText);
 }
 
-button, .button {
+button,
+.button {
+  background: linear-gradient(
+    135deg,
+    var(--buttonGradientCol1),
+    var(--buttonGradientCol2),
+    var(--gradientCol1),
+    var(--primaryCol)
+  );
   background-size: 300% 100%;
-  background: linear-gradient(135deg, var(--buttonGradientCol1), var(--buttonGradientCol2 ), var(--gradientCol1 ), var(--primaryCol ));
   border-radius: var(--s1);
   border: none;
   color: var(--textCol);
@@ -147,8 +158,14 @@ button, .button {
 
 button.clear,
 .button.clear {
+  background: linear-gradient(
+    135deg,
+    var(--mutedBlack),
+    var(--mutedBlack),
+    var(--buttonGradientCol1),
+    var(--buttonGradientCol2)
+  );
   background-size: 400% 100%;
-  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ), var(--buttonGradientCol1), var(--buttonGradientCol2 ));
   color: var(--mutedText);
 
   &:hover {
@@ -159,8 +176,14 @@ button.clear,
 
 button.clear--secondary,
 .button.clear--secondary {
+  background: linear-gradient(
+    135deg,
+    var(--mutedBlack),
+    var(--mutedBlack),
+    var(--gradientCol1),
+    var(--primaryCol)
+  );
   background-size: 400% 100%;
-  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ),  var(--gradientCol1 ), var(--primaryCol ));
   color: var(--mutedText);
 
   &:hover {
@@ -182,7 +205,7 @@ button.clear--secondary,
     width: 100%;
   }
 
-  p{
+  p {
     text-align: center;
   }
 }
