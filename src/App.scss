@@ -43,17 +43,17 @@ body {
 
 main {
   background: var(--mutedBlack);
-  flex: 1;
   display: flex;
   flex-direction: column;
+  flex: 1;
 }
 
 .container {
   align-items: center;
   background: var(--mutedBlack);
   display: flex;
-  flex: 1;
   flex-direction: column;
+  flex: 1;
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
   width: 100%;
@@ -86,8 +86,8 @@ label {
 
 input {
   background: var(--mutedBlack);
-  border: 1px solid transparent;
   border-radius: var(--s1);
+  border: 1px solid transparent;
   caret-color: var(--mutedText);
   color: var(--textCol);
   font-weight: normal;
@@ -120,16 +120,16 @@ input::placeholder {
 }
 
 button, .button {
-  background: linear-gradient(135deg, var(--buttonGradientCol1), var(--buttonGradientCol2 ), var(--gradientCol1 ), var(--primaryCol ));
   background-size: 300% 100%;
-  border: none;
+  background: linear-gradient(135deg, var(--buttonGradientCol1), var(--buttonGradientCol2 ), var(--gradientCol1 ), var(--primaryCol ));
   border-radius: var(--s1);
+  border: none;
   color: var(--textCol);
   cursor: pointer;
   display: inline-block;
   font-size: 20px;
-  line-height: 1.6;
   font-weight: bold !important;
+  line-height: 1.6;
   outline: none;
   padding: var(--s1) var(--s3);
   transition: all var(--transitionSpeed) var(--transitionTiming);
@@ -147,8 +147,8 @@ button, .button {
 
 button.clear,
 .button.clear {
-  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ), var(--buttonGradientCol1), var(--buttonGradientCol2 ));
   background-size: 400% 100%;
+  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ), var(--buttonGradientCol1), var(--buttonGradientCol2 ));
   color: var(--mutedText);
 
   &:hover {
@@ -159,8 +159,8 @@ button.clear,
 
 button.clear--secondary,
 .button.clear--secondary {
-  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ),  var(--gradientCol1 ), var(--primaryCol ));
   background-size: 400% 100%;
+  background: linear-gradient(135deg,  var(--mutedBlack ), var(--mutedBlack ),  var(--gradientCol1 ), var(--primaryCol ));
   color: var(--mutedText);
 
   &:hover {
@@ -172,8 +172,8 @@ button.clear--secondary,
 .login-view,
 .register-view {
   align-self: center;
-  border-radius: var(--s1);
   background: var(--mutedBlack);
+  border-radius: var(--s1);
   margin: auto 0;
   padding: var(--s4);
 

@@ -7,11 +7,11 @@
 }
 
 .profile-view__form {
-  position: relative;
-  border-radius: var(--s1);
   background: var(--mutedBlack);
-  padding: var(--s4);
+  border-radius: var(--s1);
   margin: var(--s3) 0 var(--s6) 0;
+  padding: var(--s4);
+  position: relative;
 }
 
 .profile-view__button-wrapper {

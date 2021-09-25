@@ -1,11 +1,12 @@
 .navbar {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
-  justify-content: space-between;
   padding: var(--s2) var(--s3);
-  flex-wrap: wrap;
+
   ul {
     list-style-type: none;
     padding: 0;
