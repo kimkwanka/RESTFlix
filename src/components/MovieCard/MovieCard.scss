@@ -37,10 +37,10 @@
 
 .movie-card__favorite-heart::after {
   content: "♡";
-  line-height: 22px;
   color: var(--textCol);
   font-size: 48px;
+  left: 50%;
   position: absolute;
-  top: var(--s1);
-  right: 8px;
+  top: 50%;
+  transform: translate(-50%,-50%);
 }
