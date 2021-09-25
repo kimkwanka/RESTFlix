@@ -33,12 +33,20 @@ const MovieModal = ({ movie }) => {
   };
 
   if (previewVideo.current) {
-    if (isHovered) {
+    // https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error
+    const video = previewVideo.current;
+
+    const isPlaying = video.currentTime > 0 && !video.paused;
+
+    if (isHovered && !isPlaying) {
       previewVideo.current.play();
-    } else {
+    }
+
+    if (!isHovered && isPlaying) {
       previewVideo.current.pause();
     }
   }
+
   const videoUrl = movie.imageUrl.split('.')[0];
 
   return (
