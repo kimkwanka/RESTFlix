@@ -44,9 +44,7 @@ const MovieCard = ({ movie }) => {
   return (
     <div className="movie-card" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
       <div className="movie-modal">
-        {isFavorite ? (
-          <span className="movie-card__favorite-heart">&#x2661;</span>
-        ) : null}
+        {isFavorite && <span className="movie-card__favorite-heart" /> }
         <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
           <video ref={previewVideo} className="movie-modal__video" src={`${videoRoot}${videoUrl}.webm`} crossOrigin="anonymous" muted loop type="video/webm" />
           <img
@@ -88,9 +86,7 @@ const MovieCard = ({ movie }) => {
           </div>
         </div>
       </div>
-      {isFavorite ? (
-        <span className="movie-card__favorite-heart">&#x2661;</span>
-      ) : null}
+      {isFavorite && <span className="movie-card__favorite-heart" /> }
       <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
         <img
           className="movie-card__img"

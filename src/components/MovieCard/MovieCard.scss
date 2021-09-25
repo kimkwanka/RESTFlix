@@ -70,18 +70,27 @@
 }
 
 .movie-card__favorite-heart {
-  color: var(--textCol);
   background: linear-gradient(111.34deg, var(--buttonGradientCol1) 0%, var(--buttonGradientCol2 ) 100%);
   border-radius: 50%;
-  font-size: 40px;
-  padding: 0 var(--s2);
   position: absolute;
   top: var(--s1);
   right: var(--s1);
+  height: 40px;
+  width: 40px;
   z-index: 1;
 }
 .movie-modal .movie-card__favorite-heart {
   z-index: 999;
+}
+
+.movie-card__favorite-heart::after {
+  content: "♡";
+  line-height: 22px;
+  color: var(--textCol);
+  font-size: 48px;
+  position: absolute;
+  top: var(--s1);
+  right: 8px;
 }
 
 .movie-modal {
