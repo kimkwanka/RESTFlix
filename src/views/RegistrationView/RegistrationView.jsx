@@ -68,7 +68,7 @@ const RegistrationView = () => {
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
-        <button type="submit" onClick={handleSubmit}>
+        <button className="secondary" type="submit" onClick={handleSubmit}>
           Sign Up
         </button>
         <ErrorMessages errorType="registerErrors" />

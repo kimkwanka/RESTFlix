@@ -157,6 +157,22 @@ button,
   }
 }
 
+button.secondary,
+.button.secondary {
+  background: linear-gradient(
+    135deg,
+    var(--gradientCol1),
+    var(--primaryCol),
+    var(--buttonGradientCol1),
+    var(--buttonGradientCol2)
+  );
+  background-size: 300% 100%;
+
+  &:hover {
+    background-position: 100% 0%;
+  }
+}
+
 button.clear,
 .button.clear {
   background: linear-gradient(
