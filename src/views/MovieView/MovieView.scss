@@ -1,13 +1,14 @@
 .movie-view {
   align-items: stretch;
-  display: flex;
+  display: grid;
   flex-grow: 1;
-  justify-content: flex-start;
+  gap: var(--s3);
+  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
   overflow: hidden;
   padding: var(--s3);
   position: relative;
   width: 100%;
-
+  
   * {
     position: relative;
     z-index: 1;
@@ -25,7 +26,6 @@
 
 .movie-view__image {
   object-fit: cover;
-  max-width: 600px;
   width: 100%;
 }
 
