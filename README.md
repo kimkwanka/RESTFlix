@@ -5,6 +5,9 @@ Client written in React for the [cf-movie-api backend](https://github.com/kimkwa
 - React
 - Redux
 
+## Live demo
+Check out the [live demo](https://kk-myflix.netlify.app) to see the app in action.
+
 ## Getting started
 
 ### Install
