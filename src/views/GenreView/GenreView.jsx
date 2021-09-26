@@ -20,10 +20,10 @@ const GenreView = ({
   const genre = useSelector((state) => selectGenreByName(state, genreName));
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <div className="card-Body">
-        <div className="card-Title">{genre.name}</div>
-        <div className="card-text">{genre.description}</div>
+    <div className="genre-view">
+      <div className="genre-view__details">
+        <h1 className="genre-view__name">{genre.name}</h1>
+        <div className="genre-view__description">{genre.description}</div>
       </div>
     </div>
   );

@@ -21,14 +21,14 @@ const DirectorView = ({
     selectDirectorByName(state, directorName));
 
   return (
-    <div className="d-flex flex-column align-items-center">
-      <div className="card-Body">
-        <div className="card-Title">{director.name}</div>
-        <div className="card-Text">{`Year of Birth: ${director.birth}`}</div>
-        {director.Death && (
-          <div className="card-Text">{`Year of Death: ${director.death}`}</div>
+    <div className="director-view">
+      <div className="director-view__details">
+        <h1 className="director-view__name">{director.name}</h1>
+        <div className="director-view__birth">{`Year of Birth: ${director.birth}`}</div>
+        {director.death && (
+          <div className="director-view__death">{`Year of Death: ${director.death}`}</div>
         )}
-        <div className="card-Text">{director.bio}</div>
+        <div className="director-view__description">{director.bio}</div>
       </div>
     </div>
   );
