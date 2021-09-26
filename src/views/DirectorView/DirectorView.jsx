@@ -3,6 +3,8 @@ import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 
+import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
+
 import './DirectorView.scss';
 
 const selectDirectorByName = (state, directorName) => {
@@ -29,6 +31,10 @@ const DirectorView = ({
           <div className="director-view__death">{`Year of Death: ${director.death}`}</div>
         )}
         <div className="director-view__description">{director.bio}</div>
+        <h2>Movies by this director:</h2>
+        <FilteredMoviesList
+          filterFunc={(movie) => movie.director.name.toLowerCase() === directorName.toLowerCase()}
+        />
       </div>
     </div>
   );
