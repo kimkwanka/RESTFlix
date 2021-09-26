@@ -5,12 +5,6 @@ import { thunkFetch } from './utils/thunkFetch';
 
 const API_URL = process.env.MOVIE_API_URL;
 
-if (!API_URL) {
-  throw new Error(
-    'Environment variable MOVIE_API_URL is not set. Either provide it via a .env file or natively in your OS.',
-  );
-}
-
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async (_, thunkAPI) => thunkFetch({ thunkAPI, url: `${API_URL}/movies/` }),
