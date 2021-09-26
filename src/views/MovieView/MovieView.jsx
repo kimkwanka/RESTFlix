@@ -35,7 +35,10 @@ const MovieView = ({
       />
       <div className="movie-view__details">
         <h1 className="movie-view__title">{movie.title}</h1>
-        <div className="movie-view__rating">IMDb Rating: &#9733; 6.8</div>
+        <div className="movie-view__rating">
+          IMDb Rating: &#9733;
+          {movie.rating}
+        </div>
         <p className="movie-view__genre">
           Genre:&nbsp;
           <Link to={`/genres/${movie.genre.name}`}>{movie.genre.name}</Link>

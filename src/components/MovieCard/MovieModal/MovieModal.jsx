@@ -70,7 +70,10 @@ const MovieModal = ({ movie }) => {
           <div className="movie-modal__description">{movie.description}</div>
           <div className="movie-modal__details">
             <div className="movie-modal__genre">{movie.genre.name}</div>
-            <div className="movie-modal__rating">&#9733; 6.8</div>
+            <div className="movie-modal__rating">
+              &#9733;
+              {movie.rating}
+            </div>
           </div>
         </div>
       </div>
@@ -87,6 +90,7 @@ MovieModal.propTypes = {
     genre: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),
+    rating: PropTypes.number.isRequired,
   }).isRequired,
 };
 
