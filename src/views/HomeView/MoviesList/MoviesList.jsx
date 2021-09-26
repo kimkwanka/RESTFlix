@@ -28,9 +28,9 @@ const MoviesList = () => {
 
   return (
     <div className="movies-list">
-      {filteredMovies.map((movie) => (
+      {filteredMovies.map((movie, index) => (
         <MovieCard
-          key={movie._id}
+          key={`${movie._id}${index}`}
           movie={movie}
           isFavorite={favoriteMovies.indexOf(movie._id) !== -1}
         />
