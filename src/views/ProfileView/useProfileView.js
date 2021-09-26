@@ -36,10 +36,13 @@ const useProfileView = () => {
     setNewUserData({ ...newUserData, [key]: value });
   };
 
-  const setUsername = (newUsername) => updateNewUserData('username', newUsername);
-  const setPassword = (newPassword) => updateNewUserData('password', newPassword);
+  const setUsername = (newUsername) =>
+    updateNewUserData('username', newUsername);
+  const setPassword = (newPassword) =>
+    updateNewUserData('password', newPassword);
   const setEmail = (newEmail) => updateNewUserData('email', newEmail);
-  const setBirthday = (newBirthday) => updateNewUserData('birthday', newBirthday);
+  const setBirthday = (newBirthday) =>
+    updateNewUserData('birthday', newBirthday);
 
   const updateFormRef = useRef();
 

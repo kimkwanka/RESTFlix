@@ -17,10 +17,13 @@ const RegistrationView = () => {
     birthday: null,
   });
 
-  const setUsername = (username) => setNewUserData({ ...newUserData, username });
-  const setPassword = (password) => setNewUserData({ ...newUserData, password });
+  const setUsername = (username) =>
+    setNewUserData({ ...newUserData, username });
+  const setPassword = (password) =>
+    setNewUserData({ ...newUserData, password });
   const setEmail = (email) => setNewUserData({ ...newUserData, email });
-  const setBirthday = (birthday) => setNewUserData({ ...newUserData, birthday });
+  const setBirthday = (birthday) =>
+    setNewUserData({ ...newUserData, birthday });
 
   const {
     username, password, email, birthday,

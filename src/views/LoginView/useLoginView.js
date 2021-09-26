@@ -25,7 +25,9 @@ const useLoginView = () => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
       try {
-        const { user, token } = await dispatch(loginUser({ username, password })).unwrap();
+        const { user, token } = await dispatch(
+          loginUser({ username, password }),
+        ).unwrap();
 
         history.push('/');
         saveToLocalStorage({ data: user, token });

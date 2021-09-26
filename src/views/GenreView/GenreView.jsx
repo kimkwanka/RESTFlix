@@ -5,12 +5,18 @@ import { useSelector } from 'react-redux';
 
 import './GenreView.scss';
 
-const selectGenreByName = ((state, genreName) => {
-  const movieWithGenre = state.movies.find((movie) => movie.genre.name === genreName);
+const selectGenreByName = (state, genreName) => {
+  const movieWithGenre = state.movies.find(
+    (movie) => movie.genre.name === genreName,
+  );
   return movieWithGenre.genre;
-});
+};
 
-const GenreView = ({ match: { params: { genreName } } }) => {
+const GenreView = ({
+  match: {
+    params: { genreName },
+  },
+}) => {
   const genre = useSelector((state) => selectGenreByName(state, genreName));
 
   return (

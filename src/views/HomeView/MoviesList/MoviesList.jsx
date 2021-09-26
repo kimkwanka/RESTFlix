@@ -22,7 +22,8 @@ const MoviesList = () => {
   const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
 
   const filteredMovies = searchTerm !== ''
-    ? movies.filter((movie) => movie.title.toLowerCase().includes(searchTerm.toLowerCase()))
+    ? movies.filter((movie) =>
+      movie.title.toLowerCase().includes(searchTerm.toLowerCase()))
     : movies;
 
   return (
@@ -38,4 +39,4 @@ const MoviesList = () => {
   );
 };
 
-export default (MoviesList);
+export default MoviesList;

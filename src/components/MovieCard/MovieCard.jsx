@@ -18,7 +18,7 @@ const MovieCard = ({ movie }) => {
   return (
     <div className="movie-card">
       <MovieModal movie={movie} />
-      {isFavorite && <span className="movie-card__favorite-heart" /> }
+      {isFavorite && <span className="movie-card__favorite-heart" />}
       <Link className="movie-card__wrapper-link" to={`movies/${movie._id}`}>
         <img
           className="movie-card__img"

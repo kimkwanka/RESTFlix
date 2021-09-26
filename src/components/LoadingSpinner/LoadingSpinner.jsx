@@ -7,9 +7,7 @@ import './LoadingSpinner.scss';
 const LoadingSpinner = () => {
   const isRequestPending = useSelector((state) => state.ui.isRequestPending);
 
-  return (
-    isRequestPending ? <div className="loading-spinner" /> : null
-  );
+  return isRequestPending ? <div className="loading-spinner" /> : null;
 };
 
 export default LoadingSpinner;

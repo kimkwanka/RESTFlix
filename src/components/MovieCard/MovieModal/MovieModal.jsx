@@ -50,10 +50,22 @@ const MovieModal = ({ movie }) => {
   const videoUrl = movie.imageUrl.split('.')[0];
 
   return (
-    <div className="movie-modal" onMouseEnter={() => setIsHovered(true)} onMouseLeave={() => setIsHovered(false)}>
-      {isFavorite && <span className="movie-modal__favorite-heart" /> }
+    <div
+      className="movie-modal"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {isFavorite && <span className="movie-modal__favorite-heart" />}
       <Link className="movie-modal__wrapper-link" to={`movies/${movie._id}`}>
-        <video ref={previewVideo} className="movie-modal__video" src={`${videoRoot}${videoUrl}.webm`} crossOrigin="anonymous" muted loop type="video/webm" />
+        <video
+          ref={previewVideo}
+          className="movie-modal__video"
+          src={`${videoRoot}${videoUrl}.webm`}
+          crossOrigin="anonymous"
+          muted
+          loop
+          type="video/webm"
+        />
         <img
           className="movie-modal__img"
           crossOrigin="anonymous"

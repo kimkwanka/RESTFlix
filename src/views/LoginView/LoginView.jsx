@@ -20,10 +20,7 @@ const LoginView = () => {
   return (
     <div className="login-view">
       <h1 className="login-view__heading">Sign In</h1>
-      <form
-        className="login-view__form"
-        ref={loginFormRef}
-      >
+      <form className="login-view__form" ref={loginFormRef}>
         <label htmlFor="formUsername">
           Username:
           <input

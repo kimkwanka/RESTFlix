@@ -18,7 +18,9 @@ const favoriteMoviesList = () => {
   }, []);
 
   const movies = useSelector((state) => state.movies);
-  const favoriteMovieIds = useSelector((state) => state.user.data.favoriteMovies);
+  const favoriteMovieIds = useSelector(
+    (state) => state.user.data.favoriteMovies,
+  );
   const favoriteMoviesArray = [];
 
   if (movies.length > 0) {

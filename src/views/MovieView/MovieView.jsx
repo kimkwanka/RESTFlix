@@ -9,13 +9,21 @@ import './MovieView.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
-const MovieView = ({ match: { params: { movieId } } }) => {
+const MovieView = ({
+  match: {
+    params: { movieId },
+  },
+}) => {
   const movies = useSelector((state) => state.movies);
   const movie = movies.find((m) => m._id === movieId);
 
   return (
     <div className="movie-card d-flex flex-column align-items-center">
-      <img crossOrigin="anonymous" src={`${imgRoot}${movie.imageUrl}`} alt={movie.title} />
+      <img
+        crossOrigin="anonymous"
+        src={`${imgRoot}${movie.imageUrl}`}
+        alt={movie.title}
+      />
       <div className="card-body">
         <div className="card-title">{movie.title}</div>
         <p>
@@ -24,7 +32,9 @@ const MovieView = ({ match: { params: { movieId } } }) => {
         </p>
         <p>
           Director:&nbsp;
-          <Link to={`/directors/${movie.director.name}`}>{movie.director.name}</Link>
+          <Link to={`/directors/${movie.director.name}`}>
+            {movie.director.name}
+          </Link>
         </p>
         <div className="card-text">{movie.description}</div>
       </div>

@@ -35,7 +35,7 @@
   margin-right: var(--s2);
   margin-top: var(--s2);
   padding: 0 var(--s2);
-  white-space:nowrap;
+  white-space: nowrap;
 }
 
 .movie-modal__upper {
@@ -45,7 +45,7 @@
 }
 
 .movie-modal__body {
-  padding: var(--s2)
+  padding: var(--s2);
 }
 
 .movie-modal__details {
@@ -53,7 +53,6 @@
   display: flex;
   justify-content: space-between;
 }
-
 
 .movie-modal__genre {
   color: var(--mutedText);
@@ -70,7 +69,11 @@
 }
 
 .movie-modal__favorite-heart {
-  background: linear-gradient(111.34deg, var(--buttonGradientCol1) 0%, var(--buttonGradientCol2 ) 100%);
+  background: linear-gradient(
+    111.34deg,
+    var(--buttonGradientCol1) 0%,
+    var(--buttonGradientCol2) 100%
+  );
   border-radius: 50%;
   height: 40px;
   position: absolute;
@@ -82,7 +85,7 @@
 
 .movie-modal__favorite-heart::after {
   color: var(--textCol);
-  content: "♡";
+  content: '♡';
   font-size: 48px;
   line-height: 22px;
   position: absolute;
@@ -97,14 +100,18 @@
   visibility: hidden;
 }
 .movie-card:hover .movie-modal {
-  transform: scale(1.10);
+  transform: scale(1.1);
   transition: transform var(--transitionSpeed) ease-in;
   visibility: visible;
   z-index: 100;
 }
 
 .movie-modal__content {
-  background: linear-gradient(111.34deg, var(--gradientCol1) 0%,var(--gradientCol2) 100%);
+  background: linear-gradient(
+    111.34deg,
+    var(--gradientCol1) 0%,
+    var(--gradientCol2) 100%
+  );
   border-radius: 0 0 var(--s1) var(--s1);
   max-height: 0;
   overflow: hidden;

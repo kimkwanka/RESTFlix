@@ -21,7 +21,10 @@ const pendingRequestReducer = (state = false, action) => {
     return true;
   }
 
-  if (actionTypeStr.endsWith('/fulfilled') || actionTypeStr.endsWith('/rejected')) {
+  if (
+    actionTypeStr.endsWith('/fulfilled')
+    || actionTypeStr.endsWith('/rejected')
+  ) {
     return false;
   }
 
@@ -32,12 +35,18 @@ const { actions, reducer: uiSliceReducer } = uiSlice;
 
 export const { setSearchTerm } = actions;
 
-const combinedUIReducer = (state = {
-  isRequestPending: false,
-  searchTerm: '',
-}, action) => {
+const combinedUIReducer = (
+  state = {
+    isRequestPending: false,
+    searchTerm: '',
+  },
+  action,
+) => {
   const nextState = uiSliceReducer(state, action);
-  const isRequestPending = pendingRequestReducer(state.isRequestPending, action);
+  const isRequestPending = pendingRequestReducer(
+    state.isRequestPending,
+    action,
+  );
 
   return { ...nextState, isRequestPending };
 };

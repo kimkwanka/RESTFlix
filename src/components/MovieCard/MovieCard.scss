@@ -25,7 +25,11 @@
 }
 
 .movie-card__favorite-heart {
-  background: linear-gradient(111.34deg, var(--buttonGradientCol1) 0%, var(--buttonGradientCol2 ) 100%);
+  background: linear-gradient(
+    111.34deg,
+    var(--buttonGradientCol1) 0%,
+    var(--buttonGradientCol2) 100%
+  );
   border-radius: 50%;
   position: absolute;
   top: var(--s1);
@@ -36,11 +40,11 @@
 }
 
 .movie-card__favorite-heart::after {
-  content: "♡";
+  content: '♡';
   color: var(--textCol);
   font-size: 48px;
   left: 50%;
   position: absolute;
   top: 50%;
-  transform: translate(-50%,-50%);
+  transform: translate(-50%, -50%);
 }

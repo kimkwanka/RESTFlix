@@ -26,7 +26,11 @@ const SearchBar = () => {
 
   return (
     <div className={`search-bar ${isOpen ? 'search-bar--opened' : ''}`}>
-      <button type="button" className="search-bar__open-button" onClick={handleOpenClick}>
+      <button
+        type="button"
+        className="search-bar__open-button"
+        onClick={handleOpenClick}
+      >
         <span className="search-bar__open-button__icon">&#8981;</span>
       </button>
       <input
@@ -39,7 +43,6 @@ const SearchBar = () => {
         ref={inputRef}
       />
     </div>
-
   );
 };
 

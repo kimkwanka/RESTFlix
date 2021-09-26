@@ -17,9 +17,7 @@ const preloadedUser = {
   isLoggedIn: true,
 };
 
-const preloadedState = preloadedUser.token
-  ? { user: preloadedUser }
-  : {};
+const preloadedState = preloadedUser.token ? { user: preloadedUser } : {};
 
 const store = configureStore({
   reducer: rootReducer,

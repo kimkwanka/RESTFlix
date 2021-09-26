@@ -1,4 +1,5 @@
 /* eslint-disable no-param-reassign */
+
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { thunkFetch } from './utils/thunkFetch';
@@ -7,23 +8,25 @@ const API_URL = process.env.MOVIE_API_URL;
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async ({ username, password }, thunkAPI) => thunkFetch({
-    thunkAPI,
-    url: `${API_URL}/login?username=${username}&password=${password}`,
-    method: 'POST',
-    useAuth: false,
-  }),
+  async ({ username, password }, thunkAPI) =>
+    thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/login?username=${username}&password=${password}`,
+      method: 'POST',
+      useAuth: false,
+    }),
 );
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
-  async (newUserData, thunkAPI) => thunkFetch({
-    thunkAPI,
-    url: `${API_URL}/users`,
-    method: 'POST',
-    useAuth: false,
-    body: JSON.stringify(newUserData),
-  }),
+  async (newUserData, thunkAPI) =>
+    thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/users`,
+      method: 'POST',
+      useAuth: false,
+      body: JSON.stringify(newUserData),
+    }),
 );
 
 export const updateUserData = createAsyncThunk(
