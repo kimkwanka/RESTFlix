@@ -74,6 +74,7 @@ a {
 a:not([class]) {
   color: var(--primaryCol);
   text-decoration: none;
+  font-weight: bold;
 
   &:hover {
     color: var(--buttonGradientCol1);
