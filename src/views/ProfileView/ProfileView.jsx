@@ -8,7 +8,7 @@ import useProfileView from './useProfileView';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
-import FavoriteMovieList from './FavoriteMoviesList/FavoriteMoviesList';
+import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
 
 import './ProfileView.scss';
 
@@ -94,7 +94,7 @@ const ProfileView = () => {
       {favoriteMovies.length > 0 ? (
         <>
           <h2>Favorite Movies</h2>
-          <FavoriteMovieList />
+          <FilteredMoviesList filterFunc={(movie) => favoriteMovies.includes(movie._id)} />
         </>
       ) : null}
     </div>

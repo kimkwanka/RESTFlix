@@ -1,7 +1,16 @@
 import React from 'react';
 
-import MoviesList from './MoviesList/MoviesList';
+import { useSelector } from 'react-redux';
 
-const HomeView = () => <MoviesList />;
+import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
+
+const HomeView = () => {
+  const searchTerm = useSelector((state) => state.ui.searchTerm);
+
+  const filterMoviesBySearchTerm = (movie) =>
+    movie.title.toLowerCase().includes(searchTerm.toLowerCase());
+
+  return <FilteredMoviesList filterFunc={filterMoviesBySearchTerm} allowDuplicates />;
+};
 
 export default HomeView;
