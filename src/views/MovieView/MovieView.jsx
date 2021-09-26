@@ -18,25 +18,33 @@ const MovieView = ({
   const movie = movies.find((m) => m._id === movieId);
 
   return (
-    <div className="movie-card d-flex flex-column align-items-center">
+    <div className="movie-view">
       <img
+        className="movie-view__background-image"
         crossOrigin="anonymous"
         src={`${imgRoot}${movie.imageUrl}`}
         alt={movie.title}
       />
-      <div className="card-body">
-        <div className="card-title">{movie.title}</div>
-        <p>
+      <img
+        className="movie-view__image"
+        crossOrigin="anonymous"
+        src={`${imgRoot}${movie.imageUrl}`}
+        alt={movie.title}
+      />
+      <div className="movie-view__details">
+        <h1 className="movie-view__title">{movie.title}</h1>
+        <div className="movie-view__rating">IMDb Rating: &#9733; 6.8</div>
+        <p className="movie-view__genre">
           Genre:&nbsp;
           <Link to={`/genres/${movie.genre.name}`}>{movie.genre.name}</Link>
         </p>
-        <p>
+        <p className="movie-view__director">
           Director:&nbsp;
           <Link to={`/directors/${movie.director.name}`}>
             {movie.director.name}
           </Link>
         </p>
-        <div className="card-text">{movie.description}</div>
+        <div className="movie-view__description">{movie.description}</div>
       </div>
     </div>
   );
