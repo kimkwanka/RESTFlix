@@ -33,7 +33,8 @@ const DirectorView = ({
         <div className="director-view__description">{director.bio}</div>
         <h2>Movies by this director:</h2>
         <FilteredMoviesList
-          filterFunc={(movie) => movie.director.name.toLowerCase() === directorName.toLowerCase()}
+          filterFunc={(movie) =>
+            movie.director.name.toLowerCase() === directorName.toLowerCase()}
         />
       </div>
     </div>

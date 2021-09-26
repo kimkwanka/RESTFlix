@@ -24,29 +24,26 @@ const FavoriteButton = ({ movieId, showText, clear }) => {
     dispatch(removeMovieFromFavorites(movieId));
   };
 
-  return (
-
-    !isFavorite ? (
-      <button
-        type="button"
-        className={`favorite-button ${clear ? 'clear' : ''}`}
-        onClick={(e) => addToFavorites(e)}
-      >
-        &#10010;
-        {showText ? ' Add to Favorites ' : ' '}
-        &#x2661;
-      </button>
-    ) : (
-      <button
-        type="button"
-        className={`favorite-button secondary ${clear ? 'clear--secondary' : ''}`}
-        onClick={(e) => removeFromFavorites(e)}
-      >
-        &#8722;
-        {showText ? ' Remove from Favorites ' : ' '}
-        &#x2661;
-      </button>
-    )
+  return !isFavorite ? (
+    <button
+      type="button"
+      className={`favorite-button ${clear ? 'clear' : ''}`}
+      onClick={(e) => addToFavorites(e)}
+    >
+      &#10010;
+      {showText ? ' Add to Favorites ' : ' '}
+      &#x2661;
+    </button>
+  ) : (
+    <button
+      type="button"
+      className={`favorite-button secondary ${clear ? 'clear--secondary' : ''}`}
+      onClick={(e) => removeFromFavorites(e)}
+    >
+      &#8722;
+      {showText ? ' Remove from Favorites ' : ' '}
+      &#x2661;
+    </button>
   );
 };
 

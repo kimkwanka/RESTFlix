@@ -10,7 +10,9 @@ const HomeView = () => {
   const filterMoviesBySearchTerm = (movie) =>
     movie.title.toLowerCase().includes(searchTerm.toLowerCase());
 
-  return <FilteredMoviesList filterFunc={filterMoviesBySearchTerm} allowDuplicates />;
+  return (
+    <FilteredMoviesList filterFunc={filterMoviesBySearchTerm} allowDuplicates />
+  );
 };
 
 export default HomeView;

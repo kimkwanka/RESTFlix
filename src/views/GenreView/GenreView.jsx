@@ -28,10 +28,10 @@ const GenreView = ({
         <div className="genre-view__description">{genre.description}</div>
         <h2>Movies of this genre:</h2>
         <FilteredMoviesList
-          filterFunc={(movie) => movie.genre.name.toLowerCase() === genreName.toLowerCase()}
+          filterFunc={(movie) =>
+            movie.genre.name.toLowerCase() === genreName.toLowerCase()}
         />
       </div>
-
     </div>
   );
 };
