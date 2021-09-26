@@ -5,6 +5,8 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
+import FavoriteButton from '../../components/FavoriteButton/FavoriteButton';
+
 import './MovieView.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
@@ -45,6 +47,9 @@ const MovieView = ({
           </Link>
         </p>
         <div className="movie-view__description">{movie.description}</div>
+        <div className="movie-view__button-wrapper">
+          <FavoriteButton movieId={movie._id} showText />
+        </div>
       </div>
     </div>
   );

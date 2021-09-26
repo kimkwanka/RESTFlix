@@ -64,7 +64,7 @@ const MovieModal = ({ movie }) => {
       <div className="movie-modal__content">
         <div className="movie-modal__upper">
           <div className="movie-modal__title">{movie.title}</div>
-          <FavoriteButton movieId={movie._id} />
+          <FavoriteButton movieId={movie._id} clear />
         </div>
         <div className="movie-modal__body">
           <div className="movie-modal__description">{movie.description}</div>

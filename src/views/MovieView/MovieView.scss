@@ -25,9 +25,11 @@
 
 .movie-view__image {
   object-fit: cover;
+  max-width: 600px;
+  width: 100%;
 }
 
-.movie-view__details{
+.movie-view__details {
   background: var(--mutedBlack);
   padding: var(--s3);
 }
@@ -40,7 +42,6 @@
   color: orange;
   font-size: 20px;
   font-weight: normal;
-  margin-top: var(--s1);
 }
 
 .movie-view__genre,
@@ -53,5 +54,10 @@
 .movie-view__description {
   font-size: 18px;
   line-height: 1.8;
-  margin-top: var(--s3);
+  margin-bottom: var(--s5);
+  margin-top: var(--s4);
+}
+
+.movie-view__button-wrapper {
+  text-align: center;
 }
