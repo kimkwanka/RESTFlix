@@ -44,7 +44,7 @@ const MovieModal = ({ movie }) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {isFavorite && <span className="movie-modal__favorite-heart" />}
-      <Link className="movie-modal__wrapper-link" to={`movies/${movie._id}`}>
+      <Link className="movie-modal__wrapper-link" to={`/movies/${movie._id}`}>
         <video
           ref={previewVideo}
           className="movie-modal__video"
