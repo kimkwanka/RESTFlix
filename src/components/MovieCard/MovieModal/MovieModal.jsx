@@ -35,8 +35,6 @@ const MovieModal = ({ movie }) => {
     }
   }
 
-  const videoUrl = movie.imageUrl.split('.')[0];
-
   return (
     <div
       className="movie-modal"
@@ -48,7 +46,7 @@ const MovieModal = ({ movie }) => {
         <video
           ref={previewVideo}
           className="movie-modal__video"
-          src={`${videoRoot}${videoUrl}.webm`}
+          src={`${videoRoot}${movie.slug}.webm`}
           crossOrigin="anonymous"
           muted
           loop
@@ -57,7 +55,7 @@ const MovieModal = ({ movie }) => {
         <img
           className="movie-modal__img"
           crossOrigin="anonymous"
-          src={`${imgRoot}${movie.imageUrl}`}
+          src={`${imgRoot}${movie.slug}.jpg`}
           alt={movie.title}
         />
       </Link>
@@ -86,7 +84,7 @@ MovieModal.propTypes = {
     _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     genre: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),

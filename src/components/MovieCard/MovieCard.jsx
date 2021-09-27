@@ -23,7 +23,7 @@ const MovieCard = ({ movie }) => {
         <img
           className="movie-card__img"
           crossOrigin="anonymous"
-          src={`${imgRoot}${movie.imageUrl}`}
+          src={`${imgRoot}${movie.slug}.jpg`}
           alt={movie.title}
         />
       </Link>
@@ -36,7 +36,7 @@ MovieCard.propTypes = {
     _id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
     genre: PropTypes.shape({
       name: PropTypes.string.isRequired,
     }),

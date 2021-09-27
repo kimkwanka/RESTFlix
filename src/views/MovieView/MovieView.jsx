@@ -24,13 +24,13 @@ const MovieView = ({
       <img
         className="movie-view__background-image"
         crossOrigin="anonymous"
-        src={`${imgRoot}${movie.imageUrl}`}
+        src={`${imgRoot}${movie.slug}.jpg`}
         alt={movie.title}
       />
       <img
         className="movie-view__image"
         crossOrigin="anonymous"
-        src={`${imgRoot}${movie.imageUrl}`}
+        src={`${imgRoot}${movie.slug}.jpg`}
         alt={movie.title}
       />
       <div className="movie-view__details">
