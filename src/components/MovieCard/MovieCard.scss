@@ -31,17 +31,17 @@
     var(--buttonGradientCol2) 100%
   );
   border-radius: 50%;
-  position: absolute;
-  top: var(--s1);
-  right: var(--s1);
   height: 40px;
+  position: absolute;
+  right: var(--s1);
+  top: var(--s1);
   width: 40px;
   z-index: 1;
 }
 
 .movie-card__favorite-heart::after {
-  content: '♡';
   color: var(--textCol);
+  content: '♡';
   font-size: 48px;
   left: 50%;
   position: absolute;
