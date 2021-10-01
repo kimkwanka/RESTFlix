@@ -12,24 +12,25 @@ const errorsSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(loginUser.pending, (state, _) => {
-      state.loginErrors = [];
-    });
-    builder.addCase(registerUser.pending, (state, _) => {
-      state.registerErrors = [];
-    });
-    builder.addCase(updateUserData.pending, (state, _) => {
-      state.profileErrors = [];
-    });
-    builder.addCase(loginUser.rejected, (state, action) => {
-      state.loginErrors = action.payload;
-    });
-    builder.addCase(registerUser.rejected, (state, action) => {
-      state.registerErrors = action.payload;
-    });
-    builder.addCase(updateUserData.rejected, (state, action) => {
-      state.profileErrors = action.payload;
-    });
+    builder
+      .addCase(loginUser.pending, (state, _) => {
+        state.loginErrors = [];
+      })
+      .addCase(registerUser.pending, (state, _) => {
+        state.registerErrors = [];
+      })
+      .addCase(updateUserData.pending, (state, _) => {
+        state.profileErrors = [];
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.loginErrors = action.payload;
+      })
+      .addCase(registerUser.rejected, (state, action) => {
+        state.registerErrors = action.payload;
+      })
+      .addCase(updateUserData.rejected, (state, action) => {
+        state.profileErrors = action.payload;
+      });
   },
 });
 
