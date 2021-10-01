@@ -1,6 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
+const isPendingAction = (action) => action.type.endsWith('/pending');
+const isFullfilledOrRejectedAction = (action) => action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected');
+
 const uiSlice = createSlice({
   name: 'ui',
   initialState: {
@@ -12,43 +15,19 @@ const uiSlice = createSlice({
       state.searchTerm = action.payload;
     },
   },
+  extraReducers: (builder) => {
+    builder
+      .addMatcher(isPendingAction, (state, _) => {
+        state.isRequestPending = true;
+      })
+      .addMatcher(isFullfilledOrRejectedAction, (state, _) => {
+        state.isRequestPending = false;
+      });
+  },
 });
 
-const pendingRequestReducer = (state = false, action) => {
-  const actionTypeStr = action.type.toString();
-
-  if (actionTypeStr.endsWith('/pending')) {
-    return true;
-  }
-
-  if (
-    actionTypeStr.endsWith('/fulfilled')
-    || actionTypeStr.endsWith('/rejected')
-  ) {
-    return false;
-  }
-
-  return state;
-};
-
-const { actions, reducer: uiSliceReducer } = uiSlice;
+const { actions, reducer } = uiSlice;
 
 export const { setSearchTerm } = actions;
 
-const combinedUIReducer = (
-  state = {
-    isRequestPending: false,
-    searchTerm: '',
-  },
-  action,
-) => {
-  const nextState = uiSliceReducer(state, action);
-  const isRequestPending = pendingRequestReducer(
-    state.isRequestPending,
-    action,
-  );
-
-  return { ...nextState, isRequestPending };
-};
-
-export default combinedUIReducer;
+export default reducer;
