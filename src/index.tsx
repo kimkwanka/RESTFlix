@@ -1,6 +1,5 @@
-import {} from 'dotenv/config';
+import './_env';
 
-import React from 'react';
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
@@ -19,7 +18,7 @@ if (!process.env.MOVIE_API_URL) {
 }
 
 const preloadedUser = {
-  ...JSON.parse(localStorage.getItem('user')),
+  ...JSON.parse(localStorage.getItem('user') || ''),
   isLoggedIn: true,
 };
 
