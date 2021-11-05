@@ -6,36 +6,34 @@ import { loginUser, registerUser, updateUserData } from './userSlice';
 const errorsSlice = createSlice({
   name: 'errors',
   initialState: {
-    loginErrors: [],
-    registerErrors: [],
-    profileErrors: [],
+    loginErrors: <Array<string>>[],
+    registerErrors: <Array<string>>[],
+    profileErrors: <Array<string>>[],
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(loginUser.pending, (state, _) => {
+      .addCase(loginUser.pending, (state) => {
         state.loginErrors = [];
       })
-      .addCase(registerUser.pending, (state, _) => {
+      .addCase(registerUser.pending, (state) => {
         state.registerErrors = [];
       })
-      .addCase(updateUserData.pending, (state, _) => {
+      .addCase(updateUserData.pending, (state) => {
         state.profileErrors = [];
       })
       .addCase(loginUser.rejected, (state, action) => {
-        state.loginErrors = action.payload;
+        state.loginErrors = action.payload as string[];
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.registerErrors = action.payload;
+        state.registerErrors = action.payload as string[];
       })
       .addCase(updateUserData.rejected, (state, action) => {
-        state.profileErrors = action.payload;
+        state.profileErrors = action.payload as string[];
       });
   },
 });
 
-const { actions, reducer } = errorsSlice;
-
-export const { setErrors } = actions;
+const { reducer } = errorsSlice;
 
 export default reducer;

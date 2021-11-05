@@ -2,9 +2,16 @@ export const thunkFetch = async ({
   url,
   method = 'GET',
   useAuth = true,
-  body = null,
+  body = undefined,
   thunkAPI: { getState, rejectWithValue, fulfillWithValue },
-  meta = null,
+  meta = undefined,
+}: {
+  url: string;
+  method?: string;
+  useAuth?: boolean;
+  body?: BodyInit | undefined;
+  thunkAPI: any;
+  meta?: object | undefined;
 }) => {
   try {
     let Authorization = '';
@@ -24,7 +31,7 @@ export const thunkFetch = async ({
       body,
     });
 
-    const isText = response.headers.get('Content-Type').startsWith('text');
+    const isText = response.headers.get('Content-Type')?.startsWith('text');
 
     if (response.ok) {
       const fulfilledResponse = isText
@@ -35,12 +42,12 @@ export const thunkFetch = async ({
 
     const responseErrors = isText
       ? [await response.text()]
-      : (await response.json()).errors.map((e) => e.msg);
+      : (await response.json()).errors.map((e: any) => e.msg);
 
     console.error(responseErrors);
 
     return rejectWithValue(responseErrors, meta);
-  } catch (err) {
+  } catch (err: any) {
     console.error(err);
     return rejectWithValue([err.toString()], meta);
   }

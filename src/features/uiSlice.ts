@@ -1,8 +1,8 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, AnyAction } from '@reduxjs/toolkit';
 
-const isPendingAction = (action) => action.type.endsWith('/pending');
-const isFullfilledOrRejectedAction = (action) => action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected');
+const isPendingAction = (action: AnyAction) => action.type.endsWith('/pending');
+const isFullfilledOrRejectedAction = (action: AnyAction) => action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected');
 
 const uiSlice = createSlice({
   name: 'ui',

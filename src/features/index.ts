@@ -14,5 +14,4 @@ export default combineReducers({
 
 export * from './userSlice';
 export * from './uiSlice';
-export * from './errorsSlice';
 export * from './moviesSlice';

@@ -8,7 +8,7 @@ const API_URL = process.env.MOVIE_API_URL;
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async (_, thunkAPI) => {
-    const { movies } = thunkAPI.getState();
+    const { movies }: any = thunkAPI.getState();
 
     if (movies.length > 0) {
       return movies;
