@@ -1,28 +1,38 @@
 {
-    "env": {
-        "browser": true,
-        "es2021": true
-    },
-    "extends": [
-        "plugin:react/recommended",
-        "airbnb"
+  "root": true,
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/require-default-props": [1, { "ignoreFunctionalComponents": true }],
+    "brace-style": ["error", "1tbs"],
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
+    "no-underscore-dangle": ["error", { "allow": ["_id"] }],
+    "no-console": ["error", { "allow": ["warn", "error"] }],
+    "react/jsx-filename-extension": [
+      1,
+      { "extensions": [".js", ".jsx", ".ts", ".tsx"] }
     ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
-        },
-        "ecmaVersion": 12,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
-    ],
-    "rules": {
-        "brace-style": ["error", "1tbs"],
-        "no-plusplus": ["error", { "allowForLoopAfterthoughts" : true }],
-        "no-unused-vars": ["error", { "argsIgnorePattern": "^_" }],
-        "no-underscore-dangle": ["error", { "allow": ["_id"] }],
-        "no-console": ["error", { "allow": ["warn", "error"] }],
-        "implicit-arrow-linebreak": "off"
-    }
+    "import/extensions": [
+      "error",
+      "ignorePackages",
+      {
+        "js": "never",
+        "jsx": "never",
+        "ts": "never",
+        "tsx": "never"
+      }
+    ]
+  }
 }
