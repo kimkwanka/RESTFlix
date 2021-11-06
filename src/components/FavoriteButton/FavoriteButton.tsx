@@ -2,7 +2,7 @@ import { memo, MouseEvent } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { IState } from '@features/types';
+import { IState } from '../../features/types';
 
 import './FavoriteButton.scss';
 

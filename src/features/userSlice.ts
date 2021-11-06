@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { IState, IUser } from '@features/types';
+import { IState, IUser } from './types';
 
 import { thunkFetch } from './utils/thunkFetch';
 

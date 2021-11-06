@@ -3,8 +3,8 @@ import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchMovies } from '@features/index';
-import { IState, IMovie } from '@features/types';
+import { fetchMovies } from '../../features/index';
+import { IState, IMovie } from '../../features/types';
 
 import MovieCard from '../MovieCard/MovieCard';
 

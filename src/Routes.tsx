@@ -3,7 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { IState } from '@features/types';
+import { IState } from './features/types';
 
 import LoginView from './views/LoginView/LoginView';
 import RegistrationView from './views/RegistrationView/RegistrationView';

@@ -2,7 +2,7 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
-import { IState } from '@features/types';
+import { IState } from '../../features/types';
 
 import './LoadingSpinner.scss';
 

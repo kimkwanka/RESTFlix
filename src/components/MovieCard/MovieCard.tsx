@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import { IState, IMovie } from '@features/types';
+import { IState, IMovie } from '../../features/types';
 
 import MovieModal from './MovieModal/MovieModal';
 

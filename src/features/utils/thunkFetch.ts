@@ -1,4 +1,4 @@
-import { IState } from '@features/types';
+import { IState } from '../types';
 
 interface ThunkApi {
   getState(): unknown;

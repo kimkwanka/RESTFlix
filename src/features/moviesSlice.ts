@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { IMovie } from '@features/types';
+import { IMovie } from './types';
 
 import { thunkFetch } from './utils/thunkFetch';
 

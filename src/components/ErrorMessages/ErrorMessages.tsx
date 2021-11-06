@@ -1,18 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import { useSelector } from 'react-redux';
 
-import { IState } from '@features/types';
+import { IState } from '../../features/types';
 
 import './ErrorMessages.scss';
 
-const ErrorMessages = ({
-  errorType,
-}: {
+interface IErrorMessagesProps {
   errorType: 'loginErrors' | 'registerErrors' | 'profileErrors';
-}) => {
+}
+
+const ErrorMessages = ({ errorType }: IErrorMessagesProps) => {
   const errorMessages = useSelector((state: IState) => state.errors[errorType]);
 
   return (
@@ -26,10 +25,6 @@ const ErrorMessages = ({
       </div>
     </div>
   );
-};
-
-ErrorMessages.propTypes = {
-  errorType: PropTypes.string.isRequired,
 };
 
 export default ErrorMessages;
