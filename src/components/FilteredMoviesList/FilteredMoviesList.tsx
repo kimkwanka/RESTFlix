@@ -1,17 +1,23 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 
-import PropTypes from 'prop-types';
-
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 
 import { fetchMovies } from '../../features';
 
-import MovieCard from '../MovieCard/MovieCard';
+import MovieCard, { IMovie } from '../MovieCard/MovieCard';
 
 import './FilteredMoviesList.scss';
 
-const FilteredMoviesList = ({ filterFunc, allowDuplicates }) => {
+interface IFilteredMoviesListParams {
+  filterFunc: () => boolean;
+  allowDuplicates?: boolean;
+}
+
+const FilteredMoviesList = ({
+  filterFunc,
+  allowDuplicates,
+}: IFilteredMoviesListParams) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,7 +25,7 @@ const FilteredMoviesList = ({ filterFunc, allowDuplicates }) => {
     return () => {};
   }, []);
 
-  const movies = useSelector((state) => state.movies);
+  const movies = useSelector((state: RootStateOrAny) => state.movies);
 
   // Filter out movies by using the filterFunc.
   // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
@@ -30,20 +36,11 @@ const FilteredMoviesList = ({ filterFunc, allowDuplicates }) => {
 
   return (
     <div className="movies-list">
-      {filteredMovies.map((movie, index) => (
-        <MovieCard key={`${movie._id}${index}`} movie={movie} isFavorite />
+      {filteredMovies.map((movie: IMovie, index: number) => (
+        <MovieCard key={`${movie._id}${index}`} movie={movie} />
       ))}
     </div>
   );
-};
-
-FilteredMoviesList.propTypes = {
-  filterFunc: PropTypes.func.isRequired,
-  allowDuplicates: PropTypes.bool,
-};
-
-FilteredMoviesList.defaultProps = {
-  allowDuplicates: false,
 };
 
 export default React.memo(FilteredMoviesList);

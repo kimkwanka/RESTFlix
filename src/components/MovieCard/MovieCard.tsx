@@ -1,9 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
-
-import PropTypes from 'prop-types';
+import { useSelector, RootStateOrAny } from 'react-redux';
 
 import MovieModal from './MovieModal/MovieModal';
 
@@ -11,8 +9,22 @@ import './MovieCard.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
-const MovieCard = ({ movie }) => {
-  const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
+interface IGenre {
+  name: string;
+}
+
+export interface IMovie {
+  _id: string;
+  title: string;
+  description: string;
+  slug: string;
+  genre: IGenre;
+}
+
+const MovieCard = ({ movie }: { movie: IMovie }) => {
+  const favoriteMovies = useSelector(
+    (state: RootStateOrAny) => state.user.data.favoriteMovies,
+  );
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
 
   return (
@@ -29,18 +41,6 @@ const MovieCard = ({ movie }) => {
       </Link>
     </div>
   );
-};
-
-MovieCard.propTypes = {
-  movie: PropTypes.PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-  }).isRequired,
 };
 
 export default React.memo(MovieCard);
