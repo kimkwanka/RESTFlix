@@ -9,13 +9,17 @@ import './FavoriteButton.scss';
 import { addMovieToFavorites, removeMovieFromFavorites } from '../../features';
 
 interface IFavoriteButtonProps {
-  movieId: string;
+  movieId?: string;
   showText?: boolean;
-  clear: boolean;
+  clear?: boolean;
 }
 
 const FavoriteButton = ({ movieId, showText, clear }: IFavoriteButtonProps) => {
   const dispatch = useDispatch();
+
+  if (!movieId) {
+    return null;
+  }
 
   const favoriteMovies = useSelector(
     (state: IState) => state.user.data.favoriteMovies,

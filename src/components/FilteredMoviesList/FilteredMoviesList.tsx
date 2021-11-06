@@ -11,7 +11,7 @@ import MovieCard from '../MovieCard/MovieCard';
 import './FilteredMoviesList.scss';
 
 interface IFilteredMoviesListProps {
-  filterFunc: () => boolean;
+  filterFunc: (movie: IMovie) => boolean;
   allowDuplicates?: boolean;
 }
 

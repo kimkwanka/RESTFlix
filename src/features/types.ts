@@ -15,12 +15,22 @@ export interface IUI {
   searchTerm: string;
 }
 interface IGenre {
+  description: string;
+  name: string;
+}
+
+interface IDirector {
+  bio: string;
+  birth: string;
+  death: string;
   name: string;
 }
 
 export interface IMovie {
   _id: string;
   description: string;
+  director: IDirector;
+  featured: boolean;
   genre: IGenre;
   rating: number;
   slug: string;

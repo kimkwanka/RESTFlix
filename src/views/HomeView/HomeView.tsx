@@ -2,12 +2,14 @@ import React from 'react';
 
 import { useSelector } from 'react-redux';
 
+import { IState, IMovie } from '../../features/types';
+
 import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
 
 const HomeView = () => {
-  const searchTerm = useSelector((state) => state.ui.searchTerm);
+  const searchTerm = useSelector((state: IState) => state.ui.searchTerm);
 
-  const filterMoviesBySearchTerm = (movie) =>
+  const filterMoviesBySearchTerm = (movie: IMovie) =>
     movie.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (
