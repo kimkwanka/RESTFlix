@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { NavLink } from 'react-router-dom';
 
-import { logoutUser } from '../../redux';
+import { logoutUser } from '../../features';
 
 import SearchBar from './SearchBar/SearchBar';
 

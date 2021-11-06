@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { loginUser } from '../../redux';
+import { loginUser } from '../../features';
 
 const saveToLocalStorage = (user) => {
   localStorage.setItem('user', JSON.stringify(user));

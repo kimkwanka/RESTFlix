@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import './SearchBar.scss';
 
-import { setSearchTerm } from '../../../redux';
+import { setSearchTerm } from '../../../features';
 
 const SearchBar = () => {
   const searchTerm = useSelector((state) => state.ui.searchTerm);

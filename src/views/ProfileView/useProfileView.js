@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { updateUserData, deleteUser } from '../../redux';
+import { updateUserData, deleteUser } from '../../features';
 
 const formatDate = (date) => {
   const inputDate = new Date(date);

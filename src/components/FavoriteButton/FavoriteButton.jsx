@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import './FavoriteButton.scss';
 
-import { addMovieToFavorites, removeMovieFromFavorites } from '../../redux';
+import { addMovieToFavorites, removeMovieFromFavorites } from '../../features';
 
 const FavoriteButton = ({ movieId, showText, clear }) => {
   const dispatch = useDispatch();

@@ -4,7 +4,7 @@ import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
-import { registerUser } from '../../redux';
+import { registerUser } from '../../features';
 
 const RegistrationView = () => {
   const history = useHistory();

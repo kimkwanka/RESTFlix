@@ -18,7 +18,7 @@ if (!process.env.MOVIE_API_URL) {
 }
 
 const preloadedUser = {
-  ...JSON.parse(localStorage.getItem('user') || ''),
+  ...JSON.parse(localStorage.getItem('user') || '{}'),
   isLoggedIn: true,
 };
 

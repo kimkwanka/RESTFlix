@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import { fetchMovies } from '../../redux';
+import { fetchMovies } from '../../features';
 
 import MovieCard from '../MovieCard/MovieCard';
 
