@@ -1,6 +1,7 @@
 /* eslint-disable no-param-reassign */
+import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { IState, IUser } from '@features/types';
 
 import { thunkFetch } from './utils/thunkFetch';
 
@@ -8,7 +9,10 @@ const API_URL = process.env.MOVIE_API_URL;
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
-  async ({ username, password }, thunkAPI) =>
+  async (
+    { username, password }: { username: string; password: string },
+    thunkAPI,
+  ) =>
     thunkFetch({
       thunkAPI,
       url: `${API_URL}/login?username=${username}&password=${password}`,
@@ -32,7 +36,7 @@ export const registerUser = createAsyncThunk(
 export const updateUserData = createAsyncThunk(
   'user/updateUserData',
   async (newUserData, thunkAPI) => {
-    const userId = thunkAPI.getState().user.data._id;
+    const userId = (thunkAPI.getState() as IState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -46,7 +50,7 @@ export const updateUserData = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, thunkAPI) => {
-    const userId = thunkAPI.getState().user.data._id;
+    const userId = (thunkAPI.getState() as IState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -58,8 +62,8 @@ export const deleteUser = createAsyncThunk(
 
 export const addMovieToFavorites = createAsyncThunk(
   'user/addMovieToFavorites',
-  async (movieId, thunkAPI) => {
-    const userId = thunkAPI.getState().user.data._id;
+  async (movieId: string, thunkAPI) => {
+    const userId = (thunkAPI.getState() as IState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -72,8 +76,8 @@ export const addMovieToFavorites = createAsyncThunk(
 
 export const removeMovieFromFavorites = createAsyncThunk(
   'user/removeMovieFromFavorites',
-  async (movieId, thunkAPI) => {
-    const userId = thunkAPI.getState().user.data._id;
+  async (movieId: string, thunkAPI) => {
+    const userId = (thunkAPI.getState() as IState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -84,43 +88,70 @@ export const removeMovieFromFavorites = createAsyncThunk(
   },
 );
 
-export const logoutUser = createAsyncThunk('user/logoutUser', (_) => {
+export const logoutUser = createAsyncThunk('user/logoutUser', () => {
   localStorage.removeItem('user');
 });
 
 const userSlice = createSlice({
   name: 'user',
   initialState: {
-    data: {},
+    data: {
+      _id: '',
+      birthday: '',
+      email: '',
+      favoriteMovies: [],
+      password: '',
+      username: '',
+    },
     token: '',
     isLoggedIn: false,
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(addMovieToFavorites.fulfilled, (state, action) => {
-      state.data.favoriteMovies.push(action.meta.arg);
-    });
-    builder.addCase(removeMovieFromFavorites.fulfilled, (state, action) => {
-      const indexOfMovieIdToRemove = state.data.favoriteMovies.indexOf(
-        action.meta.arg,
-      );
-      state.data.favoriteMovies.splice(indexOfMovieIdToRemove, 1);
-    });
-    builder.addCase(loginUser.fulfilled, (state, action) => ({
+    builder.addCase(
+      addMovieToFavorites.fulfilled,
+      (state: IUser, action: AnyAction) => {
+        state.data.favoriteMovies.push(action.meta.arg);
+      },
+    );
+    builder.addCase(
+      removeMovieFromFavorites.fulfilled,
+      (state: IUser, action: AnyAction) => {
+        const indexOfMovieIdToRemove = state.data.favoriteMovies.indexOf(
+          action.meta.arg,
+        );
+        state.data.favoriteMovies.splice(indexOfMovieIdToRemove, 1);
+      },
+    );
+    builder.addCase(loginUser.fulfilled, (state, action: AnyAction) => ({
       data: action.payload.user,
       token: action.payload.token,
       isLoggedIn: true,
     }));
-    builder.addCase(updateUserData.fulfilled, (state, action) => {
+    builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
       state.data = action.payload;
     });
-    builder.addCase(deleteUser.fulfilled, (_, __) => ({
-      data: {},
+    builder.addCase(deleteUser.fulfilled, () => ({
+      data: {
+        _id: '',
+        birthday: '',
+        email: '',
+        favoriteMovies: [],
+        password: '',
+        username: '',
+      },
       token: '',
       isLoggedIn: false,
     }));
-    builder.addCase(logoutUser.pending, (_, __) => ({
-      data: {},
+    builder.addCase(logoutUser.pending, () => ({
+      data: {
+        _id: '',
+        birthday: '',
+        email: '',
+        favoriteMovies: [],
+        password: '',
+        username: '',
+      },
       token: '',
       isLoggedIn: false,
     }));

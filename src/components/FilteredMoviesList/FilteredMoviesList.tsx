@@ -3,9 +3,10 @@ import React, { useEffect } from 'react';
 
 import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
 
-import { fetchMovies } from '../../features';
+import { fetchMovies } from '@features/index';
+import { IMovie } from '@features/types';
 
-import MovieCard, { IMovie } from '../MovieCard/MovieCard';
+import MovieCard from '../MovieCard/MovieCard';
 
 import './FilteredMoviesList.scss';
 

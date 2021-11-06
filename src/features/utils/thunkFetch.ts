@@ -1,3 +1,11 @@
+import { IState } from '@features/types';
+
+interface ThunkApi {
+  getState(): unknown;
+  rejectWithValue(value: unknown, meta: unknown): unknown;
+  fulfillWithValue(value: unknown, meta: unknown): unknown;
+}
+
 export const thunkFetch = async ({
   url,
   method = 'GET',
@@ -10,14 +18,14 @@ export const thunkFetch = async ({
   method?: string;
   useAuth?: boolean;
   body?: BodyInit | undefined;
-  thunkAPI: any;
-  meta?: object | undefined;
+  thunkAPI: ThunkApi;
+  meta?: string | undefined;
 }) => {
   try {
     let Authorization = '';
 
     if (useAuth) {
-      const jwtToken = getState().user.token;
+      const jwtToken = (getState() as IState).user.token;
       Authorization = `Bearer ${jwtToken}`;
     }
 
@@ -42,14 +50,15 @@ export const thunkFetch = async ({
 
     const responseErrors = isText
       ? [await response.text()]
-      : (await response.json()).errors.map((e: any) => e.msg);
+      : (await response.json()).errors.map((e: { msg: string }) => e.msg);
 
     console.error(responseErrors);
 
     return rejectWithValue(responseErrors, meta);
-  } catch (err: any) {
+  } catch (err) {
+    const errorMessage = err instanceof Error ? err.toString() : err;
     console.error(err);
-    return rejectWithValue([err.toString()], meta);
+    return rejectWithValue([errorMessage], meta);
   }
 };
 

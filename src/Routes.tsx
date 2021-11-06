@@ -3,6 +3,8 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
+import { IState } from '@features/types';
+
 import LoginView from './views/LoginView/LoginView';
 import RegistrationView from './views/RegistrationView/RegistrationView';
 import HomeView from './views/HomeView/HomeView';
@@ -12,11 +14,13 @@ import DirectorView from './views/DirectorView/DirectorView';
 import ProfileView from './views/ProfileView/ProfileView';
 
 const Routes = () => {
-  const isLoggedIn = useSelector((state) => state.user.isLoggedIn);
+  const isLoggedIn = useSelector((state: IState) => state.user.isLoggedIn);
   // Redirect /login and /register to / if logged in.
   // Redirect all routes to /login (except /login and /register) when not logged in.
 
-  const areMoviesLoaded = useSelector((state) => state.movies.length > 0);
+  const areMoviesLoaded = useSelector(
+    (state: IState) => state.movies.length > 0,
+  );
   // Redirect Movie, Genre and DirectorView to / when movies haven't been fetched yet.
 
   return (

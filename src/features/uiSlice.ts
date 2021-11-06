@@ -2,7 +2,8 @@
 import { createSlice, AnyAction } from '@reduxjs/toolkit';
 
 const isPendingAction = (action: AnyAction) => action.type.endsWith('/pending');
-const isFullfilledOrRejectedAction = (action: AnyAction) => action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected');
+const isFullfilledOrRejectedAction = (action: AnyAction) =>
+  action.type.endsWith('/fulfilled') || action.type.endsWith('/rejected');
 
 const uiSlice = createSlice({
   name: 'ui',
@@ -17,10 +18,10 @@ const uiSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addMatcher(isPendingAction, (state, _) => {
+      .addMatcher(isPendingAction, (state) => {
         state.isRequestPending = true;
       })
-      .addMatcher(isFullfilledOrRejectedAction, (state, _) => {
+      .addMatcher(isFullfilledOrRejectedAction, (state) => {
         state.isRequestPending = false;
       });
   },

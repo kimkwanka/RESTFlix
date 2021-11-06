@@ -3,23 +3,13 @@ import { Link } from 'react-router-dom';
 
 import { useSelector, RootStateOrAny } from 'react-redux';
 
+import { IMovie } from '@features/types';
+
 import MovieModal from './MovieModal/MovieModal';
 
 import './MovieCard.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
-
-interface IGenre {
-  name: string;
-}
-
-export interface IMovie {
-  _id: string;
-  title: string;
-  description: string;
-  slug: string;
-  genre: IGenre;
-}
 
 const MovieCard = ({ movie }: { movie: IMovie }) => {
   const favoriteMovies = useSelector(
