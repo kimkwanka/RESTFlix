@@ -1,10 +1,10 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-import React from 'react';
-
 import { useSelector } from 'react-redux';
 
 import useProfileView from './useProfileView';
+
+import { IState } from '../../features/types';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
@@ -13,10 +13,8 @@ import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMovi
 import './ProfileView.scss';
 
 const ProfileView = () => {
-  const currentUserData = useSelector((state) => state.user.data);
-  const {
-    username, email, birthday, favoriteMovies,
-  } = currentUserData;
+  const currentUserData = useSelector((state: IState) => state.user.data);
+  const { username, email, birthday, favoriteMovies } = currentUserData;
 
   const {
     formatDate,
@@ -41,7 +39,7 @@ const ProfileView = () => {
             type="text"
             defaultValue={username}
             onChange={(e) => setUsername(e.target.value)}
-            minLength="5"
+            minLength={5}
             pattern="^[a-zA-Z0-9]+$"
           />
         </label>

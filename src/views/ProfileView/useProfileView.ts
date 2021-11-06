@@ -1,20 +1,22 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, MouseEvent } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
+import { IState } from '../../features/types';
+
 import { updateUserData, deleteUser } from '../../features';
 
-const formatDate = (date) => {
+const formatDate = (date: string) => {
   const inputDate = new Date(date);
   return inputDate.toISOString().substr(0, 10);
 };
 
 const useProfileView = () => {
   const dispatch = useDispatch();
-
-  const currentUserData = useSelector((state) => state.user.data);
+  const updateFormRef = useRef<HTMLFormElement>(null);
+  const currentUserData = useSelector((state: IState) => state.user.data);
 
   const [newUserData, setNewUserData] = useState({
     ...currentUserData,
@@ -24,38 +26,37 @@ const useProfileView = () => {
 
   const updateChangedStatus = () => {
     setDataHasChanged(
-      newUserData.username !== currentUserData.username
-        || newUserData.password !== ''
-        || newUserData.email !== currentUserData.email
-        || formatDate(newUserData.birthday)
-          !== formatDate(currentUserData.birthday),
+      newUserData.username !== currentUserData.username ||
+        newUserData.password !== '' ||
+        newUserData.email !== currentUserData.email ||
+        formatDate(newUserData.birthday) !==
+          formatDate(currentUserData.birthday),
     );
   };
 
-  const updateNewUserData = (key, value) => {
+  const updateNewUserData = (key: string, value: string) => {
     setNewUserData({ ...newUserData, [key]: value });
   };
 
-  const setUsername = (newUsername) =>
+  const setUsername = (newUsername: string) =>
     updateNewUserData('username', newUsername);
-  const setPassword = (newPassword) =>
+  const setPassword = (newPassword: string) =>
     updateNewUserData('password', newPassword);
-  const setEmail = (newEmail) => updateNewUserData('email', newEmail);
-  const setBirthday = (newBirthday) =>
+  const setEmail = (newEmail: string) => updateNewUserData('email', newEmail);
+  const setBirthday = (newBirthday: string) =>
     updateNewUserData('birthday', newBirthday);
 
-  const updateFormRef = useRef();
+  const isUpdateFormInputValid = () => updateFormRef.current?.reportValidity();
 
-  const isUpdateFormInputValid = () => updateFormRef.current.reportValidity();
-
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
+
     if (isUpdateFormInputValid()) {
       dispatch(updateUserData(newUserData));
     }
   };
 
-  const handleDelete = async (e) => {
+  const handleDelete = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     // eslint-disable-next-line no-alert
     const deletionConfirmed = confirm(

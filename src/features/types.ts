@@ -1,3 +1,10 @@
+export interface IUserData {
+  birthday: string;
+  email: string;
+  password: string;
+  username: string;
+}
+
 export interface IUser {
   data: {
     _id: string;

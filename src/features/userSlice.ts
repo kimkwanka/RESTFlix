@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { IState, IUser } from './types';
+import { IState, IUser, IUserData } from './types';
 
 import { thunkFetch } from './utils/thunkFetch';
 
@@ -35,7 +35,7 @@ export const registerUser = createAsyncThunk(
 
 export const updateUserData = createAsyncThunk(
   'user/updateUserData',
-  async (newUserData, thunkAPI) => {
+  async (newUserData: IUserData, thunkAPI) => {
     const userId = (thunkAPI.getState() as IState).user.data._id;
 
     return thunkFetch({
