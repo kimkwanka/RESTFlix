@@ -1,9 +1,9 @@
-import React, { useState, useRef } from 'react';
+import { memo, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useSelector } from 'react-redux';
 
-import PropTypes from 'prop-types';
+import { IState, IMovie } from '@features/types';
 
 import './MovieModal.scss';
 
@@ -12,11 +12,17 @@ import FavoriteButton from '../../FavoriteButton/FavoriteButton';
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 const videoRoot = `${process.env.MOVIE_API_URL}/video/`;
 
-const MovieModal = ({ movie }) => {
-  const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
+interface MovieModalProps {
+  movie: IMovie;
+}
+
+const MovieModal = ({ movie }: MovieModalProps) => {
+  const favoriteMovies = useSelector(
+    (state: IState) => state.user.data.favoriteMovies,
+  );
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
 
-  const previewVideo = useRef(null);
+  const previewVideo = useRef<HTMLVideoElement>(null);
 
   const [isHovered, setIsHovered] = useState(false);
 
@@ -50,7 +56,6 @@ const MovieModal = ({ movie }) => {
           crossOrigin="anonymous"
           muted
           loop
-          type="video/webm"
         />
         <img
           className="movie-modal__img"
@@ -79,17 +84,4 @@ const MovieModal = ({ movie }) => {
   );
 };
 
-MovieModal.propTypes = {
-  movie: PropTypes.PropTypes.shape({
-    _id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    description: PropTypes.string.isRequired,
-    slug: PropTypes.string.isRequired,
-    genre: PropTypes.shape({
-      name: PropTypes.string.isRequired,
-    }),
-    rating: PropTypes.number.isRequired,
-  }).isRequired,
-};
-
-export default React.memo(MovieModal);
+export default memo(MovieModal);

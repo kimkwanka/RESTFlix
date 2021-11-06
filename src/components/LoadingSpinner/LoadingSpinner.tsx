@@ -1,12 +1,14 @@
 import React from 'react';
 
-import { useSelector, RootStateOrAny } from 'react-redux';
+import { useSelector } from 'react-redux';
+
+import { IState } from '@features/types';
 
 import './LoadingSpinner.scss';
 
 const LoadingSpinner = () => {
   const isRequestPending = useSelector(
-    (state: RootStateOrAny) => state.ui.isRequestPending,
+    (state: IState) => state.ui.isRequestPending,
   );
 
   return isRequestPending ? <div className="loading-spinner" /> : null;

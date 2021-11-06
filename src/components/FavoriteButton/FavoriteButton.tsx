@@ -1,25 +1,33 @@
-import React from 'react';
+import { memo, MouseEvent } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import PropTypes from 'prop-types';
+import { IState } from '@features/types';
 
 import './FavoriteButton.scss';
 
 import { addMovieToFavorites, removeMovieFromFavorites } from '../../features';
 
-const FavoriteButton = ({ movieId, showText, clear }) => {
+interface IFavoriteButtonProps {
+  movieId: string;
+  showText?: boolean;
+  clear: boolean;
+}
+
+const FavoriteButton = ({ movieId, showText, clear }: IFavoriteButtonProps) => {
   const dispatch = useDispatch();
 
-  const favoriteMovies = useSelector((state) => state.user.data.favoriteMovies);
+  const favoriteMovies = useSelector(
+    (state: IState) => state.user.data.favoriteMovies,
+  );
   const isFavorite = favoriteMovies.indexOf(movieId) !== -1;
 
-  const addToFavorites = (e) => {
+  const addToFavorites = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(addMovieToFavorites(movieId));
   };
 
-  const removeFromFavorites = (e) => {
+  const removeFromFavorites = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
     dispatch(removeMovieFromFavorites(movieId));
   };
@@ -47,15 +55,4 @@ const FavoriteButton = ({ movieId, showText, clear }) => {
   );
 };
 
-FavoriteButton.propTypes = {
-  movieId: PropTypes.string.isRequired,
-  showText: PropTypes.bool,
-  clear: PropTypes.bool,
-};
-
-FavoriteButton.defaultProps = {
-  showText: false,
-  clear: false,
-};
-
-export default React.memo(FavoriteButton);
+export default memo(FavoriteButton);

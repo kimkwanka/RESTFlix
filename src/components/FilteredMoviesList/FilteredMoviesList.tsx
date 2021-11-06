@@ -1,16 +1,16 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch, RootStateOrAny } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 import { fetchMovies } from '@features/index';
-import { IMovie } from '@features/types';
+import { IState, IMovie } from '@features/types';
 
 import MovieCard from '../MovieCard/MovieCard';
 
 import './FilteredMoviesList.scss';
 
-interface IFilteredMoviesListParams {
+interface IFilteredMoviesListProps {
   filterFunc: () => boolean;
   allowDuplicates?: boolean;
 }
@@ -18,7 +18,7 @@ interface IFilteredMoviesListParams {
 const FilteredMoviesList = ({
   filterFunc,
   allowDuplicates,
-}: IFilteredMoviesListParams) => {
+}: IFilteredMoviesListProps) => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -26,7 +26,7 @@ const FilteredMoviesList = ({
     return () => {};
   }, []);
 
-  const movies = useSelector((state: RootStateOrAny) => state.movies);
+  const movies = useSelector((state: IState) => state.movies);
 
   // Filter out movies by using the filterFunc.
   // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
