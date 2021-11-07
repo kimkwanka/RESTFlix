@@ -1,12 +1,12 @@
 import { useAppSelector } from '../../features/hooks';
 
-import { IState, IMovie } from '../../features/types';
+import { TRootState, IMovie } from '../../features/types';
 
 import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
 
 import './DirectorView.scss';
 
-const selectDirectorByName = (state: IState, directorName: string) => {
+const selectDirectorByName = (state: TRootState, directorName: string) => {
   const movieWithDirector = state.movies.find(
     (movie: IMovie) => movie.director.name === directorName,
   );

@@ -1,12 +1,12 @@
 import { useAppSelector } from '../../features/hooks';
 
-import { IState } from '../../features/types';
+import { TRootState } from '../../features/types';
 
 import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
 
 import './GenreView.scss';
 
-const selectGenreByName = (state: IState, genreName: string) => {
+const selectGenreByName = (state: TRootState, genreName: string) => {
   const movieWithGenre = state.movies.find(
     (movie) => movie.genre.name === genreName,
   );

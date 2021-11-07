@@ -1,11 +1,18 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { IState, IUser, IUserData } from './types';
+import { TRootState, IUser } from './types';
 
 import { thunkFetch } from './utils/thunkFetch';
 
 const API_URL = process.env.MOVIE_API_URL;
+
+interface IUserData {
+  birthday: string;
+  email: string;
+  password: string;
+  username: string;
+}
 
 export const loginUser = createAsyncThunk(
   'user/loginUser',
@@ -36,7 +43,7 @@ export const registerUser = createAsyncThunk(
 export const updateUserData = createAsyncThunk(
   'user/updateUserData',
   async (newUserData: IUserData, thunkAPI) => {
-    const userId = (thunkAPI.getState() as IState).user.data._id;
+    const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -50,7 +57,7 @@ export const updateUserData = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'user/deleteUser',
   async (_, thunkAPI) => {
-    const userId = (thunkAPI.getState() as IState).user.data._id;
+    const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -63,7 +70,7 @@ export const deleteUser = createAsyncThunk(
 export const addMovieToFavorites = createAsyncThunk(
   'user/addMovieToFavorites',
   async (movieId: string, thunkAPI) => {
-    const userId = (thunkAPI.getState() as IState).user.data._id;
+    const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
       thunkAPI,
@@ -77,7 +84,7 @@ export const addMovieToFavorites = createAsyncThunk(
 export const removeMovieFromFavorites = createAsyncThunk(
   'user/removeMovieFromFavorites',
   async (movieId: string, thunkAPI) => {
-    const userId = (thunkAPI.getState() as IState).user.data._id;
+    const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
       thunkAPI,

@@ -1,10 +1,3 @@
-export interface IUserData {
-  birthday: string;
-  email: string;
-  password: string;
-  username: string;
-}
-
 export interface IUser {
   data: {
     _id: string;
@@ -17,40 +10,28 @@ export interface IUser {
   isLoggedIn?: boolean;
   token: string;
 }
-export interface IUI {
-  isRequestPending: boolean;
-  searchTerm: string;
-}
-interface IGenre {
-  description: string;
-  name: string;
-}
-
-interface IDirector {
-  bio: string;
-  birth: string;
-  death: string;
-  name: string;
-}
 
 export interface IMovie {
   _id: string;
   description: string;
-  director: IDirector;
+  director: {
+    bio: string;
+    birth: string;
+    death: string;
+    name: string;
+  };
   featured: boolean;
-  genre: IGenre;
+  genre: {
+    description: string;
+    name: string;
+  };
   rating: number;
   slug: string;
   title: string;
 }
 
-export interface IState {
-  errors: {
-    loginErrors: string[];
-    registerErrors: string[];
-    profileErrors: string[];
-  };
-  movies: IMovie[];
-  ui: IUI;
-  user: IUser;
-}
+// Dependency cycle is ok here since TypeScript compiler can correctly handle it for types.
+// (Check https://redux-toolkit.js.org/tutorials/typescript#application-usage for more details)
+
+// eslint-disable-next-line import/no-cycle
+export type { TRootState } from './store';

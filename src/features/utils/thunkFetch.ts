@@ -1,4 +1,4 @@
-import { IState } from '../types';
+import { TRootState } from '../types';
 
 interface ThunkApi {
   getState(): unknown;
@@ -25,7 +25,7 @@ export const thunkFetch = async ({
     let Authorization = '';
 
     if (useAuth) {
-      const jwtToken = (getState() as IState).user.token;
+      const jwtToken = (getState() as TRootState).user.token;
       Authorization = `Bearer ${jwtToken}`;
     }
 
