@@ -1,21 +1,19 @@
 import { MouseEvent } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-
 import { NavLink } from 'react-router-dom';
 
-import { logoutUser } from '../../features';
+import { useAppSelector, useAppDispatch } from '../../features/hooks';
 
-import { IState } from '../../features/types';
+import { logoutUser } from '../../features/actions';
 
 import SearchBar from './SearchBar/SearchBar';
 
 import './NavBar.scss';
 
 const NavBar = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
-  const isLoggedIn = useSelector((state: IState) => state.user.isLoggedIn);
+  const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const handleLogoutClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();

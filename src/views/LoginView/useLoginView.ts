@@ -2,13 +2,11 @@
 import { useState, useRef, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../features/hooks';
 
-import { loginUser } from '../../features';
+import { loginUser } from '../../features/actions';
 
 import { IUser } from '../../features/types';
-
-import { IDispatch } from '../../features/store';
 
 const saveToLocalStorage = (user: IUser) => {
   localStorage.setItem('user', JSON.stringify(user));
@@ -16,7 +14,7 @@ const saveToLocalStorage = (user: IUser) => {
 
 const useLoginView = () => {
   const history = useHistory();
-  const dispatch = useDispatch<IDispatch>();
+  const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('FlyingBanana');
   const [password, setPassword] = useState('test123');

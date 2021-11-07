@@ -2,15 +2,13 @@ import { useState, useRef, MouseEvent } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '../../features/hooks';
 
-import { registerUser } from '../../features';
-
-import { IDispatch } from '../../features/store';
+import { registerUser } from '../../features/actions';
 
 const RegistrationView = () => {
   const history = useHistory();
-  const dispatch = useDispatch<IDispatch>();
+  const dispatch = useAppDispatch();
   const registerFormRef = useRef<HTMLFormElement>(null);
 
   const [newUserData, setNewUserData] = useState({

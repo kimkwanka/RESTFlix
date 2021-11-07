@@ -1,10 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../features/hooks';
 
 import useProfileView from './useProfileView';
-
-import { IState } from '../../features/types';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
 
@@ -13,7 +11,7 @@ import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMovi
 import './ProfileView.scss';
 
 const ProfileView = () => {
-  const currentUserData = useSelector((state: IState) => state.user.data);
+  const currentUserData = useAppSelector((state) => state.user.data);
   const { username, email, birthday, favoriteMovies } = currentUserData;
 
   const {

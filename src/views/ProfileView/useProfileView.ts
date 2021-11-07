@@ -2,11 +2,9 @@
 /* eslint no-restricted-globals: ["error"] */
 import { useState, useEffect, useRef, MouseEvent } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../features/hooks';
 
-import { IState } from '../../features/types';
-
-import { updateUserData, deleteUser } from '../../features';
+import { updateUserData, deleteUser } from '../../features/actions';
 
 const formatDate = (date: string) => {
   const inputDate = new Date(date);
@@ -14,9 +12,9 @@ const formatDate = (date: string) => {
 };
 
 const useProfileView = () => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const updateFormRef = useRef<HTMLFormElement>(null);
-  const currentUserData = useSelector((state: IState) => state.user.data);
+  const currentUserData = useAppSelector((state) => state.user.data);
 
   const [newUserData, setNewUserData] = useState({
     ...currentUserData,

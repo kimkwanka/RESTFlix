@@ -14,6 +14,7 @@ const store = configureStore({
   preloadedState,
 });
 
-export type IDispatch = typeof store.dispatch;
+export type TAppDispatch = typeof store.dispatch;
+export type TRootState = ReturnType<typeof rootReducer>;
 
 export default store;

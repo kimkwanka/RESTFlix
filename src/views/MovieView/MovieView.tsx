@@ -2,9 +2,9 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../features/hooks';
 
-import { IState, IMovie } from '../../features/types';
+import { IMovie } from '../../features/types';
 
 import FavoriteButton from '../../components/FavoriteButton/FavoriteButton';
 
@@ -25,7 +25,7 @@ const MovieView = ({
     params: { movieId },
   },
 }: IMovieViewProps) => {
-  const movies = useSelector((state: IState) => state.movies);
+  const movies = useAppSelector((state) => state.movies);
   const movie = movies.find((m: IMovie) => m._id === movieId);
 
   return (

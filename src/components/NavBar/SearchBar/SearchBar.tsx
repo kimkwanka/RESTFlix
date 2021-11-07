@@ -1,17 +1,15 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useRef } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../../features/hooks';
 
-import { setSearchTerm } from '../../../features';
-
-import { IState } from '../../../features/types';
+import { setSearchTerm } from '../../../features/actions';
 
 import './SearchBar.scss';
 
 const SearchBar = () => {
-  const searchTerm = useSelector((state: IState) => state.ui.searchTerm);
-  const dispatch = useDispatch();
+  const searchTerm = useAppSelector((state) => state.ui.searchTerm);
+  const dispatch = useAppDispatch();
 
   const inputRef = useRef<HTMLInputElement>(null);
 

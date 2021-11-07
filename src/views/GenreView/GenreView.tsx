@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../features/hooks';
 
 import { IState } from '../../features/types';
 
@@ -28,9 +28,7 @@ const GenreView = ({
     params: { genreName },
   },
 }: IGenreViewProps) => {
-  const genre = useSelector((state: IState) =>
-    selectGenreByName(state, genreName),
-  );
+  const genre = useAppSelector((state) => selectGenreByName(state, genreName));
 
   return (
     <div className="genre-view">

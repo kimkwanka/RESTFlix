@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../features/hooks';
 
-import { IState, IMovie } from '../../features/types';
+import { IMovie } from '../../features/types';
 
 import MovieModal from './MovieModal/MovieModal';
 
@@ -11,9 +11,13 @@ import './MovieCard.scss';
 
 const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
 
-const MovieCard = ({ movie }: { movie: IMovie }) => {
-  const favoriteMovies = useSelector(
-    (state: IState) => state.user.data.favoriteMovies,
+interface IMovieCardProps {
+  movie: IMovie;
+}
+
+const MovieCard = ({ movie }: IMovieCardProps) => {
+  const favoriteMovies = useAppSelector(
+    (state) => state.user.data.favoriteMovies,
   );
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
 

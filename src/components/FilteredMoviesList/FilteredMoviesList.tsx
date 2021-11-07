@@ -1,10 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useEffect } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
-
-import { fetchMovies } from '../../features/index';
-import { IState, IMovie } from '../../features/types';
+import { useAppSelector, useAppDispatch } from '../../features/hooks';
+import { IMovie } from '../../features/types';
+import { fetchMovies } from '../../features/actions';
 
 import MovieCard from '../MovieCard/MovieCard';
 
@@ -19,14 +18,14 @@ const FilteredMoviesList = ({
   filterFunc,
   allowDuplicates,
 }: IFilteredMoviesListProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     dispatch(fetchMovies());
     return () => {};
   }, []);
 
-  const movies = useSelector((state: IState) => state.movies);
+  const movies = useAppSelector((state) => state.movies);
 
   // Filter out movies by using the filterFunc.
   // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
@@ -37,7 +36,7 @@ const FilteredMoviesList = ({
 
   return (
     <div className="movies-list">
-      {filteredMovies.map((movie: IMovie, index: number) => (
+      {filteredMovies.map((movie, index: number) => (
         <MovieCard key={`${movie._id}${index}`} movie={movie} />
       ))}
     </div>

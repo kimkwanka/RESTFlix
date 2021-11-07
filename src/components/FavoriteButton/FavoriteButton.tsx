@@ -1,12 +1,13 @@
 import { memo, MouseEvent } from 'react';
 
-import { useSelector, useDispatch } from 'react-redux';
+import { useAppSelector, useAppDispatch } from '../../features/hooks';
 
-import { IState } from '../../features/types';
+import {
+  addMovieToFavorites,
+  removeMovieFromFavorites,
+} from '../../features/actions';
 
 import './FavoriteButton.scss';
-
-import { addMovieToFavorites, removeMovieFromFavorites } from '../../features';
 
 interface IFavoriteButtonProps {
   movieId?: string;
@@ -15,14 +16,14 @@ interface IFavoriteButtonProps {
 }
 
 const FavoriteButton = ({ movieId, showText, clear }: IFavoriteButtonProps) => {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
 
   if (!movieId) {
     return null;
   }
 
-  const favoriteMovies = useSelector(
-    (state: IState) => state.user.data.favoriteMovies,
+  const favoriteMovies = useAppSelector(
+    (state) => state.user.data.favoriteMovies,
   );
   const isFavorite = favoriteMovies.indexOf(movieId) !== -1;
 

@@ -24,7 +24,7 @@ export const fetchMovies = createAsyncThunk(
 
 const moviesSlice = createSlice({
   name: 'movies',
-  initialState: [],
+  initialState: [] as IMovie[],
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {

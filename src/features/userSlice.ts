@@ -99,7 +99,7 @@ const userSlice = createSlice({
       _id: '',
       birthday: '',
       email: '',
-      favoriteMovies: [],
+      favoriteMovies: [] as string[],
       password: '',
       username: '',
     },

@@ -1,9 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React from 'react';
 
-import { useSelector } from 'react-redux';
-
-import { IState } from '../../features/types';
+import { useAppSelector } from '../../features/hooks';
 
 import './ErrorMessages.scss';
 
@@ -12,7 +10,7 @@ interface IErrorMessagesProps {
 }
 
 const ErrorMessages = ({ errorType }: IErrorMessagesProps) => {
-  const errorMessages = useSelector((state: IState) => state.errors[errorType]);
+  const errorMessages = useAppSelector((state) => state.errors[errorType]);
 
   return (
     <div className="m-4">

@@ -1,9 +1,9 @@
 import { memo, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../../features/hooks';
 
-import { IState, IMovie } from '../../../features/types';
+import { IMovie } from '../../../features/types';
 
 import './MovieModal.scss';
 
@@ -17,8 +17,8 @@ interface MovieModalProps {
 }
 
 const MovieModal = ({ movie }: MovieModalProps) => {
-  const favoriteMovies = useSelector(
-    (state: IState) => state.user.data.favoriteMovies,
+  const favoriteMovies = useAppSelector(
+    (state) => state.user.data.favoriteMovies,
   );
   const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
 

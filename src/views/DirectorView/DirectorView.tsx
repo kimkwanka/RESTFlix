@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { useSelector } from 'react-redux';
+import { useAppSelector } from '../../features/hooks';
 
 import { IState, IMovie } from '../../features/types';
 
@@ -28,7 +28,7 @@ const DirectorView = ({
     params: { directorName },
   },
 }: IDirectorViewProps) => {
-  const director = useSelector((state: IState) =>
+  const director = useAppSelector((state) =>
     selectDirectorByName(state, directorName),
   );
 
