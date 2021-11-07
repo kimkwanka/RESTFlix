@@ -1,3 +1,3 @@
-export * from './userSlice';
-export * from './uiSlice';
-export * from './moviesSlice';
+export * from './slices/user';
+export * from './slices/ui';
+export * from './slices/movies';

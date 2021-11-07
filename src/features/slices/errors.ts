@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice } from '@reduxjs/toolkit';
 
-import { loginUser, registerUser, updateUserData } from './userSlice';
+import { loginUser, registerUser, updateUserData } from './user';
 
 const errorsSlice = createSlice({
   name: 'errors',
