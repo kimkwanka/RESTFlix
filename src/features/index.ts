@@ -11,7 +11,3 @@ export default combineReducers({
   errors: errorsReducer,
   movies: moviesReducer,
 });
-
-export * from './userSlice';
-export * from './uiSlice';
-export * from './moviesSlice';
