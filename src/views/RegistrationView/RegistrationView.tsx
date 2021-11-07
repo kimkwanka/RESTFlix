@@ -35,7 +35,7 @@ const RegistrationView = () => {
             defaultValue={username}
             onChange={(e) => setUsername(e.target.value)}
             required
-            minLength="5"
+            minLength={5}
             pattern="^[a-zA-Z0-9]+$"
           />
         </label>

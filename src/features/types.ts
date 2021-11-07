@@ -14,7 +14,7 @@ export interface IUser {
     password: string;
     username: string;
   };
-  isLoggedIn: boolean;
+  isLoggedIn?: boolean;
   token: string;
 }
 export interface IUI {

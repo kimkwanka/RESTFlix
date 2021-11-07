@@ -23,7 +23,7 @@ export const loginUser = createAsyncThunk(
 
 export const registerUser = createAsyncThunk(
   'user/registerUser',
-  async (newUserData, thunkAPI) =>
+  async (newUserData: IUserData, thunkAPI) =>
     thunkFetch({
       thunkAPI,
       url: `${API_URL}/users`,

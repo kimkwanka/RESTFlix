@@ -1,33 +1,37 @@
 /* eslint-disable no-underscore-dangle */
-import { useState, useRef } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useDispatch } from 'react-redux';
 
 import { loginUser } from '../../features';
 
-const saveToLocalStorage = (user) => {
+import { IUser } from '../../features/types';
+
+import { IDispatch } from '../../features/store';
+
+const saveToLocalStorage = (user: IUser) => {
   localStorage.setItem('user', JSON.stringify(user));
 };
 
 const useLoginView = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<IDispatch>();
 
   const [username, setUsername] = useState('FlyingBanana');
   const [password, setPassword] = useState('test123');
 
-  const loginFormRef = useRef();
+  const loginFormRef = useRef<HTMLFormElement>(null);
 
-  const isLoginFormInputValid = () => loginFormRef.current.reportValidity();
+  const isLoginFormInputValid = () => loginFormRef.current?.reportValidity();
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
       try {
-        const { user, token } = await dispatch(
+        const { user, token } = (await dispatch(
           loginUser({ username, password }),
-        ).unwrap();
+        ).unwrap()) as { user: IUser['data']; token: string };
 
         history.push('/');
         saveToLocalStorage({ data: user, token });

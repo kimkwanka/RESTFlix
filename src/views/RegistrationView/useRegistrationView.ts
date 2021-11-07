@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
@@ -6,34 +6,33 @@ import { useDispatch } from 'react-redux';
 
 import { registerUser } from '../../features';
 
+import { IDispatch } from '../../features/store';
+
 const RegistrationView = () => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<IDispatch>();
+  const registerFormRef = useRef<HTMLFormElement>(null);
 
   const [newUserData, setNewUserData] = useState({
     username: '',
     password: '',
     email: '',
-    birthday: null,
+    birthday: '',
   });
 
-  const setUsername = (username) =>
+  const setUsername = (username: string) =>
     setNewUserData({ ...newUserData, username });
-  const setPassword = (password) =>
+  const setPassword = (password: string) =>
     setNewUserData({ ...newUserData, password });
-  const setEmail = (email) => setNewUserData({ ...newUserData, email });
-  const setBirthday = (birthday) =>
+  const setEmail = (email: string) => setNewUserData({ ...newUserData, email });
+  const setBirthday = (birthday: string) =>
     setNewUserData({ ...newUserData, birthday });
 
-  const {
-    username, password, email, birthday,
-  } = newUserData;
+  const { username, password, email, birthday } = newUserData;
 
-  const registerFormRef = useRef();
+  const isRegisterInputValid = () => registerFormRef.current?.reportValidity();
 
-  const isRegisterInputValid = () => registerFormRef.current.reportValidity();
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (isRegisterInputValid()) {

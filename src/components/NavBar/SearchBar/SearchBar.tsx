@@ -3,21 +3,23 @@ import React, { useState, useRef } from 'react';
 
 import { useSelector, useDispatch } from 'react-redux';
 
-import './SearchBar.scss';
-
 import { setSearchTerm } from '../../../features';
 
+import { IState } from '../../../features/types';
+
+import './SearchBar.scss';
+
 const SearchBar = () => {
-  const searchTerm = useSelector((state) => state.ui.searchTerm);
+  const searchTerm = useSelector((state: IState) => state.ui.searchTerm);
   const dispatch = useDispatch();
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenClick = () => {
     setIsOpen(true);
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   const handleLoseFocus = () => {
