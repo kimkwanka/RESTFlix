@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useRef } from 'react';
+import { useState, useRef } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../../features/hooks';
 

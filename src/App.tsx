@@ -1,5 +1,3 @@
-import React from 'react';
-
 import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
 import NavBar from './components/NavBar/NavBar';
 

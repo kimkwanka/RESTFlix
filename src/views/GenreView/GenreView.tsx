@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAppSelector } from '../../features/hooks';
 
 import { IState } from '../../features/types';

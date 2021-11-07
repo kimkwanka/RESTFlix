@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useAppSelector } from '../../features/hooks';
 
 import { IState, IMovie } from '../../features/types';

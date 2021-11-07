@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '../../features/hooks';
@@ -37,4 +37,4 @@ const MovieCard = ({ movie }: IMovieCardProps) => {
   );
 };
 
-export default React.memo(MovieCard);
+export default memo(MovieCard);

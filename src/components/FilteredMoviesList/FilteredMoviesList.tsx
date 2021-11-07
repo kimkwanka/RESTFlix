@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useEffect } from 'react';
+import { memo, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../features/hooks';
 import { IMovie } from '../../features/types';
@@ -43,4 +43,4 @@ const FilteredMoviesList = ({
   );
 };
 
-export default React.memo(FilteredMoviesList);
+export default memo(FilteredMoviesList);
