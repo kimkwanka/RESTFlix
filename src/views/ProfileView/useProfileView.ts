@@ -1,6 +1,6 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-import { useState, useEffect, useRef, MouseEvent } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 
 import { useAppSelector, useAppDispatch } from '../../features/hooks';
 
@@ -12,25 +12,21 @@ const formatDate = (date: string) => {
 };
 
 const useProfileView = () => {
+  const currentUserData = useAppSelector((state) => state.user.data);
+
   const dispatch = useAppDispatch();
   const updateFormRef = useRef<HTMLFormElement>(null);
-  const currentUserData = useAppSelector((state) => state.user.data);
 
   const [newUserData, setNewUserData] = useState({
     ...currentUserData,
     password: '',
   });
-  const [dataHasChanged, setDataHasChanged] = useState(false);
 
-  const updateChangedStatus = () => {
-    setDataHasChanged(
-      newUserData.username !== currentUserData.username ||
-        newUserData.password !== '' ||
-        newUserData.email !== currentUserData.email ||
-        formatDate(newUserData.birthday) !==
-          formatDate(currentUserData.birthday),
-    );
-  };
+  const userDataChanged =
+    newUserData.username !== currentUserData.username ||
+    newUserData.password !== '' ||
+    newUserData.email !== currentUserData.email ||
+    formatDate(newUserData.birthday) !== formatDate(currentUserData.birthday);
 
   const updateNewUserData = (key: string, value: string) => {
     setNewUserData({ ...newUserData, [key]: value });
@@ -66,11 +62,14 @@ const useProfileView = () => {
     }
   };
 
-  useEffect(() => {
-    updateChangedStatus();
-  }, [newUserData, currentUserData]);
+  const { username, email, password, birthday, favoriteMovies } = newUserData;
 
   return {
+    username,
+    email,
+    password,
+    birthday,
+    favoriteMovies,
     formatDate,
     handleSubmit,
     handleDelete,
@@ -78,7 +77,7 @@ const useProfileView = () => {
     setBirthday,
     setPassword,
     setUsername,
-    dataHasChanged,
+    userDataChanged,
     updateFormRef,
   };
 };

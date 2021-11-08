@@ -1,7 +1,5 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
-import { useAppSelector } from '../../features/hooks';
-
 import useProfileView from './useProfileView';
 
 import ErrorMessages from '../../components/ErrorMessages/ErrorMessages';
@@ -11,10 +9,12 @@ import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMovi
 import './ProfileView.scss';
 
 const ProfileView = () => {
-  const currentUserData = useAppSelector((state) => state.user.data);
-  const { username, email, birthday, favoriteMovies } = currentUserData;
-
   const {
+    username,
+    email,
+    password,
+    birthday,
+    favoriteMovies,
     formatDate,
     handleSubmit,
     handleDelete,
@@ -22,7 +22,7 @@ const ProfileView = () => {
     setBirthday,
     setPassword,
     setUsername,
-    dataHasChanged,
+    userDataChanged,
     updateFormRef,
   } = useProfileView();
 
@@ -35,7 +35,7 @@ const ProfileView = () => {
           <input
             id="formUsername"
             type="text"
-            defaultValue={username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             minLength={5}
             pattern="^[a-zA-Z0-9]+$"
@@ -46,7 +46,7 @@ const ProfileView = () => {
           <input
             id="formPassword"
             type="password"
-            defaultValue=""
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
@@ -55,7 +55,7 @@ const ProfileView = () => {
           <input
             id="formEmail"
             type="email"
-            defaultValue={email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
@@ -64,13 +64,13 @@ const ProfileView = () => {
           <input
             id="formBirthday"
             type="date"
-            defaultValue={formatDate(birthday)}
+            value={formatDate(birthday)}
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
         <div className="profile-view__button-wrapper">
           <button
-            disabled={!dataHasChanged}
+            disabled={!userDataChanged}
             className="profile-view__update-button"
             type="submit"
             onClick={handleSubmit}
