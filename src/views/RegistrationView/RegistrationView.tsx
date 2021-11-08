@@ -16,6 +16,7 @@ const RegistrationView = () => {
     setEmail,
     setBirthday,
     registerFormRef,
+    isDisabled,
   } = useRegistrationView();
 
   return (
@@ -26,11 +27,11 @@ const RegistrationView = () => {
         ref={registerFormRef}
       >
         <label htmlFor="formUsername">
-          Username:
+          Username:*
           <input
             id="formUsername"
             type="text"
-            defaultValue={username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength={5}
@@ -38,21 +39,21 @@ const RegistrationView = () => {
           />
         </label>
         <label htmlFor="formPassword">
-          Password:
+          Password:*
           <input
             id="formPassword"
             type="password"
-            defaultValue={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
         <label htmlFor="formEmail">
-          Email:
+          Email:*
           <input
             id="formEmail"
             type="email"
-            defaultValue={email}
+            value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
@@ -62,11 +63,16 @@ const RegistrationView = () => {
           <input
             id="formBirthday"
             type="date"
-            defaultValue={birthday}
+            value={birthday}
             onChange={(e) => setBirthday(e.target.value)}
           />
         </label>
-        <button className="secondary" type="submit" onClick={handleSubmit}>
+        <button
+          className="secondary"
+          type="submit"
+          onClick={handleSubmit}
+          disabled={isDisabled}
+        >
           Sign Up
         </button>
         <ErrorMessages errorType="registerErrors" />

@@ -23,6 +23,8 @@ const useLoginView = () => {
 
   const isLoginFormInputValid = () => loginFormRef.current?.reportValidity();
 
+  const isDisabled = !(username && password);
+
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
@@ -47,6 +49,7 @@ const useLoginView = () => {
     setUsername,
     setPassword,
     loginFormRef,
+    isDisabled,
   };
 };
 

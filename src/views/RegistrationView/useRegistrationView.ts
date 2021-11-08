@@ -30,6 +30,8 @@ const RegistrationView = () => {
 
   const isRegisterInputValid = () => registerFormRef.current?.reportValidity();
 
+  const isDisabled = !(username && password && email);
+
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
@@ -56,6 +58,7 @@ const RegistrationView = () => {
     setEmail,
     setBirthday,
     registerFormRef,
+    isDisabled,
   };
 };
 

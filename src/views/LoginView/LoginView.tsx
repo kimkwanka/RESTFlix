@@ -13,6 +13,7 @@ const LoginView = () => {
     setUsername,
     setPassword,
     loginFormRef,
+    isDisabled,
   } = useLoginView();
 
   return (
@@ -24,7 +25,7 @@ const LoginView = () => {
           <input
             id="formUsername"
             type="text"
-            defaultValue={username}
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
             minLength={5}
@@ -36,12 +37,12 @@ const LoginView = () => {
           <input
             id="formPassword"
             type="password"
-            defaultValue={password}
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </label>
-        <button type="submit" onClick={handleSubmit}>
+        <button type="submit" onClick={handleSubmit} disabled={isDisabled}>
           Sign In
         </button>
         <ErrorMessages errorType="loginErrors" />
