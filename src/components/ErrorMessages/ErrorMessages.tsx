@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import { useAppSelector } from '../../features/hooks';
+import { useAppSelector } from '@features/hooks';
 
 import './ErrorMessages.scss';
 

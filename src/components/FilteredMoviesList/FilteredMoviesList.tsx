@@ -1,11 +1,11 @@
 /* eslint-disable react/no-array-index-key */
 import { memo, useEffect } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../features/hooks';
-import { IMovie } from '../../features/types';
-import { fetchMovies } from '../../features/actions';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
+import { IMovie } from '@features/types';
+import { fetchMovies } from '@features/actions';
 
-import MovieCard from '../MovieCard/MovieCard';
+import MovieCard from '@components/MovieCard/MovieCard';
 
 import './FilteredMoviesList.scss';
 

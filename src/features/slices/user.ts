@@ -1,9 +1,9 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
-import { thunkFetch } from '../utils/thunkFetch';
+import { thunkFetch } from '@features/utils/thunkFetch';
 
-import { TRootState, IUser } from '../types';
+import { TRootState, IUser } from '@features/types';
 
 const API_URL = import.meta.env.VITE_MOVIE_API_URL;
 

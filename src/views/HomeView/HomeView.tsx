@@ -1,8 +1,8 @@
-import { useAppSelector } from '../../features/hooks';
+import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '../../features/types';
+import { IMovie } from '@features/types';
 
-import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
+import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
 const HomeView = () => {
   const searchTerm = useAppSelector((state) => state.ui.searchTerm);

@@ -1,14 +1,14 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { useAppSelector } from './features/hooks';
+import { useAppSelector } from '@features/hooks';
 
-import LoginView from './views/LoginView/LoginView';
-import RegistrationView from './views/RegistrationView/RegistrationView';
-import HomeView from './views/HomeView/HomeView';
-import MovieView from './views/MovieView/MovieView';
-import GenreView from './views/GenreView/GenreView';
-import DirectorView from './views/DirectorView/DirectorView';
-import ProfileView from './views/ProfileView/ProfileView';
+import LoginView from '@views/LoginView/LoginView';
+import RegistrationView from '@views/RegistrationView/RegistrationView';
+import HomeView from '@views/HomeView/HomeView';
+import MovieView from '@views/MovieView/MovieView';
+import GenreView from '@views/GenreView/GenreView';
+import DirectorView from '@views/DirectorView/DirectorView';
+import ProfileView from '@views/ProfileView/ProfileView';
 
 const Routes = () => {
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);

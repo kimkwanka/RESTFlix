@@ -1,13 +1,13 @@
 import { memo, useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '../../../features/hooks';
+import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '../../../features/types';
+import { IMovie } from '@features/types';
 
 import './MovieModal.scss';
 
-import FavoriteButton from '../../FavoriteButton/FavoriteButton';
+import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
 const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
 const videoRoot = `${import.meta.env.VITE_MOVIE_API_URL}/video/`;

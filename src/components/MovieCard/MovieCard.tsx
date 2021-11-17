@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '../../features/hooks';
+import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '../../features/types';
+import { IMovie } from '@features/types';
 
 import MovieModal from './MovieModal/MovieModal';
 

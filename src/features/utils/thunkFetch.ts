@@ -1,4 +1,4 @@
-import { TRootState } from '../types';
+import { TRootState } from '@features/types';
 
 interface ThunkApi {
   getState(): unknown;

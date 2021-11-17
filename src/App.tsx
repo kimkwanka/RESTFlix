@@ -1,5 +1,5 @@
-import LoadingSpinner from './components/LoadingSpinner/LoadingSpinner';
-import NavBar from './components/NavBar/NavBar';
+import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
+import NavBar from '@components/NavBar/NavBar';
 
 import Routes from './Routes';
 

@@ -2,9 +2,9 @@ import { MouseEvent } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { useAppSelector, useAppDispatch } from '../../features/hooks';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
 
-import { logoutUser } from '../../features/actions';
+import { logoutUser } from '@features/actions';
 
 import SearchBar from './SearchBar/SearchBar';
 

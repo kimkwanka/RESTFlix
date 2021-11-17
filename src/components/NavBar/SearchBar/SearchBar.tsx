@@ -1,9 +1,9 @@
 /* eslint-disable react/no-array-index-key */
 import { useState, useRef } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../../features/hooks';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
 
-import { setSearchTerm } from '../../../features/actions';
+import { setSearchTerm } from '@features/actions';
 
 import './SearchBar.scss';
 

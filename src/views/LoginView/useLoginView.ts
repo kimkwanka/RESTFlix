@@ -2,11 +2,11 @@
 import { useState, useRef, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 
-import { useAppDispatch } from '../../features/hooks';
+import { useAppDispatch } from '@features/hooks';
 
-import { loginUser } from '../../features/actions';
+import { loginUser } from '@features/actions';
 
-import { IUser } from '../../features/types';
+import { IUser } from '@features/types';
 
 const saveToLocalStorage = (user: IUser) => {
   localStorage.setItem('user', JSON.stringify(user));

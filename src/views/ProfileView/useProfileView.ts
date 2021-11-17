@@ -2,9 +2,9 @@
 /* eslint no-restricted-globals: ["error"] */
 import { useState, useRef, MouseEvent } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../features/hooks';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
 
-import { updateUserData, deleteUser } from '../../features/actions';
+import { updateUserData, deleteUser } from '@features/actions';
 
 const formatDate = (date: string) => {
   const inputDate = new Date(date);

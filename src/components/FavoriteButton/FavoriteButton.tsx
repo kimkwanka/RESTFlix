@@ -1,11 +1,11 @@
 import { memo, MouseEvent } from 'react';
 
-import { useAppSelector, useAppDispatch } from '../../features/hooks';
+import { useAppSelector, useAppDispatch } from '@features/hooks';
 
 import {
   addMovieToFavorites,
   removeMovieFromFavorites,
-} from '../../features/actions';
+} from '@features/actions';
 
 import './FavoriteButton.scss';
 

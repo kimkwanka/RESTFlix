@@ -2,9 +2,9 @@ import { useState, useRef, MouseEvent } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { useAppDispatch } from '../../features/hooks';
+import { useAppDispatch } from '@features/hooks';
 
-import { registerUser } from '../../features/actions';
+import { registerUser } from '@features/actions';
 
 const RegistrationView = () => {
   const history = useHistory();

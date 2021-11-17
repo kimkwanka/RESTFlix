@@ -1,8 +1,8 @@
-import { useAppSelector } from '../../features/hooks';
+import { useAppSelector } from '@features/hooks';
 
-import { TRootState, IMovie } from '../../features/types';
+import { TRootState, IMovie } from '@features/types';
 
-import FilteredMoviesList from '../../components/FilteredMoviesList/FilteredMoviesList';
+import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
 import './DirectorView.scss';
 
