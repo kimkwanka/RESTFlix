@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 /* eslint no-restricted-globals: ["error"] */
 import { useState, useRef, MouseEvent } from 'react';
 

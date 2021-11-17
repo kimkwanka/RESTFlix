@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useAppSelector } from '@features/hooks';
 
 import './ErrorMessages.scss';
@@ -13,8 +12,8 @@ const ErrorMessages = ({ errorType }: IErrorMessagesProps) => {
   return (
     <div className="m-4">
       <div>
-        {errorMessages.map((e, i) => (
-          <p className="error-text" key={`err${i}`}>
+        {errorMessages.map((e) => (
+          <p className="error-text" key={`err_${e.message}`}>
             {e.message}
           </p>
         ))}

@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { memo, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@features/hooks';
@@ -36,8 +35,8 @@ const FilteredMoviesList = ({
 
   return (
     <div className="movies-list">
-      {filteredMovies.map((movie, index: number) => (
-        <MovieCard key={`${movie._id}${index}`} movie={movie} />
+      {filteredMovies.map((movie) => (
+        <MovieCard key={`${movie._id}`} movie={movie} />
       ))}
     </div>
   );

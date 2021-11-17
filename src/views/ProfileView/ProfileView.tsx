@@ -1,5 +1,3 @@
-/* eslint-disable react/no-array-index-key */
-/* eslint no-restricted-globals: ["error"] */
 import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
 import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { useState, useRef, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 

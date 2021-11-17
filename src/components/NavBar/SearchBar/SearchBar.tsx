@@ -1,4 +1,3 @@
-/* eslint-disable react/no-array-index-key */
 import { useState, useRef } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@features/hooks';

@@ -1,4 +1,3 @@
-/* eslint-disable no-underscore-dangle */
 import { Link } from 'react-router-dom';
 
 import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
