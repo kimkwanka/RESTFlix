@@ -1,12 +1,13 @@
-## cf-myflix
+## RESTFlix
 Client written in React for the [cf-movie-api backend](https://github.com/kimkwanka/cf-movie-api).
 
 ## Built With
 - React
 - Redux
+- TypeScript
 
 ## Live demo
-Check out the [live demo](https://kk-myflix.netlify.app) to see the app in action.
+Check out the [live demo](https://restflix.netlify.app/) to see the app in action.
 
 ## Getting started
 
