@@ -2,8 +2,7 @@ import { TRootState } from '../types';
 
 interface ThunkApi {
   getState(): unknown;
-  rejectWithValue(value: unknown, meta: unknown): unknown;
-  fulfillWithValue(value: unknown, meta: unknown): unknown;
+  rejectWithValue(value: unknown, meta?: unknown): unknown;
 }
 
 export const thunkFetch = async ({
@@ -11,15 +10,13 @@ export const thunkFetch = async ({
   method = 'GET',
   useAuth = true,
   body = undefined,
-  thunkAPI: { getState, rejectWithValue, fulfillWithValue },
-  meta = undefined,
+  thunkAPI: { getState, rejectWithValue },
 }: {
   url: string;
   method?: string;
   useAuth?: boolean;
   body?: BodyInit | undefined;
   thunkAPI: ThunkApi;
-  meta?: string | undefined;
 }) => {
   try {
     let Authorization = '';
@@ -39,26 +36,17 @@ export const thunkFetch = async ({
       body,
     });
 
-    const isText = response.headers.get('Content-Type')?.startsWith('text');
+    const data = await response.json();
 
-    if (response.ok) {
-      const fulfilledResponse = isText
-        ? await response.text()
-        : await response.json();
-      return fulfillWithValue(fulfilledResponse, meta);
+    if (data?.errors?.length) {
+      return rejectWithValue(data);
     }
 
-    const responseErrors = isText
-      ? [await response.text()]
-      : (await response.json()).errors.map((e: { msg: string }) => e.msg);
-
-    console.error(responseErrors);
-
-    return rejectWithValue(responseErrors, meta);
+    return data;
   } catch (err) {
     const errorMessage = err instanceof Error ? err.toString() : err;
     console.error(err);
-    return rejectWithValue([errorMessage], meta);
+    return rejectWithValue([errorMessage]);
   }
 };
 

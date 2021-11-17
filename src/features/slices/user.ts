@@ -76,7 +76,6 @@ export const addMovieToFavorites = createAsyncThunk(
       thunkAPI,
       url: `${API_URL}/users/${userId}/movies/${movieId}`,
       method: 'POST',
-      meta: movieId,
     });
   },
 );
@@ -90,7 +89,6 @@ export const removeMovieFromFavorites = createAsyncThunk(
       thunkAPI,
       url: `${API_URL}/users/${userId}/movies/${movieId}`,
       method: 'DELETE',
-      meta: movieId,
     });
   },
 );

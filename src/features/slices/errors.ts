@@ -1,14 +1,14 @@
 /* eslint-disable no-param-reassign */
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, AnyAction } from '@reduxjs/toolkit';
 
 import { loginUser, registerUser, updateUserData } from './user';
 
 const errorsSlice = createSlice({
   name: 'errors',
   initialState: {
-    loginErrors: <Array<string>>[],
-    registerErrors: <Array<string>>[],
-    profileErrors: <Array<string>>[],
+    loginErrors: <Array<{ message: string }>>[],
+    registerErrors: <Array<{ message: string }>>[],
+    profileErrors: <Array<{ message: string }>>[],
   },
   reducers: {},
   extraReducers: (builder) => {
@@ -22,14 +22,14 @@ const errorsSlice = createSlice({
       .addCase(updateUserData.pending, (state) => {
         state.profileErrors = [];
       })
-      .addCase(loginUser.rejected, (state, action) => {
-        state.loginErrors = action.payload as string[];
+      .addCase(loginUser.rejected, (state, action: AnyAction) => {
+        state.loginErrors = action.payload.errors;
       })
-      .addCase(registerUser.rejected, (state, action) => {
-        state.registerErrors = action.payload as string[];
+      .addCase(registerUser.rejected, (state, action: AnyAction) => {
+        state.registerErrors = action.payload.errors;
       })
-      .addCase(updateUserData.rejected, (state, action) => {
-        state.profileErrors = action.payload as string[];
+      .addCase(updateUserData.rejected, (state, action: AnyAction) => {
+        state.profileErrors = action.payload.errors;
       });
   },
 });

@@ -15,7 +15,7 @@ const ErrorMessages = ({ errorType }: IErrorMessagesProps) => {
       <div>
         {errorMessages.map((e, i) => (
           <p className="error-text" key={`err${i}`}>
-            {e}
+            {e.message}
           </p>
         ))}
       </div>
