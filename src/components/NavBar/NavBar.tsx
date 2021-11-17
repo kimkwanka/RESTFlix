@@ -23,7 +23,7 @@ const NavBar = () => {
   return (
     <nav className="navbar">
       <h1 className="logo">
-        <span>my</span>
+        <span>REST</span>
         Flix
       </h1>
       {isLoggedIn && (

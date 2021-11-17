@@ -38,7 +38,7 @@ const SearchBar = () => {
         className="search-bar__input"
         onChange={(e) => dispatch(setSearchTerm(e.target.value))}
         value={searchTerm}
-        placeholder="Search myFlix"
+        placeholder="Search RESTFlix"
         onBlur={handleLoseFocus}
         ref={inputRef}
       />
