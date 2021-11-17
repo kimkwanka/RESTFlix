@@ -118,16 +118,13 @@ const userSlice = createSlice({
     builder.addCase(
       addMovieToFavorites.fulfilled,
       (state: IUser, action: AnyAction) => {
-        state.data.favoriteMovies.push(action.meta.arg);
+        state.data = action.payload.data;
       },
     );
     builder.addCase(
       removeMovieFromFavorites.fulfilled,
       (state: IUser, action: AnyAction) => {
-        const indexOfMovieIdToRemove = state.data.favoriteMovies.indexOf(
-          action.meta.arg,
-        );
-        state.data.favoriteMovies.splice(indexOfMovieIdToRemove, 1);
+        state.data = action.payload.data;
       },
     );
     builder.addCase(loginUser.fulfilled, (state, action: AnyAction) => ({
@@ -136,7 +133,7 @@ const userSlice = createSlice({
       isLoggedIn: true,
     }));
     builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
-      state.data = action.payload;
+      state.data = action.payload.data;
     });
     builder.addCase(deleteUser.fulfilled, () => ({
       data: {
