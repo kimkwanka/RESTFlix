@@ -8,7 +8,7 @@ import FavoriteButton from '../../components/FavoriteButton/FavoriteButton';
 
 import './MovieView.scss';
 
-const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
+const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
 
 interface IMovieViewProps {
   match: {

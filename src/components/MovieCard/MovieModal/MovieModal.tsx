@@ -9,8 +9,8 @@ import './MovieModal.scss';
 
 import FavoriteButton from '../../FavoriteButton/FavoriteButton';
 
-const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
-const videoRoot = `${process.env.MOVIE_API_URL}/video/`;
+const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
+const videoRoot = `${import.meta.env.VITE_MOVIE_API_URL}/video/`;
 
 interface MovieModalProps {
   movie: IMovie;

@@ -1,5 +1,3 @@
-import './_env';
-
 import ReactDOM from 'react-dom';
 
 import { BrowserRouter } from 'react-router-dom';
@@ -10,7 +8,7 @@ import store from './features/store';
 
 import App from './App';
 
-if (!process.env.MOVIE_API_URL) {
+if (!import.meta.env.VITE_MOVIE_API_URL) {
   throw new Error(
     'Environment variable MOVIE_API_URL is not set. Either provide it via a .env file or natively in your OS.',
   );

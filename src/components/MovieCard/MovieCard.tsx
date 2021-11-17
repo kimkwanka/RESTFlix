@@ -9,7 +9,7 @@ import MovieModal from './MovieModal/MovieModal';
 
 import './MovieCard.scss';
 
-const imgRoot = `${process.env.MOVIE_API_URL}/img/`;
+const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
 
 interface IMovieCardProps {
   movie: IMovie;

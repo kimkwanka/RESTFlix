@@ -5,7 +5,7 @@ import { thunkFetch } from '../utils/thunkFetch';
 
 import { IMovie } from '../types';
 
-const API_URL = process.env.MOVIE_API_URL;
+const API_URL = import.meta.env.VITE_MOVIE_API_URL;
 
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
