@@ -28,9 +28,6 @@ const moviesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {
-      if (action.payload.length < 30) {
-        return action.payload.concat(action.payload);
-      }
       return action.payload;
     });
   },
