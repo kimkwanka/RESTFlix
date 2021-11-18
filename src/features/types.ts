@@ -4,7 +4,7 @@ export interface IUser {
     birthday: string;
     email: string;
     favoriteMovies: string[];
-    password: string;
+    passwordHash: string;
     username: string;
   };
   isLoggedIn?: boolean;
