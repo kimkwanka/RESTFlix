@@ -41,11 +41,12 @@ const useProfileView = () => {
 
   const isUpdateFormInputValid = () => updateFormRef.current?.reportValidity();
 
-  const handleSubmit = (e: MouseEvent<HTMLButtonElement>) => {
+  const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     if (isUpdateFormInputValid()) {
-      dispatch(updateUserData(newUserData));
+      await dispatch(updateUserData(newUserData));
+      setPassword('');
     }
   };
 
