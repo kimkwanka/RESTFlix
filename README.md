@@ -18,7 +18,7 @@ After cloning the repository run either
 ### Environment Variables
 The app depends on the following environment variables (supplied via a [.env file](https://www.npmjs.com/package/react-native-dotenv) or natively by your OS environment).
 
-  ***MOVIE_API_URL**=https://dry-sands-45830.herokuapp.com*
+  ***VITE_MOVIE_API_URL**=https://dry-sands-45830.herokuapp.com*
 
 (Just create a file named ``.env`` in the project root, copy the above line into it and you're good to go.)
 
