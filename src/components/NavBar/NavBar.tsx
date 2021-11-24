@@ -18,6 +18,9 @@ const NavBar = () => {
   const handleLogoutClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
     dispatch(logoutUser());
+
+    // Set 'logout' item in local storage to trigger logout in other tabs via storage event listerner in App.tsx
+    localStorage.setItem('logout', JSON.stringify(Date.now()));
   };
 
   return (

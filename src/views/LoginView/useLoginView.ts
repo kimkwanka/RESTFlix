@@ -1,15 +1,9 @@
-import { useState, useRef, MouseEvent } from 'react';
+import { useState, useRef, useEffect, MouseEvent } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useAppDispatch } from '@features/hooks';
 
-import { loginUser } from '@features/actions';
-
-import { IUser } from '@features/types';
-
-const saveToLocalStorage = (user: IUser) => {
-  localStorage.setItem('user', JSON.stringify(user));
-};
+import { loginUser, loginUserSilently } from '@features/actions';
 
 const useLoginView = () => {
   const history = useHistory();
@@ -27,19 +21,16 @@ const useLoginView = () => {
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
-      try {
-        const { user, token } = (await dispatch(
-          loginUser({ username, password }),
-        ).unwrap()) as { user: IUser['data']; token: string };
+      await dispatch(loginUser({ username, password }));
 
-        history.push('/');
-        saveToLocalStorage({ data: user, token });
-      } catch {
-        // Error is dealt with inside loginUser thunk
-        // but unwrap() bubbles it up again, so just catch and ignore it.
-      }
+      history.push('/');
     }
   };
+  useEffect(() => {
+    dispatch(loginUserSilently());
+
+    return () => {};
+  }, []);
 
   return {
     username,

@@ -35,3 +35,4 @@ export interface IMovie {
 
 // eslint-disable-next-line import/no-cycle
 export type { TRootState } from './store';
+export type { TAppDispatch } from './store';

@@ -28,6 +28,39 @@ export const loginUser = createAsyncThunk(
     }),
 );
 
+export const loginUserSilently = createAsyncThunk(
+  'user/loginUserSilently',
+  async (_, thunkAPI) =>
+    thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/silentlogin`,
+      method: 'POST',
+      useAuth: false,
+    }),
+);
+
+export const logoutUser = createAsyncThunk(
+  'user/logoutUser',
+  async (_, thunkAPI) =>
+    thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/logout`,
+      method: 'POST',
+      useAuth: false,
+    }),
+);
+
+export const getNewTokens = createAsyncThunk(
+  'user/getNewTokens',
+  async (_, thunkAPI) =>
+    thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/tokenrefresh`,
+      method: 'POST',
+      useAuth: false,
+    }),
+);
+
 export const registerUser = createAsyncThunk(
   'user/registerUser',
   async (newUserData: IUserData, thunkAPI) =>
@@ -93,10 +126,6 @@ export const removeMovieFromFavorites = createAsyncThunk(
   },
 );
 
-export const logoutUser = createAsyncThunk('user/logoutUser', () => {
-  localStorage.removeItem('user');
-});
-
 const userSlice = createSlice({
   name: 'user',
   initialState: {
@@ -113,6 +142,33 @@ const userSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(getNewTokens.fulfilled, (state, action: AnyAction) => {
+      state.token = action.payload.data.jwtToken;
+    });
+    builder.addCase(getNewTokens.rejected, () => ({
+      data: {
+        _id: '',
+        birthday: '',
+        email: '',
+        favoriteMovies: [],
+        passwordHash: '',
+        username: '',
+      },
+      token: '',
+      isLoggedIn: false,
+    }));
+    builder.addCase(logoutUser.fulfilled, () => ({
+      data: {
+        _id: '',
+        birthday: '',
+        email: '',
+        favoriteMovies: [],
+        passwordHash: '',
+        username: '',
+      },
+      token: '',
+      isLoggedIn: false,
+    }));
     builder.addCase(
       addMovieToFavorites.fulfilled,
       (state: IUser, action: AnyAction) => {
@@ -126,10 +182,19 @@ const userSlice = createSlice({
       },
     );
     builder.addCase(loginUser.fulfilled, (state, action: AnyAction) => ({
-      data: action.payload.user,
-      token: action.payload.token,
+      data: action.payload.data.user,
+      token: action.payload.data.jwtToken,
       isLoggedIn: true,
+      isRefreshing: false,
     }));
+    builder.addCase(
+      loginUserSilently.fulfilled,
+      (state, action: AnyAction) => ({
+        data: action.payload.data.user,
+        token: action.payload.data.jwtToken,
+        isLoggedIn: true,
+      }),
+    );
     builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
       state.data = action.payload.data;
     });

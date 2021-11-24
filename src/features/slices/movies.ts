@@ -17,7 +17,6 @@ export const fetchMovies = createAsyncThunk(
     if (movies.length > 0) {
       return movies;
     }
-
     return thunkFetch({ thunkAPI, url: `${API_URL}/movies/` });
   },
 );
@@ -29,6 +28,9 @@ const moviesSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {
       return action.payload;
+    });
+    builder.addCase(fetchMovies.rejected, () => {
+      return [];
     });
   },
 });
