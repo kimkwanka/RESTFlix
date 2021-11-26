@@ -46,7 +46,6 @@ export const logoutUser = createAsyncThunk(
       thunkAPI,
       url: `${API_URL}/logout`,
       method: 'POST',
-      useAuth: false,
     }),
 );
 
@@ -199,18 +198,6 @@ const userSlice = createSlice({
       state.data = action.payload.data;
     });
     builder.addCase(deleteUser.fulfilled, () => ({
-      data: {
-        _id: '',
-        birthday: '',
-        email: '',
-        favoriteMovies: [],
-        passwordHash: '',
-        username: '',
-      },
-      token: '',
-      isLoggedIn: false,
-    }));
-    builder.addCase(logoutUser.pending, () => ({
       data: {
         _id: '',
         birthday: '',
