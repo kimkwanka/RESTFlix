@@ -1,12 +1,10 @@
 import { useState, useRef, useEffect, MouseEvent } from 'react';
-import { useHistory } from 'react-router-dom';
 
 import { useAppDispatch } from '@features/hooks';
 
 import { loginUser, loginUserSilently } from '@features/actions';
 
 const useLoginView = () => {
-  const history = useHistory();
   const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('FlyingBanana');
@@ -21,9 +19,7 @@ const useLoginView = () => {
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
-      await dispatch(loginUser({ username, password }));
-
-      history.push('/');
+      dispatch(loginUser({ username, password }));
     }
   };
   useEffect(() => {
