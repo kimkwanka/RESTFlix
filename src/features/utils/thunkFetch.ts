@@ -1,6 +1,6 @@
 import { TRootState, TAppDispatch } from '@features/types';
 
-import { getNewTokens } from '@features/actions';
+import { silentRefresh } from '@features/actions';
 
 interface ThunkApi {
   getState(): unknown;
@@ -47,7 +47,7 @@ export const thunkFetch = async ({
     // After the Promise has resolved, retry the request once more.
     if (response.status === 401) {
       if (!tokenRefreshPromise) {
-        tokenRefreshPromise = dispatch(getNewTokens());
+        tokenRefreshPromise = dispatch(silentRefresh());
       }
       await tokenRefreshPromise;
       tokenRefreshPromise = null;
@@ -73,6 +73,7 @@ export const thunkFetch = async ({
     const data = await response.json();
 
     if (data?.errors?.length) {
+      console.error(data.errors);
       return rejectWithValue(data);
     }
 

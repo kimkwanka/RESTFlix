@@ -2,7 +2,7 @@ import { useState, useRef, useEffect, MouseEvent } from 'react';
 
 import { useAppDispatch } from '@features/hooks';
 
-import { loginUser, loginUserSilently } from '@features/actions';
+import { loginUser, silentRefresh } from '@features/actions';
 
 const useLoginView = () => {
   const dispatch = useAppDispatch();
@@ -23,7 +23,7 @@ const useLoginView = () => {
     }
   };
   useEffect(() => {
-    dispatch(loginUserSilently());
+    dispatch(silentRefresh());
 
     return () => {};
   }, []);

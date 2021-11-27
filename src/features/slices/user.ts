@@ -28,12 +28,12 @@ export const loginUser = createAsyncThunk(
     }),
 );
 
-export const loginUserSilently = createAsyncThunk(
-  'user/loginUserSilently',
+export const silentRefresh = createAsyncThunk(
+  'user/silentRefresh',
   async (_, thunkAPI) =>
     thunkFetch({
       thunkAPI,
-      url: `${API_URL}/silentlogin`,
+      url: `${API_URL}/silentRefresh`,
       method: 'POST',
       useAuth: false,
     }),
@@ -46,17 +46,6 @@ export const logoutUser = createAsyncThunk(
       thunkAPI,
       url: `${API_URL}/logout`,
       method: 'POST',
-    }),
-);
-
-export const getNewTokens = createAsyncThunk(
-  'user/getNewTokens',
-  async (_, thunkAPI) =>
-    thunkFetch({
-      thunkAPI,
-      url: `${API_URL}/tokenrefresh`,
-      method: 'POST',
-      useAuth: false,
     }),
 );
 
@@ -141,10 +130,12 @@ const userSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(getNewTokens.fulfilled, (state, action: AnyAction) => {
-      state.token = action.payload.data.jwtToken;
-    });
-    builder.addCase(getNewTokens.rejected, () => ({
+    builder.addCase(silentRefresh.fulfilled, (state, action: AnyAction) => ({
+      data: action.payload.data.user,
+      token: action.payload.data.jwtToken,
+      isLoggedIn: true,
+    }));
+    builder.addCase(silentRefresh.rejected, () => ({
       data: {
         _id: '',
         birthday: '',
@@ -186,14 +177,6 @@ const userSlice = createSlice({
       isLoggedIn: true,
       isRefreshing: false,
     }));
-    builder.addCase(
-      loginUserSilently.fulfilled,
-      (state, action: AnyAction) => ({
-        data: action.payload.data.user,
-        token: action.payload.data.jwtToken,
-        isLoggedIn: true,
-      }),
-    );
     builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
       state.data = action.payload.data;
     });
