@@ -3,33 +3,31 @@ import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '@features/types';
+import { TmdbMovieSimple } from '@features/types';
 
 import MovieModal from './MovieModal/MovieModal';
 
 import './MovieCard.scss';
 
-const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
-
 interface IMovieCardProps {
-  movie: IMovie;
+  movie: TmdbMovieSimple;
 }
 
 const MovieCard = ({ movie }: IMovieCardProps) => {
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,
   );
-  const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
+  const isFavorite = favoriteMovies.indexOf(movie.id) !== -1;
 
   return (
     <div className="movie-card">
       <MovieModal movie={movie} />
       {isFavorite && <span className="movie-card__favorite-heart" />}
-      <Link className="movie-card__wrapper-link" to={`/movies/${movie._id}`}>
+      <Link className="movie-card__wrapper-link" to={`/movies/${movie.id}`}>
         <img
           className="movie-card__img"
           crossOrigin="anonymous"
-          src={`${imgRoot}${movie.slug}.jpg`}
+          src={movie.backdropUrl}
           alt={movie.title}
         />
       </Link>

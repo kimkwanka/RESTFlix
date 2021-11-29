@@ -1,17 +1,17 @@
-import { useAppSelector } from '@features/hooks';
+// import { useAppSelector } from '@features/hooks';
 
-import { TRootState, IMovie } from '@features/types';
+// import { TRootState, TmdbMovieSimple } from '@features/types';
 
-import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
+// import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
 import './DirectorView.scss';
 
-const selectDirectorByName = (state: TRootState, directorName: string) => {
-  const movieWithDirector = state.movies.find(
-    (movie: IMovie) => movie.director.name === directorName,
-  );
-  return movieWithDirector?.director;
-};
+// const selectDirectorByName = (state: TRootState, directorName: string) => {
+//   const movieWithDirector = state.movies.entities.find(
+//     (movie: TmdbMovieSimple) => movie.director.name === directorName,
+//   );
+//   return movieWithDirector?.director;
+// };
 
 interface IDirectorViewProps {
   match: {
@@ -26,14 +26,15 @@ const DirectorView = ({
     params: { directorName },
   },
 }: IDirectorViewProps) => {
-  const director = useAppSelector((state) =>
-    selectDirectorByName(state, directorName),
-  );
+  // const director = useAppSelector((state) =>
+  //   selectDirectorByName(state, directorName),
+  // );
+  console.log('DIRECTOR:', directorName);
 
   return (
     <div className="director-view">
       <div className="director-view__details">
-        <h1 className="director-view__name">{director?.name}</h1>
+        {/* <h1 className="director-view__name">{director?.name}</h1>
         <div className="director-view__birth">{`Year of Birth: ${director?.birth}`}</div>
         {director?.death && (
           <div className="director-view__death">{`Year of Death: ${director?.death}`}</div>
@@ -41,10 +42,10 @@ const DirectorView = ({
         <div className="director-view__description">{director?.bio}</div>
         <h2>Movies by this director:</h2>
         <FilteredMoviesList
-          filterFunc={(movie: IMovie) =>
+          filterFunc={(movie: TmdbMovieSimple) =>
             movie.director.name.toLowerCase() === directorName.toLowerCase()
           }
-        />
+        /> */}
       </div>
     </div>
   );

@@ -15,7 +15,9 @@ const Routes = () => {
   // Redirect /login and /register to / if logged in.
   // Redirect all routes to /login (except /login and /register) when not logged in.
 
-  const areMoviesLoaded = useAppSelector((state) => state.movies.length > 0);
+  const areMoviesLoaded = useAppSelector(
+    (state) => state.movies.entities.length > 0,
+  );
   // Redirect Movie, Genre and DirectorView to / when movies haven't been fetched yet.
 
   return (

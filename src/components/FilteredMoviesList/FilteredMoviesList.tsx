@@ -1,7 +1,7 @@
 import { memo, useEffect } from 'react';
 
 import { useAppSelector, useAppDispatch } from '@features/hooks';
-import { IMovie } from '@features/types';
+import { TmdbMovieSimple } from '@features/types';
 import { fetchMovies } from '@features/actions';
 
 import MovieCard from '@components/MovieCard/MovieCard';
@@ -9,7 +9,7 @@ import MovieCard from '@components/MovieCard/MovieCard';
 import './FilteredMoviesList.scss';
 
 interface IFilteredMoviesListProps {
-  filterFunc: (movie: IMovie) => boolean;
+  filterFunc: (movie: TmdbMovieSimple) => boolean;
   allowDuplicates?: boolean;
 }
 
@@ -24,8 +24,10 @@ const FilteredMoviesList = ({
     return () => {};
   }, []);
 
-  const movies = useAppSelector((state) => state.movies);
+  const movies = useAppSelector((state) => state.movies.entities);
+  const tmdbConfig = useAppSelector((state) => state.movies.config);
 
+  console.log('MOVIES:', movies);
   // Filter out movies by using the filterFunc.
   // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
   // (Sets can't contain duplicate entries)
@@ -36,7 +38,7 @@ const FilteredMoviesList = ({
   return (
     <div className="movies-list">
       {filteredMovies.map((movie) => (
-        <MovieCard key={`${movie._id}`} movie={movie} />
+        <MovieCard key={`${movie.id}`} movie={movie} />
       ))}
     </div>
   );

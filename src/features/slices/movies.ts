@@ -3,34 +3,75 @@ import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
 import { thunkFetch } from '@features/utils/thunkFetch';
 
-import { IMovie } from '@features/types';
+import {
+  TmdbMovieSimple,
+  TmdbConfiguration,
+  TRootState,
+} from '@features/types';
 
 const API_URL = import.meta.env.VITE_MOVIE_API_URL;
+
+const fetchTMDBConfig = createAsyncThunk(
+  'movies/fetchTMDBConfig',
+  async (_, thunkAPI) => {
+    return thunkFetch({ thunkAPI, url: `${API_URL}/tmdb/configuration` });
+  },
+);
 
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async (_, thunkAPI) => {
-    const { movies }: { movies: IMovie[] } = thunkAPI.getState() as {
-      movies: IMovie[];
-    };
+    let {
+      movies: { config },
+    } = thunkAPI.getState() as TRootState;
 
-    if (movies.length > 0) {
-      return movies;
+    if (!config.secure_base_url) {
+      await thunkAPI.dispatch(fetchTMDBConfig());
+      config = (thunkAPI.getState() as TRootState).movies.config;
     }
-    return thunkFetch({ thunkAPI, url: `${API_URL}/movies/` });
+
+    const { data } = await thunkFetch({
+      thunkAPI,
+      url: `${API_URL}/tmdb/discover/movie`,
+    });
+
+    const movies = data.results ? data.results : [];
+
+    const moviesWithImagePaths = movies.map((movie: TmdbMovieSimple) => {
+      return {
+        ...movie,
+        posterUrl:
+          config.secure_base_url +
+          config.poster_sizes[config.poster_sizes.length - 2] +
+          movie.poster_path,
+        backdropUrl:
+          config.secure_base_url +
+          config.backdrop_sizes[config.backdrop_sizes.length - 2] +
+          movie.backdrop_path,
+        id: movie.id.toString(),
+      };
+    });
+
+    return moviesWithImagePaths;
   },
 );
 
 const moviesSlice = createSlice({
   name: 'movies',
-  initialState: [] as IMovie[],
+  initialState: {
+    config: {} as TmdbConfiguration,
+    entities: [] as TmdbMovieSimple[],
+  },
   reducers: {},
   extraReducers: (builder) => {
-    builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {
-      return action.payload;
+    builder.addCase(fetchTMDBConfig.fulfilled, (state, action: AnyAction) => {
+      state.config = action.payload.data.images;
     });
-    builder.addCase(fetchMovies.rejected, () => {
-      return [];
+    builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {
+      state.entities = action.payload;
+    });
+    builder.addCase(fetchMovies.rejected, (state) => {
+      state.entities = [];
     });
   },
 });

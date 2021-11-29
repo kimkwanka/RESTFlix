@@ -88,7 +88,7 @@ const ProfileView = () => {
         <>
           <h2>Favorite Movies</h2>
           <FilteredMoviesList
-            filterFunc={(movie) => favoriteMovies.includes(movie._id)}
+            filterFunc={(movie) => favoriteMovies.includes(movie.id)}
           />
         </>
       ) : null}

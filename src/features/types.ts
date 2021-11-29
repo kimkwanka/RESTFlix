@@ -11,24 +11,35 @@ export interface IUser {
   token: string;
 }
 
-export interface IMovie {
-  _id: string;
-  description: string;
-  director: {
-    bio: string;
-    birth: string;
-    death: string;
-    name: string;
-  };
-  featured: boolean;
-  genre: {
-    description: string;
-    name: string;
-  };
-  rating: number;
-  slug: string;
+export type TmdbMovieSimple = {
+  adult: boolean;
+  backdrop_path: string;
+  backdropUrl: string;
+  genre_ids: string[];
+  id: string;
+  original_language: boolean;
+  original_title: string;
+  overview: string;
+  popularity: number;
+  poster_path: string;
+  posterUrl: string;
+  release_date: string;
   title: string;
-}
+  video: boolean;
+  vote_average: number;
+  vote_count: number;
+};
+
+export type TmdbConfiguration = {
+  __typename?: 'TMDBConfiguration';
+  backdrop_sizes: string[];
+  base_url: string;
+  logo_sizes: string[];
+  poster_sizes: string[];
+  profile_sizes: string[];
+  secure_base_url: string;
+  still_sizes: string[];
+};
 
 // Dependency cycle is ok here since TypeScript compiler can correctly handle it for types.
 // (Check https://redux-toolkit.js.org/tutorials/typescript#application-usage for more details)

@@ -1,13 +1,13 @@
 import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '@features/types';
+import { TmdbMovieSimple } from '@features/types';
 
 import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
 const HomeView = () => {
   const searchTerm = useAppSelector((state) => state.ui.searchTerm);
 
-  const filterMoviesBySearchTerm = (movie: IMovie) =>
+  const filterMoviesBySearchTerm = (movie: TmdbMovieSimple) =>
     movie.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (

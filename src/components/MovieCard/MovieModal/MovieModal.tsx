@@ -3,24 +3,22 @@ import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@features/hooks';
 
-import { IMovie } from '@features/types';
+import { TmdbMovieSimple } from '@features/types';
 
 import './MovieModal.scss';
 
 import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
-const imgRoot = `${import.meta.env.VITE_MOVIE_API_URL}/img/`;
-const videoRoot = `${import.meta.env.VITE_MOVIE_API_URL}/video/`;
-
 interface MovieModalProps {
-  movie: IMovie;
+  movie: TmdbMovieSimple;
 }
 
 const MovieModal = ({ movie }: MovieModalProps) => {
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,
   );
-  const isFavorite = favoriteMovies.indexOf(movie._id) !== -1;
+
+  const isFavorite = favoriteMovies.indexOf(movie.id) !== -1;
 
   const previewVideo = useRef<HTMLVideoElement>(null);
 
@@ -33,11 +31,11 @@ const MovieModal = ({ movie }: MovieModalProps) => {
     const isPlaying = video.currentTime > 0 && !video.paused;
 
     if (isHovered && !isPlaying) {
-      previewVideo.current.play();
+      // previewVideo.current.play();
     }
 
     if (!isHovered && isPlaying) {
-      previewVideo.current.pause();
+      // previewVideo.current.pause();
     }
   }
 
@@ -48,11 +46,11 @@ const MovieModal = ({ movie }: MovieModalProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {isFavorite && <span className="movie-modal__favorite-heart" />}
-      <Link className="movie-modal__wrapper-link" to={`/movies/${movie._id}`}>
+      <Link className="movie-modal__wrapper-link" to={`/movies/${movie.id}`}>
         <video
           ref={previewVideo}
           className="movie-modal__video"
-          src={`${videoRoot}${movie.slug}.webm`}
+          src=""
           crossOrigin="anonymous"
           muted
           loop
@@ -60,22 +58,22 @@ const MovieModal = ({ movie }: MovieModalProps) => {
         <img
           className="movie-modal__img"
           crossOrigin="anonymous"
-          src={`${imgRoot}${movie.slug}.jpg`}
+          src={movie.backdropUrl}
           alt={movie.title}
         />
       </Link>
       <div className="movie-modal__content">
         <div className="movie-modal__upper">
           <div className="movie-modal__title">{movie.title}</div>
-          <FavoriteButton movieId={movie._id} clear />
+          <FavoriteButton movieId={movie.id} clear />
         </div>
         <div className="movie-modal__body">
-          <div className="movie-modal__description">{movie.description}</div>
+          <div className="movie-modal__description">{movie.overview}</div>
           <div className="movie-modal__details">
-            <div className="movie-modal__genre">{movie.genre.name}</div>
+            <div className="movie-modal__genre">{movie.genre_ids[0]}</div>
             <div className="movie-modal__rating">
               &#9733;
-              {movie.rating}
+              {movie.vote_average}
             </div>
           </div>
         </div>
