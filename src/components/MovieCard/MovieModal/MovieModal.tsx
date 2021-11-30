@@ -70,7 +70,7 @@ const MovieModal = ({ movie }: MovieModalProps) => {
         <div className="movie-modal__body">
           <div className="movie-modal__description">{movie.overview}</div>
           <div className="movie-modal__details">
-            <div className="movie-modal__genre">{movie.genre_ids[0]}</div>
+            <div className="movie-modal__genre">{movie.genres.join(', ')}</div>
             <div className="movie-modal__rating">
               &#9733;
               {movie.vote_average}

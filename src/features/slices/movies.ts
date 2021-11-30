@@ -18,16 +18,28 @@ const fetchTMDBConfig = createAsyncThunk(
   },
 );
 
+const fetchGenres = createAsyncThunk(
+  'movies/fetchGenres',
+  async (_, thunkAPI) => {
+    return thunkFetch({ thunkAPI, url: `${API_URL}/tmdb/genre/movie/list` });
+  },
+);
+
 export const fetchMovies = createAsyncThunk(
   'movies/fetchMovies',
   async (_, thunkAPI) => {
     let {
-      movies: { config },
+      movies: { config, genres },
     } = thunkAPI.getState() as TRootState;
 
     if (!config.secure_base_url) {
       await thunkAPI.dispatch(fetchTMDBConfig());
       config = (thunkAPI.getState() as TRootState).movies.config;
+    }
+
+    if (!Object.keys(genres).length) {
+      await thunkAPI.dispatch(fetchGenres());
+      genres = (thunkAPI.getState() as TRootState).movies.genres;
     }
 
     const { data } = await thunkFetch({
@@ -49,6 +61,7 @@ export const fetchMovies = createAsyncThunk(
           config.backdrop_sizes[config.backdrop_sizes.length - 2] +
           movie.backdrop_path,
         id: movie.id.toString(),
+        genres: movie.genre_ids.map((id) => genres[id]),
       };
     });
 
@@ -60,12 +73,22 @@ const moviesSlice = createSlice({
   name: 'movies',
   initialState: {
     config: {} as TmdbConfiguration,
+    genres: {} as Record<number, string>,
     entities: [] as TmdbMovieSimple[],
   },
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchTMDBConfig.fulfilled, (state, action: AnyAction) => {
       state.config = action.payload.data.images;
+    });
+    builder.addCase(fetchGenres.fulfilled, (state, action: AnyAction) => {
+      const genreLookupTable: Record<number, string> = {};
+      action.payload.data.genres.forEach(
+        (genre: { id: number; name: string }) => {
+          genreLookupTable[genre.id] = genre.name;
+        },
+      );
+      state.genres = genreLookupTable;
     });
     builder.addCase(fetchMovies.fulfilled, (state, action: AnyAction) => {
       state.entities = action.payload;

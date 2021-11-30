@@ -47,12 +47,16 @@ const MovieView = ({
       <div className="movie-view__details">
         <h1 className="movie-view__title">{movie?.title}</h1>
         <div className="movie-view__rating">
-          IMDb Rating: &#9733;
+          Rating: &#9733;
           {movie?.vote_average}
         </div>
         <p className="movie-view__genre">
-          Genre:&nbsp;
-          {/* <Link to={`/genres/${movie?.genre.name}`}>{movie?.genre.name}</Link> */}
+          Genres:&nbsp;
+          {movie?.genre_ids.map((genre_id, index) => (
+            <Link key={genre_id} to={`/genres/${genre_id}`}>
+              {movie?.genres[index]}{' '}
+            </Link>
+          ))}
         </p>
         <p className="movie-view__director">
           Director:&nbsp;

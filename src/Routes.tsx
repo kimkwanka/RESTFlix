@@ -33,7 +33,7 @@ const Routes = () => {
 
       {!areMoviesLoaded && <Redirect from="*" to="/" />}
       <Route exact path="/movies/:movieId" component={MovieView} />
-      <Route exact path="/genres/:genreName" component={GenreView} />
+      <Route exact path="/genres/:genreId" component={GenreView} />
       <Route exact path="/directors/:directorName" component={DirectorView} />
     </Switch>
   );

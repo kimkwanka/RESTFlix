@@ -15,7 +15,8 @@ export type TmdbMovieSimple = {
   adult: boolean;
   backdrop_path: string;
   backdropUrl: string;
-  genre_ids: string[];
+  genre_ids: number[];
+  genres: string[];
   id: string;
   original_language: boolean;
   original_title: string;
