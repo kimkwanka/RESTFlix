@@ -10,7 +10,6 @@
   width: 100%;
 
   * {
-    position: relative;
     z-index: 1;
   }
 }
@@ -19,6 +18,31 @@
     gap: 0;
     padding: 0;
   }
+}
+
+.movie-view__favorite-heart {
+  background: linear-gradient(
+    111.34deg,
+    var(--buttonGradientCol1) 0%,
+    var(--buttonGradientCol2) 100%
+  );
+  border-radius: 50%;
+  height: 60px;
+  position: absolute;
+  right: var(--s1);
+  top: var(--s1);
+  width: 60px;
+  z-index: 2;
+}
+
+.movie-view__favorite-heart::after {
+  color: var(--textCol);
+  content: '♡';
+  font-size: 48px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .movie-view__background-image {

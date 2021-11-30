@@ -24,8 +24,14 @@ const MovieView = ({
   const movies = useAppSelector((state) => state.movies.entities);
   const movie = movies.find((m: TmdbMovieSimple) => m.id === movieId);
 
+  const favoriteMovies = useAppSelector(
+    (state) => state.user.data.favoriteMovies,
+  );
+  const isFavorite = favoriteMovies.indexOf(movie?.id || '') !== -1;
+
   return (
     <div className="movie-view">
+      {isFavorite && <span className="movie-view__favorite-heart" />}
       <img
         className="movie-view__background-image"
         crossOrigin="anonymous"
