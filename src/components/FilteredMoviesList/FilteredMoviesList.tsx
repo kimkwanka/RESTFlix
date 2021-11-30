@@ -25,9 +25,7 @@ const FilteredMoviesList = ({
   }, []);
 
   const movies = useAppSelector((state) => state.movies.entities);
-  const tmdbConfig = useAppSelector((state) => state.movies.config);
 
-  console.log('MOVIES:', movies);
   // Filter out movies by using the filterFunc.
   // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
   // (Sets can't contain duplicate entries)
