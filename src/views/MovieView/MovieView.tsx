@@ -1,9 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import {
-  useGetMovieByIdQuery,
-  useGetTmdbImageBaseUrlsQuery,
-} from '@features/slices/api';
+import { useGetMovieByIdQuery } from '@features/slices/api';
 
 import { useAppSelector } from '@features/hooks';
 
@@ -24,7 +21,6 @@ const MovieView = ({
     params: { movieId },
   },
 }: IMovieViewProps) => {
-  const { data: imageBaseUrls } = useGetTmdbImageBaseUrlsQuery();
   const { data: movie } = useGetMovieByIdQuery(movieId);
 
   const favoriteMovies = useAppSelector(
@@ -32,24 +28,19 @@ const MovieView = ({
   );
   const isFavorite = movie ? favoriteMovies.indexOf(movie?.id) !== -1 : false;
 
-  const movieImageUrl =
-    imageBaseUrls && movie
-      ? imageBaseUrls.backdropBaseUrl + movie.poster_path
-      : '';
-
   return (
     <div className="movie-view">
       {isFavorite && <span className="movie-view__favorite-heart" />}
       <img
         className="movie-view__background-image"
         crossOrigin="anonymous"
-        src={movieImageUrl}
+        src={movie?.posterUrl}
         alt={movie?.title}
       />
       <img
         className="movie-view__image"
         crossOrigin="anonymous"
-        src={movieImageUrl}
+        src={movie?.posterUrl}
         alt={movie?.title}
       />
       <div className="movie-view__details">
@@ -60,9 +51,9 @@ const MovieView = ({
         </div>
         <p className="movie-view__genre">
           Genres:&nbsp;
-          {movie?.genres.map(({ id, name }) => (
-            <Link key={id} to={`/genres/${id}`}>
-              {name}{' '}
+          {movie?.genreList.map((genreName) => (
+            <Link key={genreName} to={`/genres/${genreName}`}>
+              {genreName}{' '}
             </Link>
           ))}
         </p>

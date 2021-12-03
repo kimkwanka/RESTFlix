@@ -14,14 +14,16 @@ export interface IUser {
 export type TmdbMovieSimple = {
   adult: boolean;
   backdrop_path: string;
+  backdropUrl: string;
   genre_ids: number[];
-  genres: string[];
+  genreList: string[];
   id: number;
   original_language: boolean;
   original_title: string;
   overview: string;
   popularity: number;
   poster_path: string;
+  posterUrl: string;
   release_date: string;
   title: string;
   video: boolean;
@@ -37,8 +39,10 @@ export type TmdbGenre = {
 export type TmdbMovieDetailed = {
   adult: boolean;
   backdrop_path: string;
+  backdropUrl: string;
   budget: number;
   genres: TmdbGenre[];
+  genreList: string[];
   homepage?: string;
   id: number;
   imdb_id?: string;
@@ -47,6 +51,7 @@ export type TmdbMovieDetailed = {
   overview: string;
   popularity: number;
   poster_path: string;
+  posterUrl: string;
   release_date: string;
   revenue: number;
   runtime?: number;
