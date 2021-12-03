@@ -175,7 +175,6 @@ const userSlice = createSlice({
       data: action.payload.data.user,
       token: action.payload.data.jwtToken,
       isLoggedIn: true,
-      isRefreshing: false,
     }));
     builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
       state.data = action.payload.data;
