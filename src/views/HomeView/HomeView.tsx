@@ -4,14 +4,29 @@ import { TmdbMovieSimple } from '@features/types';
 
 import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
-const HomeView = () => {
+interface IHomeViewProps {
+  match: {
+    params: {
+      page: string;
+    };
+  };
+}
+
+const HomeView = ({
+  match: {
+    params: { page = '1' },
+  },
+}: IHomeViewProps) => {
   const searchTerm = useAppSelector((state) => state.ui.searchTerm);
 
   const filterMoviesBySearchTerm = (movie: TmdbMovieSimple) =>
     movie.title.toLowerCase().includes(searchTerm.toLowerCase());
 
   return (
-    <FilteredMoviesList filterFunc={filterMoviesBySearchTerm} allowDuplicates />
+    <FilteredMoviesList
+      page={parseInt(page, 10)}
+      filterFunc={filterMoviesBySearchTerm}
+    />
   );
 };
 

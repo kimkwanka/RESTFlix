@@ -164,14 +164,20 @@ export const moviesApi = createApi({
         return { data: data.user, token: data.jwtToken, isLoggedIn: true };
       },
     }),
-    discoverMovies: builder.query<Array<TmdbMovieSimple>, number | void>({
+    discoverMovies: builder.query<
+      { movies: Array<TmdbMovieSimple>; totalPages: number },
+      number | void
+    >({
       queryFn: async (page = 1, api, extraOptions, baseQuery) => {
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
         const response = (await baseQuery(
           `tmdb/discover/movie?page=${page}`,
-        )) as TBaseQueryResponse<{ results: Array<TmdbMovieSimple> }>;
+        )) as TBaseQueryResponse<{
+          results: Array<TmdbMovieSimple>;
+          total_pages: number;
+        }>;
 
         const movies = response.data.data.results as TmdbMovieSimple[];
         const moviesWithImagePathsAndGenres = movies.map((movie) => ({
@@ -184,7 +190,12 @@ export const moviesApi = createApi({
         }));
 
         return response.data
-          ? { data: moviesWithImagePathsAndGenres }
+          ? {
+              data: {
+                movies: moviesWithImagePathsAndGenres,
+                totalPages: response.data.data.total_pages,
+              },
+            }
           : { error: response.error as FetchBaseQueryError };
       },
     }),

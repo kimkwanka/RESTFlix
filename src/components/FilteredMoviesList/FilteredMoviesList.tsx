@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { Link } from 'react-router-dom';
 
 import { TmdbMovieSimple } from '@features/types';
 
@@ -10,28 +11,42 @@ import './FilteredMoviesList.scss';
 
 interface IFilteredMoviesListProps {
   filterFunc: (movie: TmdbMovieSimple) => boolean;
-  allowDuplicates?: boolean;
+  page?: number;
 }
 
 const FilteredMoviesList = ({
   filterFunc,
-  allowDuplicates,
+  page = 1,
 }: IFilteredMoviesListProps) => {
-  const { data: movies } = useDiscoverMoviesQuery(2);
+  const { data } = useDiscoverMoviesQuery(page);
+
+  if (!data) {
+    return null;
+  }
+  const movies = data ? data.movies : [];
 
   // Filter out movies by using the filterFunc.
-  // Duplicates are optionally removed by creating a new Array from a Set of the filtered movies.
-  // (Sets can't contain duplicate entries)
-  const filteredMovies = allowDuplicates
-    ? movies?.filter(filterFunc)
-    : Array.from(new Set(movies?.filter(filterFunc)));
+  const filteredMovies = movies.filter(filterFunc);
+
+  const paginationLinks = [];
+
+  for (let i = page; i < page + 10; i++) {
+    paginationLinks.push(
+      <Link key={`/${i}`} to={`/${i}`}>
+        {i}
+      </Link>,
+    );
+  }
 
   return (
-    <div className="movies-list">
-      {filteredMovies?.map((movie) => (
-        <MovieCard key={`${movie.id}`} movie={movie} />
-      ))}
-    </div>
+    <>
+      <div className="pagination-links">{paginationLinks}</div>
+      <div className="movies-list">
+        {filteredMovies?.map((movie) => (
+          <MovieCard key={`${movie.id}`} movie={movie} />
+        ))}
+      </div>
+    </>
   );
 };
 

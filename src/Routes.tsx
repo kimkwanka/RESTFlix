@@ -23,7 +23,7 @@ const Routes = () => {
       <Route exact path="/register" component={RegistrationView} />
 
       {!isLoggedIn && <Redirect from="*" to="/login" />}
-      <Route exact path="/" component={HomeView} />
+      <Route exact path="/:page?" component={HomeView} />
       <Route exact path="/profile" component={ProfileView} />
 
       <Route exact path="/movies/:movieId" component={MovieView} />
