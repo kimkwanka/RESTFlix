@@ -210,6 +210,12 @@ const userSlice = createSlice({
       token: '',
       isLoggedIn: false,
     }));
+    builder.addMatcher(
+      moviesApi.endpoints.loginUser.matchFulfilled,
+      (_, action) => {
+        return action.payload;
+      },
+    );
   },
 });
 

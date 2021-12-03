@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect, MouseEvent } from 'react';
 
 import { useAppDispatch } from '@features/hooks';
+import { useLoginUserMutation } from '@features/slices/api';
 
-import { loginUser, silentRefresh } from '@features/actions';
+import { silentRefresh } from '@features/actions';
 
 const useLoginView = () => {
+  const [loginUser] = useLoginUserMutation();
   const dispatch = useAppDispatch();
 
   const [username, setUsername] = useState('FlyingBanana');
@@ -19,7 +21,7 @@ const useLoginView = () => {
   const handleSubmit = async (e: MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     if (isLoginFormInputValid()) {
-      dispatch(loginUser({ username, password }));
+      loginUser({ username, password });
     }
   };
   useEffect(() => {

@@ -7,7 +7,7 @@ export interface IUser {
     passwordHash: string;
     username: string;
   };
-  isLoggedIn?: boolean;
+  isLoggedIn: boolean;
   token: string;
 }
 

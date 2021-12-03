@@ -9,6 +9,7 @@ import {
 import { createAction } from '@reduxjs/toolkit';
 
 import {
+  IUser,
   TmdbConfiguration,
   TmdbImageBaseUrls,
   TmdbCredits,
@@ -87,6 +88,16 @@ export const moviesApi = createApi({
   reducerPath: 'moviesApi',
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
+    loginUser: builder.mutation<IUser, { username: string; password: string }>({
+      query: ({ username, password }) => ({
+        url: `/login?username=${username}&password=${password}`,
+        method: 'POST',
+        credentials: 'include',
+      }),
+      transformResponse: ({ data }) => {
+        return { data: data.user, token: data.jwtToken, isLoggedIn: true };
+      },
+    }),
     discoverMovies: builder.query<Array<TmdbMovieSimple>, number | void>({
       query: (page = 1) => `tmdb/discover/movie?page=${page}`,
       transformResponse: ({ data: { results } }) => results,
@@ -130,6 +141,7 @@ export const moviesApi = createApi({
 });
 
 export const {
+  useLoginUserMutation,
   useDiscoverMoviesQuery,
   useGetTmdbImageBaseUrlsQuery,
   useGetMovieCreditsByIdQuery,
