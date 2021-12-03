@@ -5,6 +5,7 @@ import { useAppSelector } from '@features/hooks';
 
 import { TmdbMovieSimple } from '@features/types';
 
+import { useGetTmdbImageBaseUrlsQuery } from '@features/slices/api';
 import MovieModal from './MovieModal/MovieModal';
 
 import './MovieCard.scss';
@@ -14,9 +15,12 @@ interface IMovieCardProps {
 }
 
 const MovieCard = ({ movie }: IMovieCardProps) => {
+  const { data: imageBaseUrls } = useGetTmdbImageBaseUrlsQuery();
+
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,
   );
+
   const isFavorite = favoriteMovies.indexOf(movie.id) !== -1;
 
   return (
@@ -24,12 +28,14 @@ const MovieCard = ({ movie }: IMovieCardProps) => {
       <MovieModal movie={movie} />
       {isFavorite && <span className="movie-card__favorite-heart" />}
       <Link className="movie-card__wrapper-link" to={`/movies/${movie.id}`}>
-        <img
-          className="movie-card__img"
-          crossOrigin="anonymous"
-          src={movie.backdropUrl}
-          alt={movie.title}
-        />
+        {imageBaseUrls && (
+          <img
+            className="movie-card__img"
+            crossOrigin="anonymous"
+            src={imageBaseUrls.backdropBaseUrl + movie.backdrop_path}
+            alt={movie.title}
+          />
+        )}
       </Link>
     </div>
   );

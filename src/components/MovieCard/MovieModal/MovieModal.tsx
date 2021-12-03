@@ -3,6 +3,11 @@ import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@features/hooks';
 
+import {
+  useGetTmdbImageBaseUrlsQuery,
+  useGetGenresQuery,
+} from '@features/slices/api';
+
 import { TmdbMovieSimple } from '@features/types';
 
 import './MovieModal.scss';
@@ -14,6 +19,9 @@ interface MovieModalProps {
 }
 
 const MovieModal = ({ movie }: MovieModalProps) => {
+  const { data: imageBaseUrls } = useGetTmdbImageBaseUrlsQuery();
+  const { data: genreList } = useGetGenresQuery();
+
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,
   );
@@ -39,6 +47,8 @@ const MovieModal = ({ movie }: MovieModalProps) => {
     }
   }
 
+  const genres = movie.genre_ids.map((genreId) => genreList?.[genreId]);
+
   return (
     <div
       className="movie-modal"
@@ -46,22 +56,24 @@ const MovieModal = ({ movie }: MovieModalProps) => {
       onMouseLeave={() => setIsHovered(false)}
     >
       {isFavorite && <span className="movie-modal__favorite-heart" />}
-      <Link className="movie-modal__wrapper-link" to={`/movies/${movie.id}`}>
-        <video
-          ref={previewVideo}
-          className="movie-modal__video"
-          src=""
-          crossOrigin="anonymous"
-          muted
-          loop
-        />
-        <img
-          className="movie-modal__img"
-          crossOrigin="anonymous"
-          src={movie.backdropUrl}
-          alt={movie.title}
-        />
-      </Link>
+      {imageBaseUrls && (
+        <Link className="movie-modal__wrapper-link" to={`/movies/${movie.id}`}>
+          <video
+            ref={previewVideo}
+            className="movie-modal__video"
+            src=""
+            crossOrigin="anonymous"
+            muted
+            loop
+          />
+          <img
+            className="movie-modal__img"
+            crossOrigin="anonymous"
+            src={imageBaseUrls.backdropBaseUrl + movie.backdrop_path}
+            alt={movie.title}
+          />
+        </Link>
+      )}
       <div className="movie-modal__content">
         <div className="movie-modal__upper">
           <div className="movie-modal__title">{movie.title}</div>
@@ -70,7 +82,7 @@ const MovieModal = ({ movie }: MovieModalProps) => {
         <div className="movie-modal__body">
           <div className="movie-modal__description">{movie.overview}</div>
           <div className="movie-modal__details">
-            <div className="movie-modal__genre">{movie.genres.join(', ')}</div>
+            <div className="movie-modal__genre">{genres.join(', ')}</div>
             <div className="movie-modal__rating">
               &#9733;
               {movie.vote_average}

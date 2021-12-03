@@ -1,6 +1,4 @@
-import { useAppSelector } from '@features/hooks';
-
-import { TRootState } from '@features/types';
+import { useGetGenresQuery } from '@features/slices/api';
 
 import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
 
@@ -19,8 +17,8 @@ const GenreView = ({
     params: { genreId },
   },
 }: IGenreViewProps) => {
-  const genres = useAppSelector((state: TRootState) => state.movies.genres);
-  const genre = genres[parseInt(genreId, 10)];
+  const { data: genreList } = useGetGenresQuery();
+  const genre = genreList?.[parseInt(genreId, 10)];
 
   return (
     <div className="genre-view">

@@ -33,7 +33,7 @@ export const silentRefresh = createAsyncThunk(
   async (_, thunkAPI) =>
     thunkFetch({
       thunkAPI,
-      url: `${API_URL}/silentRefresh`,
+      url: `${API_URL}/silentrefresh`,
       method: 'POST',
       useAuth: false,
     }),
@@ -90,7 +90,7 @@ export const deleteUser = createAsyncThunk(
 
 export const addMovieToFavorites = createAsyncThunk(
   'user/addMovieToFavorites',
-  async (movieId: string, thunkAPI) => {
+  async (movieId: number, thunkAPI) => {
     const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
@@ -103,7 +103,7 @@ export const addMovieToFavorites = createAsyncThunk(
 
 export const removeMovieFromFavorites = createAsyncThunk(
   'user/removeMovieFromFavorites',
-  async (movieId: string, thunkAPI) => {
+  async (movieId: number, thunkAPI) => {
     const userId = (thunkAPI.getState() as TRootState).user.data._id;
 
     return thunkFetch({
@@ -121,7 +121,7 @@ const userSlice = createSlice({
       _id: '',
       birthday: '',
       email: '',
-      favoriteMovies: [] as string[],
+      favoriteMovies: [] as number[],
       passwordHash: '',
       username: '',
     },

@@ -10,17 +10,17 @@ import {
 import './FavoriteButton.scss';
 
 interface IFavoriteButtonProps {
-  movieId?: string;
+  movieId?: number;
   showText?: boolean;
   clear?: boolean;
 }
 
 const FavoriteButton = ({ movieId, showText, clear }: IFavoriteButtonProps) => {
-  const dispatch = useAppDispatch();
-
   if (!movieId) {
     return null;
   }
+
+  const dispatch = useAppDispatch();
 
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,

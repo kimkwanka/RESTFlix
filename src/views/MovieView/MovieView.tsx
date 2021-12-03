@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '@features/hooks';
+import {
+  useGetMovieByIdQuery,
+  useGetTmdbImageBaseUrlsQuery,
+} from '@features/slices/api';
 
-import { TmdbMovieSimple } from '@features/types';
+import { useAppSelector } from '@features/hooks';
 
 import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
@@ -21,13 +24,18 @@ const MovieView = ({
     params: { movieId },
   },
 }: IMovieViewProps) => {
-  const movies = useAppSelector((state) => state.movies.entities);
-  const movie = movies.find((m: TmdbMovieSimple) => m.id === movieId);
+  const { data: imageBaseUrls } = useGetTmdbImageBaseUrlsQuery();
+  const { data: movie } = useGetMovieByIdQuery(movieId);
 
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,
   );
-  const isFavorite = favoriteMovies.indexOf(movie?.id || '') !== -1;
+  const isFavorite = movie ? favoriteMovies.indexOf(movie?.id) !== -1 : false;
+
+  const movieImageUrl =
+    imageBaseUrls && movie
+      ? imageBaseUrls.backdropBaseUrl + movie.poster_path
+      : '';
 
   return (
     <div className="movie-view">
@@ -35,13 +43,13 @@ const MovieView = ({
       <img
         className="movie-view__background-image"
         crossOrigin="anonymous"
-        src={movie?.posterUrl}
+        src={movieImageUrl}
         alt={movie?.title}
       />
       <img
         className="movie-view__image"
         crossOrigin="anonymous"
-        src={movie?.posterUrl}
+        src={movieImageUrl}
         alt={movie?.title}
       />
       <div className="movie-view__details">
@@ -52,9 +60,9 @@ const MovieView = ({
         </div>
         <p className="movie-view__genre">
           Genres:&nbsp;
-          {movie?.genre_ids.map((genre_id, index) => (
-            <Link key={genre_id} to={`/genres/${genre_id}`}>
-              {movie?.genres[index]}{' '}
+          {movie?.genres.map(({ id, name }) => (
+            <Link key={id} to={`/genres/${id}`}>
+              {name}{' '}
             </Link>
           ))}
         </p>
