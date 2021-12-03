@@ -169,11 +169,11 @@ export const moviesApi = createApi({
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
-        const result = (await baseQuery(
+        const response = (await baseQuery(
           `tmdb/discover/movie?page=${page}`,
         )) as TBaseQueryResponse<{ results: Array<TmdbMovieSimple> }>;
 
-        const movies = result.data.data.results as TmdbMovieSimple[];
+        const movies = response.data.data.results as TmdbMovieSimple[];
         const moviesWithImagePathsAndGenres = movies.map((movie) => ({
           ...movie,
           backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
@@ -183,9 +183,9 @@ export const moviesApi = createApi({
           ),
         }));
 
-        return result.data
+        return response.data
           ? { data: moviesWithImagePathsAndGenres }
-          : { error: result.error as FetchBaseQueryError };
+          : { error: response.error as FetchBaseQueryError };
       },
     }),
     getMovieById: builder.query<TmdbMovieDetailed, string>({
@@ -193,20 +193,20 @@ export const moviesApi = createApi({
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
-        const result = (await baseQuery(
+        const response = (await baseQuery(
           `tmdb/movie/${id}`,
         )) as TBaseQueryResponse<TmdbMovieDetailed>;
 
-        const movie = result.data.data;
+        const movie = response.data.data;
         const movieWithImagePathsAndGenres = {
           ...movie,
           backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
           posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
           genreList: movie.genres.map(({ name }) => name),
         };
-        return result.data
+        return response.data
           ? { data: movieWithImagePathsAndGenres }
-          : { error: result.error as FetchBaseQueryError };
+          : { error: response.error as FetchBaseQueryError };
       },
     }),
     getMovieCreditsById: builder.query<TmdbCredits, string>({
