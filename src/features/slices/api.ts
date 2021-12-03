@@ -98,6 +98,16 @@ export const moviesApi = createApi({
         return { data: data.user, token: data.jwtToken, isLoggedIn: true };
       },
     }),
+    silentLogin: builder.mutation<IUser, void>({
+      query: () => ({
+        url: `/silentrefresh`,
+        method: 'POST',
+        credentials: 'include',
+      }),
+      transformResponse: ({ data }) => {
+        return { data: data.user, token: data.jwtToken, isLoggedIn: true };
+      },
+    }),
     discoverMovies: builder.query<Array<TmdbMovieSimple>, number | void>({
       query: (page = 1) => `tmdb/discover/movie?page=${page}`,
       transformResponse: ({ data: { results } }) => results,
@@ -142,6 +152,7 @@ export const moviesApi = createApi({
 
 export const {
   useLoginUserMutation,
+  useSilentLoginMutation,
   useDiscoverMoviesQuery,
   useGetTmdbImageBaseUrlsQuery,
   useGetMovieCreditsByIdQuery,

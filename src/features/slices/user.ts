@@ -216,6 +216,12 @@ const userSlice = createSlice({
         return action.payload;
       },
     );
+    builder.addMatcher(
+      moviesApi.endpoints.silentLogin.matchFulfilled,
+      (_, action) => {
+        return action.payload;
+      },
+    );
   },
 });
 

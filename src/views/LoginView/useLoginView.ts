@@ -1,13 +1,13 @@
 import { useState, useRef, useEffect, MouseEvent } from 'react';
 
-import { useAppDispatch } from '@features/hooks';
-import { useLoginUserMutation } from '@features/slices/api';
-
-import { silentRefresh } from '@features/actions';
+import {
+  useLoginUserMutation,
+  useSilentLoginMutation,
+} from '@features/slices/api';
 
 const useLoginView = () => {
   const [loginUser] = useLoginUserMutation();
-  const dispatch = useAppDispatch();
+  const [silentLogin] = useSilentLoginMutation();
 
   const [username, setUsername] = useState('FlyingBanana');
   const [password, setPassword] = useState('test123');
@@ -25,7 +25,7 @@ const useLoginView = () => {
     }
   };
   useEffect(() => {
-    dispatch(silentRefresh());
+    silentLogin();
 
     return () => {};
   }, []);
