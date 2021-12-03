@@ -5,6 +5,8 @@ import { thunkFetch } from '@features/utils/thunkFetch';
 
 import { TRootState, IUser } from '@features/types';
 
+import { setAccessToken, setLoggedOut, moviesApi } from '@features/slices/api';
+
 const API_URL = import.meta.env.VITE_MOVIE_API_URL;
 
 interface IUserData {
@@ -130,6 +132,23 @@ const userSlice = createSlice({
   },
   reducers: {},
   extraReducers: (builder) => {
+    builder.addCase(setAccessToken, (state, action: AnyAction) => {
+      state.token = action.payload;
+    });
+    builder.addCase(setLoggedOut, () => {
+      return {
+        data: {
+          _id: '',
+          birthday: '',
+          email: '',
+          favoriteMovies: [],
+          passwordHash: '',
+          username: '',
+        },
+        token: '',
+        isLoggedIn: false,
+      };
+    });
     builder.addCase(silentRefresh.fulfilled, (state, action: AnyAction) => ({
       data: action.payload.data.user,
       token: action.payload.data.jwtToken,

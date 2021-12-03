@@ -6,6 +6,8 @@ import {
   FetchBaseQueryError,
 } from '@reduxjs/toolkit/query/react';
 
+import { createAction } from '@reduxjs/toolkit';
+
 import {
   TmdbConfiguration,
   TmdbImageBaseUrls,
@@ -16,7 +18,11 @@ import {
   TAppDispatch,
 } from '@features/types';
 
-import { silentRefresh } from '@features/actions';
+// To break the circular dependency between api slice and user slice we define the actions in here instead of
+// in the user slice.
+// (user slice needs to react to api endpoints, but api needs to dispatch user slice actions)
+export const setAccessToken = createAction<string>('user/setAccessToken');
+export const setLoggedOut = createAction('user/setLoggedOut');
 
 const baseUrl = import.meta.env.VITE_MOVIE_API_URL as string;
 
@@ -25,7 +31,7 @@ type TAPIResponse<T> = {
   errors: { message: string }[];
 };
 
-let tokenRefreshPromise: ReturnType<TAppDispatch> = null;
+let pendingTokenRequest: ReturnType<TAppDispatch> = null;
 
 const baseQuery = fetchBaseQuery({
   baseUrl,
@@ -45,19 +51,36 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let result = await baseQuery(args, api, extraOptions);
+  let queryResult = await baseQuery(args, api, extraOptions);
 
-  if (result.error && result.error.status === 401) {
-    if (!tokenRefreshPromise) {
-      tokenRefreshPromise = api.dispatch(silentRefresh());
+  if (queryResult.error && queryResult.error.status === 401) {
+    // If initital request was rejected because of missing or invalid access token,
+    // try to get a new token pair from the server if such a request isn't already pending
+    if (!pendingTokenRequest) {
+      pendingTokenRequest = baseQuery(
+        { url: '/silentrefresh', method: 'POST', credentials: 'include' },
+        api,
+        extraOptions,
+      );
+    }
+    // Wait for the pending token request
+    const refreshResult = (await pendingTokenRequest) as TAPIResponse<{
+      data: { jwtToken: string };
+    }>;
+
+    // Either update the store with the new token if successful or log out otherwise
+    if (refreshResult.data) {
+      api.dispatch(setAccessToken(refreshResult.data.data.jwtToken));
+    } else {
+      api.dispatch(setLoggedOut());
     }
 
-    await tokenRefreshPromise;
-    tokenRefreshPromise = null;
+    pendingTokenRequest = null;
 
-    result = await baseQuery(args, api, extraOptions);
+    // Now that we have a new token, retry the initial request
+    queryResult = await baseQuery(args, api, extraOptions);
   }
-  return result;
+  return queryResult;
 };
 
 export const moviesApi = createApi({
