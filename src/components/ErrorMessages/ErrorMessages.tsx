@@ -1,20 +1,16 @@
-import { useAppSelector } from '@features/hooks';
-
 import './ErrorMessages.scss';
 
 interface IErrorMessagesProps {
-  errorType: 'loginErrors' | 'registerErrors' | 'profileErrors';
+  errors: string[];
 }
 
-const ErrorMessages = ({ errorType }: IErrorMessagesProps) => {
-  const errorMessages = useAppSelector((state) => state.errors[errorType]);
-
+const ErrorMessages = ({ errors }: IErrorMessagesProps) => {
   return (
     <div className="m-4">
       <div>
-        {errorMessages.map((e) => (
-          <p className="error-text" key={`err_${e.message}`}>
-            {e.message}
+        {errors.map((e) => (
+          <p className="error-text" key={`err_${e}`}>
+            {e}
           </p>
         ))}
       </div>

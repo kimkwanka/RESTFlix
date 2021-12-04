@@ -6,7 +6,7 @@ import {
 } from '@features/slices/api';
 
 const useLoginView = () => {
-  const [loginUser] = useLoginUserMutation();
+  const [loginUser, { error: loginError }] = useLoginUserMutation();
   const [silentLogin] = useSilentLoginMutation();
 
   const [username, setUsername] = useState('FlyingBanana');
@@ -38,6 +38,7 @@ const useLoginView = () => {
     setPassword,
     loginFormRef,
     isDisabled,
+    loginError,
   };
 };
 

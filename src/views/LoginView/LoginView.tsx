@@ -13,6 +13,7 @@ const LoginView = () => {
     setPassword,
     loginFormRef,
     isDisabled,
+    loginError,
   } = useLoginView();
 
   return (
@@ -44,7 +45,9 @@ const LoginView = () => {
         <button type="submit" onClick={handleSubmit} disabled={isDisabled}>
           Sign In
         </button>
-        <ErrorMessages errorType="loginErrors" />
+        <ErrorMessages
+          errors={loginError && 'error' in loginError ? [loginError.error] : []}
+        />
       </form>
       <p>
         Don’t have an account?&nbsp;

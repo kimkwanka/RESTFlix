@@ -1,13 +1,11 @@
 import { useState, useRef, MouseEvent } from 'react';
 
-import { useHistory } from 'react-router-dom';
-
 import { useRegisterUserMutation } from '@features/slices/api';
 
 const RegistrationView = () => {
-  const [registerUser] = useRegisterUserMutation();
+  const [registerUser, { error: registerError, isSuccess: isRegisterSuccess }] =
+    useRegisterUserMutation();
 
-  const history = useHistory();
   const registerFormRef = useRef<HTMLFormElement>(null);
 
   const [newUserData, setNewUserData] = useState({
@@ -35,8 +33,7 @@ const RegistrationView = () => {
     e.preventDefault();
 
     if (isRegisterInputValid()) {
-      await registerUser(newUserData);
-      history.push('/');
+      registerUser(newUserData);
     }
   };
 
@@ -52,6 +49,8 @@ const RegistrationView = () => {
     setBirthday,
     registerFormRef,
     isDisabled,
+    registerError,
+    isRegisterSuccess,
   };
 };
 

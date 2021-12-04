@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 
 import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
 
@@ -17,7 +17,13 @@ const RegistrationView = () => {
     setBirthday,
     registerFormRef,
     isDisabled,
+    registerError,
+    isRegisterSuccess,
   } = useRegistrationView();
+
+  if (isRegisterSuccess) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="register-view">
@@ -75,7 +81,13 @@ const RegistrationView = () => {
         >
           Sign Up
         </button>
-        <ErrorMessages errorType="registerErrors" />
+        <ErrorMessages
+          errors={
+            registerError && 'error' in registerError
+              ? [registerError.error]
+              : []
+          }
+        />
       </form>
       <p>
         Already have an account?&nbsp;
