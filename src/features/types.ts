@@ -1,14 +1,10 @@
 export interface IUser {
-  data: {
-    _id: string;
-    birthday: string;
-    email: string;
-    favoriteMovies: number[];
-    passwordHash: string;
-    username: string;
-  };
-  isLoggedIn: boolean;
-  token: string;
+  _id: string;
+  birthday: string;
+  email: string;
+  favoriteMovies: number[];
+  passwordHash: string;
+  username: string;
 }
 
 export interface IUserData {

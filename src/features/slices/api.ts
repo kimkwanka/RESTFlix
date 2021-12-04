@@ -194,25 +194,22 @@ export const moviesApi = createApi({
   reducerPath: 'moviesApi',
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
-    loginUser: builder.mutation<IUser, { username: string; password: string }>({
+    loginUser: builder.mutation<
+      { user: IUser; jwtToken: string },
+      { username: string; password: string }
+    >({
       query: ({ username, password }) => ({
         url: `/login?username=${username}&password=${password}`,
         method: 'POST',
         credentials: 'include',
       }),
-      transformResponse: ({ user, jwtToken }) => {
-        return { data: user, token: jwtToken, isLoggedIn: true };
-      },
     }),
-    silentLogin: builder.mutation<IUser, void>({
+    silentLogin: builder.mutation<{ user: IUser; jwtToken: string }, void>({
       query: () => ({
         url: `/silentrefresh`,
         method: 'POST',
         credentials: 'include',
       }),
-      transformResponse: ({ user, jwtToken }) => {
-        return { data: user, token: jwtToken, isLoggedIn: true };
-      },
     }),
     registerUser: builder.mutation<IUser, IUserData>({
       query: (newUserData: IUserData) => ({

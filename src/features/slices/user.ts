@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk, AnyAction } from '@reduxjs/toolkit';
 
 import { thunkFetch } from '@features/utils/thunkFetch';
 
-import { TRootState, IUser } from '@features/types';
+import { TRootState } from '@features/types';
 
 import { setAccessToken, setLoggedOut, moviesApi } from '@features/slices/api';
 
@@ -213,12 +213,17 @@ const userSlice = createSlice({
     builder.addMatcher(
       moviesApi.endpoints.loginUser.matchFulfilled,
       (_, action) => {
-        return action.payload;
+        const { user, jwtToken } = action.payload;
+        return { data: user, token: jwtToken, isLoggedIn: true };
       },
     );
     builder.addMatcher(
       moviesApi.endpoints.silentLogin.matchFulfilled,
       (_, action) => {
+        const { user, jwtToken } = action.payload;
+        return { data: user, token: jwtToken, isLoggedIn: true };
+      },
+    );
     builder.addMatcher(
       moviesApi.endpoints.updateUser.matchFulfilled,
       (state, action) => {
