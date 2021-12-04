@@ -10,6 +10,7 @@ import { createAction } from '@reduxjs/toolkit';
 
 import {
   IUser,
+  IUserData,
   TmdbConfiguration,
   TmdbImageBaseUrls,
   TmdbCredits,
@@ -164,6 +165,14 @@ export const moviesApi = createApi({
         return { data: data.user, token: data.jwtToken, isLoggedIn: true };
       },
     }),
+    registerUser: builder.mutation<IUser, IUserData>({
+      query: (newUserData: IUserData) => ({
+        url: '/users',
+        method: 'POST',
+        credentials: 'include',
+        body: newUserData,
+      }),
+    }),
     discoverMovies: builder.query<
       { movies: Array<TmdbMovieSimple>; totalPages: number },
       number | void
@@ -229,6 +238,7 @@ export const moviesApi = createApi({
 export const {
   useLoginUserMutation,
   useSilentLoginMutation,
+  useRegisterUserMutation,
   useDiscoverMoviesQuery,
   useGetMovieCreditsByIdQuery,
   useGetMovieByIdQuery,

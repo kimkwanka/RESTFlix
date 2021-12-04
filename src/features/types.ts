@@ -11,6 +11,13 @@ export interface IUser {
   token: string;
 }
 
+export interface IUserData {
+  birthday: string;
+  email: string;
+  password: string;
+  username: string;
+}
+
 export type TmdbMovieSimple = {
   adult: boolean;
   backdrop_path: string;

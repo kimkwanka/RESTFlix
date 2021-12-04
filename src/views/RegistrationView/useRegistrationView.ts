@@ -2,13 +2,12 @@ import { useState, useRef, MouseEvent } from 'react';
 
 import { useHistory } from 'react-router-dom';
 
-import { useAppDispatch } from '@features/hooks';
-
-import { registerUser } from '@features/actions';
+import { useRegisterUserMutation } from '@features/slices/api';
 
 const RegistrationView = () => {
+  const [registerUser] = useRegisterUserMutation();
+
   const history = useHistory();
-  const dispatch = useAppDispatch();
   const registerFormRef = useRef<HTMLFormElement>(null);
 
   const [newUserData, setNewUserData] = useState({
@@ -36,14 +35,8 @@ const RegistrationView = () => {
     e.preventDefault();
 
     if (isRegisterInputValid()) {
-      try {
-        await dispatch(registerUser(newUserData)).unwrap();
-
-        history.push('/');
-      } catch {
-        // Error is dealt with inside registerUser thunk
-        // but unwrap() bubbles it up again, so just catch and ignore it.
-      }
+      await registerUser(newUserData);
+      history.push('/');
     }
   };
 
