@@ -4,6 +4,7 @@ import {
   BaseQueryFn,
   FetchArgs,
   FetchBaseQueryError,
+  FetchBaseQueryMeta,
 } from '@reduxjs/toolkit/query/react';
 
 import { createAction } from '@reduxjs/toolkit';
@@ -21,15 +22,38 @@ import {
 } from '@features/types';
 
 type TAPIResponse<T> = {
-  data: T;
+  data: T | null;
   errors: { message: string }[];
 };
 
-type TBaseQueryResponse<T> = {
-  data: TAPIResponse<T>;
-  error?: unknown;
-  meta?: unknown;
+type QueryReturnValue<T = unknown, E = unknown, M = unknown> =
+  | {
+      error: E;
+      data?: undefined;
+      meta?: M;
+    }
+  | {
+      error?: undefined;
+      data: T;
+      meta?: M;
+    };
+
+type TTypedFetchBaseQueryError<T> = {
+  status: number;
+  data: T;
 };
+
+type TBaseQueryAPIResponse<T> = QueryReturnValue<
+  TAPIResponse<T>,
+  TTypedFetchBaseQueryError<TAPIResponse<T>>,
+  FetchBaseQueryMeta
+>;
+
+type TBaseQueryFnResponse<T> = QueryReturnValue<
+  T,
+  TTypedFetchBaseQueryError<T>,
+  FetchBaseQueryMeta
+>;
 
 // To break the circular dependency between api slice and user slice we define the actions in here instead of
 // in the user slice.
@@ -62,7 +86,11 @@ const baseQueryWithReauth: BaseQueryFn<
   unknown,
   FetchBaseQueryError
 > = async (args, api, extraOptions) => {
-  let queryResult = await baseQueryWithAuthHeaders(args, api, extraOptions);
+  let queryResult = (await baseQueryWithAuthHeaders(
+    args,
+    api,
+    extraOptions,
+  )) as TBaseQueryAPIResponse<unknown>;
 
   if (queryResult.error && queryResult.error.status === 401) {
     // If initital request was rejected because of missing or invalid access token,
@@ -89,8 +117,30 @@ const baseQueryWithReauth: BaseQueryFn<
     pendingTokenRequest = null;
 
     // Now that we have a new token, retry the initial request
-    queryResult = await baseQueryWithAuthHeaders(args, api, extraOptions);
+    queryResult = (await baseQueryWithAuthHeaders(
+      args,
+      api,
+      extraOptions,
+    )) as TBaseQueryAPIResponse<unknown>;
   }
+
+  if (queryResult.data?.data) {
+    return {
+      data: queryResult.data.data,
+      meta: queryResult.meta,
+    };
+  }
+
+  if (queryResult.error?.data?.errors) {
+    return {
+      error: {
+        error: queryResult.error?.data.errors[0].message,
+        status: 'CUSTOM_ERROR',
+      } as FetchBaseQueryError,
+      meta: queryResult.meta,
+    };
+  }
+
   return queryResult;
 };
 
@@ -100,9 +150,9 @@ const fetchImageBaseUrlsIfUndefined = async (
   if (!imageBaseUrls) {
     const imageBaseUrlsQueryResponse = (await baseQuery(
       'tmdb/configuration',
-    )) as TBaseQueryResponse<{ images: TmdbConfiguration }>;
+    )) as TBaseQueryFnResponse<{ images: TmdbConfiguration }>;
 
-    const config = imageBaseUrlsQueryResponse.data.data.images;
+    const config = imageBaseUrlsQueryResponse?.data?.images;
 
     if (config) {
       imageBaseUrls = {
@@ -126,11 +176,10 @@ const fetchGenreLookupTableIfUndefined = async (
   if (!genreLookupTable) {
     const genreLookupTableQueryResponse = (await baseQuery(
       'tmdb/genre/movie/list',
-    )) as TBaseQueryResponse<{
+    )) as TBaseQueryFnResponse<{
       genres: Array<{ id: number; name: string }>;
     }>;
-
-    const { genres } = genreLookupTableQueryResponse.data.data;
+    const genres = genreLookupTableQueryResponse.data?.genres;
 
     if (genres) {
       genreLookupTable = genres.reduce((acc: Record<number, string>, genre) => {
@@ -151,8 +200,8 @@ export const moviesApi = createApi({
         method: 'POST',
         credentials: 'include',
       }),
-      transformResponse: ({ data }) => {
-        return { data: data.user, token: data.jwtToken, isLoggedIn: true };
+      transformResponse: ({ user, jwtToken }) => {
+        return { data: user, token: jwtToken, isLoggedIn: true };
       },
     }),
     silentLogin: builder.mutation<IUser, void>({
@@ -161,8 +210,8 @@ export const moviesApi = createApi({
         method: 'POST',
         credentials: 'include',
       }),
-      transformResponse: ({ data }) => {
-        return { data: data.user, token: data.jwtToken, isLoggedIn: true };
+      transformResponse: ({ user, jwtToken }) => {
+        return { data: user, token: jwtToken, isLoggedIn: true };
       },
     }),
     registerUser: builder.mutation<IUser, IUserData>({
@@ -183,14 +232,13 @@ export const moviesApi = createApi({
 
         const response = (await baseQuery(
           `tmdb/discover/movie?page=${page}`,
-        )) as TBaseQueryResponse<{
+        )) as TBaseQueryFnResponse<{
           results: Array<TmdbMovieSimple>;
           total_pages: number;
         }>;
 
         if (response.data) {
-          const movies =
-            (response.data.data.results as TmdbMovieSimple[]) || [];
+          const movies = (response.data.results as TmdbMovieSimple[]) || [];
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
             ...movie,
             backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
@@ -202,7 +250,7 @@ export const moviesApi = createApi({
           return {
             data: {
               movies: moviesWithImagePathsAndGenres,
-              totalPages: response.data.data.total_pages,
+              totalPages: response.data.total_pages,
             },
           };
         }
@@ -217,10 +265,10 @@ export const moviesApi = createApi({
 
         const response = (await baseQuery(
           `tmdb/movie/${id}`,
-        )) as TBaseQueryResponse<TmdbMovieDetailed>;
+        )) as TBaseQueryFnResponse<TmdbMovieDetailed>;
 
         if (response.data) {
-          const movie = response.data.data;
+          const movie = response.data;
           const movieWithImagePathsAndGenres = {
             ...movie,
             backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
