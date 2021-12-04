@@ -1,9 +1,11 @@
 /* eslint no-restricted-globals: ["error"] */
 import { useState, useRef, MouseEvent } from 'react';
 
+import { useUpdateUserMutation } from '@features/slices/api';
+
 import { useAppSelector, useAppDispatch } from '@features/hooks';
 
-import { updateUserData, deleteUser } from '@features/actions';
+import { deleteUser } from '@features/actions';
 
 const formatDate = (date: string) => {
   const inputDate = new Date(date);
@@ -11,6 +13,8 @@ const formatDate = (date: string) => {
 };
 
 const useProfileView = () => {
+  const [updateUser, { error: updateError }] = useUpdateUserMutation();
+
   const currentUserData = useAppSelector((state) => state.user.data);
 
   const dispatch = useAppDispatch();
@@ -45,7 +49,7 @@ const useProfileView = () => {
     e.preventDefault();
 
     if (isUpdateFormInputValid()) {
-      await dispatch(updateUserData(newUserData));
+      await updateUser({ userId: currentUserData._id, newUserData });
       setPassword('');
     }
   };
@@ -79,6 +83,7 @@ const useProfileView = () => {
     setUsername,
     userDataChanged,
     updateFormRef,
+    updateError,
   };
 };
 

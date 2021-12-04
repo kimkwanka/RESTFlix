@@ -219,7 +219,10 @@ const userSlice = createSlice({
     builder.addMatcher(
       moviesApi.endpoints.silentLogin.matchFulfilled,
       (_, action) => {
-        return action.payload;
+    builder.addMatcher(
+      moviesApi.endpoints.updateUser.matchFulfilled,
+      (state, action) => {
+        state.data = action.payload;
       },
     );
   },

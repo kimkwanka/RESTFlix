@@ -21,6 +21,7 @@ const ProfileView = () => {
     setUsername,
     userDataChanged,
     updateFormRef,
+    updateError,
   } = useProfileView();
 
   return (
@@ -82,7 +83,11 @@ const ProfileView = () => {
             &#10006; Delete Profile
           </button>
         </div>
-        <ErrorMessages errorType="profileErrors" />
+        <ErrorMessages
+          errors={
+            updateError && 'error' in updateError ? [updateError.error] : []
+          }
+        />
       </form>
       {favoriteMovies.length > 0 ? (
         <>
