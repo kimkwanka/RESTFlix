@@ -23,12 +23,11 @@ const Routes = () => {
       <Route exact path="/register" component={RegistrationView} />
 
       {!isLoggedIn && <Redirect from="*" to="/login" />}
-      <Route exact path="/:page?" component={HomeView} />
       <Route exact path="/profile" component={ProfileView} />
-
       <Route exact path="/movies/:movieId" component={MovieView} />
       <Route exact path="/genres/:genreName" component={GenreView} />
       <Route exact path="/directors/:directorName" component={DirectorView} />
+      <Route exact path="/:page?" component={HomeView} />
     </Switch>
   );
 };
