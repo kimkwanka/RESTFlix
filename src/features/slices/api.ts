@@ -188,24 +188,26 @@ export const moviesApi = createApi({
           total_pages: number;
         }>;
 
-        const movies = response.data.data.results as TmdbMovieSimple[];
-        const moviesWithImagePathsAndGenres = movies.map((movie) => ({
-          ...movie,
-          backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
-          posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
-          genreList: movie.genre_ids.map(
-            (genreId) => genreLookupTable?.[genreId] || '',
-          ),
-        }));
+        if (response.data) {
+          const movies =
+            (response.data.data.results as TmdbMovieSimple[]) || [];
+          const moviesWithImagePathsAndGenres = movies.map((movie) => ({
+            ...movie,
+            backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
+            posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
+            genreList: movie.genre_ids.map(
+              (genreId) => genreLookupTable?.[genreId] || '',
+            ),
+          }));
+          return {
+            data: {
+              movies: moviesWithImagePathsAndGenres,
+              totalPages: response.data.data.total_pages,
+            },
+          };
+        }
 
-        return response.data
-          ? {
-              data: {
-                movies: moviesWithImagePathsAndGenres,
-                totalPages: response.data.data.total_pages,
-              },
-            }
-          : { error: response.error as FetchBaseQueryError };
+        return { error: response.error as FetchBaseQueryError };
       },
     }),
     getMovieById: builder.query<TmdbMovieDetailed, string>({
@@ -217,16 +219,18 @@ export const moviesApi = createApi({
           `tmdb/movie/${id}`,
         )) as TBaseQueryResponse<TmdbMovieDetailed>;
 
-        const movie = response.data.data;
-        const movieWithImagePathsAndGenres = {
-          ...movie,
-          backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
-          posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
-          genreList: movie.genres.map(({ name }) => name),
-        };
-        return response.data
-          ? { data: movieWithImagePathsAndGenres }
-          : { error: response.error as FetchBaseQueryError };
+        if (response.data) {
+          const movie = response.data.data;
+          const movieWithImagePathsAndGenres = {
+            ...movie,
+            backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
+            posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
+            genreList: movie.genres.map(({ name }) => name),
+          };
+          return { data: movieWithImagePathsAndGenres };
+        }
+
+        return { error: response.error as FetchBaseQueryError };
       },
     }),
     getMovieCreditsById: builder.query<TmdbCredits, string>({
