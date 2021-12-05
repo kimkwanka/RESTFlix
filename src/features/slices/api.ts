@@ -190,7 +190,7 @@ const fetchGenreLookupTableIfUndefined = async (
   }
 };
 
-export const moviesApi = createApi({
+const api = createApi({
   reducerPath: 'moviesApi',
   baseQuery: baseQueryWithReauth,
   endpoints: (builder) => ({
@@ -271,7 +271,7 @@ export const moviesApi = createApi({
       { movies: Array<TmdbMovieSimple>; totalPages: number },
       number | void
     >({
-      queryFn: async (page = 1, api, extraOptions, baseQuery) => {
+      queryFn: async (page = 1, queryApi, extraOptions, baseQuery) => {
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
@@ -305,7 +305,7 @@ export const moviesApi = createApi({
       },
     }),
     getMovieById: builder.query<TmdbMovieDetailed, string>({
-      queryFn: async (movieId, api, extraOptions, baseQuery) => {
+      queryFn: async (movieId, queryApi, extraOptions, baseQuery) => {
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
@@ -334,6 +334,8 @@ export const moviesApi = createApi({
   }),
 });
 
+export default api;
+
 export const {
   useLoginUserMutation,
   useSilentLoginMutation,
@@ -346,4 +348,4 @@ export const {
   useDiscoverMoviesQuery,
   useGetMovieCreditsByIdQuery,
   useGetMovieByIdQuery,
-} = moviesApi;
+} = api;
