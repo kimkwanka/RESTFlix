@@ -233,6 +233,13 @@ export const moviesApi = createApi({
         body: newUserData,
       }),
     }),
+    deleteUser: builder.mutation<IUser, string>({
+      query: (userId) => ({
+        url: `/users/${userId}`,
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    }),
     discoverMovies: builder.query<
       { movies: Array<TmdbMovieSimple>; totalPages: number },
       number | void
@@ -303,6 +310,7 @@ export const {
   useSilentLoginMutation,
   useRegisterUserMutation,
   useUpdateUserMutation,
+  useDeleteUserMutation,
   useDiscoverMoviesQuery,
   useGetMovieCreditsByIdQuery,
   useGetMovieByIdQuery,

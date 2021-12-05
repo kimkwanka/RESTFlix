@@ -22,6 +22,7 @@ const ProfileView = () => {
     userDataChanged,
     updateFormRef,
     updateError,
+    deleteError,
   } = useProfileView();
 
   return (
@@ -86,6 +87,11 @@ const ProfileView = () => {
         <ErrorMessages
           errors={
             updateError && 'error' in updateError ? [updateError.error] : []
+          }
+        />
+        <ErrorMessages
+          errors={
+            deleteError && 'error' in deleteError ? [deleteError.error] : []
           }
         />
       </form>

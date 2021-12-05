@@ -230,6 +230,20 @@ const userSlice = createSlice({
         state.data = action.payload;
       },
     );
+    builder.addMatcher(moviesApi.endpoints.deleteUser.matchFulfilled, () => {
+      return {
+        data: {
+          _id: '',
+          birthday: '',
+          email: '',
+          favoriteMovies: [],
+          passwordHash: '',
+          username: '',
+        },
+        token: '',
+        isLoggedIn: false,
+      };
+    });
   },
 });
 
