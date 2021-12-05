@@ -1,16 +1,16 @@
 import { memo, MouseEvent } from 'react';
 
-import { useAppSelector, useAppDispatch } from '@features/hooks';
-
 import {
-  addMovieToFavorites,
-  removeMovieFromFavorites,
-} from '@features/actions';
+  useAddMovieToFavoritesMutation,
+  useRemoveMovieFromFavoritesMutation,
+} from '@features/slices/api';
+
+import { useAppSelector } from '@features/hooks';
 
 import './FavoriteButton.scss';
 
 interface IFavoriteButtonProps {
-  movieId?: number;
+  movieId?: string;
   showText?: boolean;
   clear?: boolean;
 }
@@ -20,21 +20,23 @@ const FavoriteButton = ({ movieId, showText, clear }: IFavoriteButtonProps) => {
     return null;
   }
 
-  const dispatch = useAppDispatch();
+  const [addMovieToFavorites] = useAddMovieToFavoritesMutation();
+  const [removeMovieFromFavorites] = useRemoveMovieFromFavoritesMutation();
 
-  const favoriteMovies = useAppSelector(
-    (state) => state.user.data.favoriteMovies,
-  );
+  const currentUserData = useAppSelector((state) => state.user.data);
+
+  const { _id: userId, favoriteMovies } = currentUserData;
+
   const isFavorite = favoriteMovies.indexOf(movieId) !== -1;
 
   const addToFavorites = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(addMovieToFavorites(movieId));
+    addMovieToFavorites({ userId, movieId });
   };
 
   const removeFromFavorites = (e: MouseEvent<HTMLElement>) => {
     e.preventDefault();
-    dispatch(removeMovieFromFavorites(movieId));
+    removeMovieFromFavorites({ userId, movieId });
   };
 
   return !isFavorite ? (

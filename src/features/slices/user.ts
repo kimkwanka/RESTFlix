@@ -123,7 +123,7 @@ const userSlice = createSlice({
       _id: '',
       birthday: '',
       email: '',
-      favoriteMovies: [] as number[],
+      favoriteMovies: [] as string[],
       passwordHash: '',
       username: '',
     },
@@ -149,67 +149,6 @@ const userSlice = createSlice({
         isLoggedIn: false,
       };
     });
-    builder.addCase(silentRefresh.fulfilled, (state, action: AnyAction) => ({
-      data: action.payload.data.user,
-      token: action.payload.data.jwtToken,
-      isLoggedIn: true,
-    }));
-    builder.addCase(silentRefresh.rejected, () => ({
-      data: {
-        _id: '',
-        birthday: '',
-        email: '',
-        favoriteMovies: [],
-        passwordHash: '',
-        username: '',
-      },
-      token: '',
-      isLoggedIn: false,
-    }));
-    builder.addCase(logoutUser.fulfilled, () => ({
-      data: {
-        _id: '',
-        birthday: '',
-        email: '',
-        favoriteMovies: [],
-        passwordHash: '',
-        username: '',
-      },
-      token: '',
-      isLoggedIn: false,
-    }));
-    builder.addCase(
-      addMovieToFavorites.fulfilled,
-      (state: IUser, action: AnyAction) => {
-        state.data = action.payload.data;
-      },
-    );
-    builder.addCase(
-      removeMovieFromFavorites.fulfilled,
-      (state: IUser, action: AnyAction) => {
-        state.data = action.payload.data;
-      },
-    );
-    builder.addCase(loginUser.fulfilled, (state, action: AnyAction) => ({
-      data: action.payload.data.user,
-      token: action.payload.data.jwtToken,
-      isLoggedIn: true,
-    }));
-    builder.addCase(updateUserData.fulfilled, (state, action: AnyAction) => {
-      state.data = action.payload.data;
-    });
-    builder.addCase(deleteUser.fulfilled, () => ({
-      data: {
-        _id: '',
-        birthday: '',
-        email: '',
-        favoriteMovies: [],
-        passwordHash: '',
-        username: '',
-      },
-      token: '',
-      isLoggedIn: false,
-    }));
     builder.addMatcher(
       moviesApi.endpoints.loginUser.matchFulfilled,
       (_, action) => {
@@ -244,6 +183,18 @@ const userSlice = createSlice({
         isLoggedIn: false,
       };
     });
+    builder.addMatcher(
+      moviesApi.endpoints.addMovieToFavorites.matchFulfilled,
+      (state, action) => {
+        state.data = action.payload;
+      },
+    );
+    builder.addMatcher(
+      moviesApi.endpoints.removeMovieFromFavorites.matchFulfilled,
+      (state, action) => {
+        state.data = action.payload;
+      },
+    );
   },
 });
 

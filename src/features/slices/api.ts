@@ -240,6 +240,26 @@ export const moviesApi = createApi({
         credentials: 'include',
       }),
     }),
+    addMovieToFavorites: builder.mutation<
+      IUser,
+      { userId: string; movieId: string }
+    >({
+      query: ({ userId, movieId }) => ({
+        url: `/users/${userId}/movies/${movieId}`,
+        method: 'POST',
+        credentials: 'include',
+      }),
+    }),
+    removeMovieFromFavorites: builder.mutation<
+      IUser,
+      { userId: string; movieId: string }
+    >({
+      query: ({ userId, movieId }) => ({
+        url: `/users/${userId}/movies/${movieId}`,
+        method: 'DELETE',
+        credentials: 'include',
+      }),
+    }),
     discoverMovies: builder.query<
       { movies: Array<TmdbMovieSimple>; totalPages: number },
       number | void
@@ -313,6 +333,8 @@ export const {
   useRegisterUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,
+  useAddMovieToFavoritesMutation,
+  useRemoveMovieFromFavoritesMutation,
   useDiscoverMoviesQuery,
   useGetMovieCreditsByIdQuery,
   useGetMovieByIdQuery,
