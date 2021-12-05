@@ -2,7 +2,7 @@ export interface IUser {
   _id: string;
   birthday: string;
   email: string;
-  favoriteMovies: number[];
+  favoriteMovies: string[];
   passwordHash: string;
   username: string;
 }
@@ -20,7 +20,7 @@ export type TmdbMovieSimple = {
   backdropUrl: string;
   genre_ids: number[];
   genreList: string[];
-  id: number;
+  id: string;
   original_language: boolean;
   original_title: string;
   overview: string;
@@ -47,7 +47,7 @@ export type TmdbMovieDetailed = {
   genres: TmdbGenre[];
   genreList: string[];
   homepage?: string;
-  id: number;
+  id: string;
   imdb_id?: string;
   original_language: boolean;
   original_title: string;

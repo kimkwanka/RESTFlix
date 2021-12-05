@@ -259,6 +259,7 @@ export const moviesApi = createApi({
           const movies = (response.data.results as TmdbMovieSimple[]) || [];
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
             ...movie,
+            id: movie.id.toString(),
             backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
             posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
             genreList: movie.genre_ids.map(
@@ -277,18 +278,19 @@ export const moviesApi = createApi({
       },
     }),
     getMovieById: builder.query<TmdbMovieDetailed, string>({
-      queryFn: async (id, api, extraOptions, baseQuery) => {
+      queryFn: async (movieId, api, extraOptions, baseQuery) => {
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
         const response = (await baseQuery(
-          `tmdb/movie/${id}`,
+          `tmdb/movie/${movieId}`,
         )) as TBaseQueryFnResponse<TmdbMovieDetailed>;
 
         if (response.data) {
           const movie = response.data;
           const movieWithImagePathsAndGenres = {
             ...movie,
+            id: movie.id.toString(),
             backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
             posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
             genreList: movie.genres.map(({ name }) => name),
