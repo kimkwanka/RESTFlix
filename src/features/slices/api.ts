@@ -211,6 +211,13 @@ export const moviesApi = createApi({
         credentials: 'include',
       }),
     }),
+    logoutUser: builder.mutation<void, void>({
+      query: () => ({
+        url: '/logout',
+        method: 'POST',
+        credentials: 'include',
+      }),
+    }),
     registerUser: builder.mutation<IUser, IUserData>({
       query: (newUserData: IUserData) => ({
         url: '/users',
@@ -330,6 +337,7 @@ export const moviesApi = createApi({
 export const {
   useLoginUserMutation,
   useSilentLoginMutation,
+  useLogoutUserMutation,
   useRegisterUserMutation,
   useUpdateUserMutation,
   useDeleteUserMutation,

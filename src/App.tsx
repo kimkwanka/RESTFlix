@@ -1,7 +1,6 @@
 import { useEffect } from 'react';
 
-import { useAppDispatch } from '@features/hooks';
-import { logoutUser } from '@features/actions';
+import { useLogoutUserMutation } from '@features/slices/api';
 
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import NavBar from '@components/NavBar/NavBar';
@@ -13,13 +12,13 @@ import 'modern-css-reset';
 import './App.scss';
 
 const App = () => {
-  const dispatch = useAppDispatch();
+  const [logoutUser] = useLogoutUserMutation();
 
   useEffect(() => {
     // If 'logout' item is set it means another tab logged out, so we log out as well
     const syncLogout = (e: StorageEvent) => {
       if (e.key === 'logout') {
-        dispatch(logoutUser());
+        logoutUser();
       }
     };
     window.addEventListener('storage', syncLogout);

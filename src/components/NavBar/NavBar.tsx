@@ -2,22 +2,22 @@ import { MouseEvent } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { useAppSelector, useAppDispatch } from '@features/hooks';
+import { useLogoutUserMutation } from '@features/slices/api';
 
-import { logoutUser } from '@features/actions';
+import { useAppSelector } from '@features/hooks';
 
 import SearchBar from './SearchBar/SearchBar';
 
 import './NavBar.scss';
 
 const NavBar = () => {
-  const dispatch = useAppDispatch();
+  const [logoutUser] = useLogoutUserMutation();
 
   const isLoggedIn = useAppSelector((state) => state.user.isLoggedIn);
 
   const handleLogoutClick = (e: MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    dispatch(logoutUser());
+    logoutUser();
 
     // Set 'logout' item in local storage to trigger logout in other tabs via storage event listerner in App.tsx
     localStorage.setItem('logout', JSON.stringify(Date.now()));

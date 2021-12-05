@@ -41,7 +41,7 @@ export const silentRefresh = createAsyncThunk(
     }),
 );
 
-export const logoutUser = createAsyncThunk(
+export const logoutUser2 = createAsyncThunk(
   'user/logoutUser',
   async (_, thunkAPI) =>
     thunkFetch({
@@ -163,6 +163,20 @@ const userSlice = createSlice({
         return { data: user, token: jwtToken, isLoggedIn: true };
       },
     );
+    builder.addMatcher(moviesApi.endpoints.logoutUser.matchFulfilled, () => {
+      return {
+        data: {
+          _id: '',
+          birthday: '',
+          email: '',
+          favoriteMovies: [],
+          passwordHash: '',
+          username: '',
+        },
+        token: '',
+        isLoggedIn: false,
+      };
+    });
     builder.addMatcher(
       moviesApi.endpoints.updateUser.matchFulfilled,
       (state, action) => {
