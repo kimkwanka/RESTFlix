@@ -35,11 +35,27 @@
   box-shadow: 0 1px var(--secondaryCol);
 }
 
-.logo {
+.logo-link {
+  color: #fff;
   flex-grow: 1;
+  text-decoration: none;
+  * {
+    transition: color var(--transitionSpeed) var(--transitionTiming);
+  }
+}
+
+.logo {
   font-size: 36px;
+
   span {
     color: var(--primaryCol);
+  }
+
+  &:hover {
+    color: var(--primaryCol);
+    span {
+      color: #fff;
+    }
   }
 }
 

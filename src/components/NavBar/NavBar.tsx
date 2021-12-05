@@ -25,10 +25,12 @@ const NavBar = () => {
 
   return (
     <nav className="navbar">
-      <h1 className="logo">
-        <span>REST</span>
-        Flix
-      </h1>
+      <NavLink className="logo-link" to="/">
+        <h1 className="logo">
+          <span>REST</span>
+          Flix
+        </h1>
+      </NavLink>
       {isLoggedIn && (
         <>
           <SearchBar />
