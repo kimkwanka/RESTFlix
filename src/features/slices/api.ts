@@ -287,8 +287,12 @@ const api = createApi({
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
             ...movie,
             id: movie.id.toString(),
-            backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
-            posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
+            backdropUrl: movie.backdrop_path
+              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
+              : '',
+            posterUrl: movie.poster_path
+              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
+              : '',
             genreList: movie.genre_ids.map(
               (genreId) => genreLookupTable?.[genreId] || '',
             ),
@@ -318,8 +322,12 @@ const api = createApi({
           const movieWithImagePathsAndGenres = {
             ...movie,
             id: movie.id.toString(),
-            backdropUrl: imageBaseUrls?.backdropBaseUrl + movie.backdrop_path,
-            posterUrl: imageBaseUrls?.posterBaseUrl + movie.poster_path,
+            backdropUrl: movie.backdrop_path
+              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
+              : '',
+            posterUrl: movie.poster_path
+              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
+              : '',
             genreList: movie.genres.map(({ name }) => name),
           };
           return { data: movieWithImagePathsAndGenres };
