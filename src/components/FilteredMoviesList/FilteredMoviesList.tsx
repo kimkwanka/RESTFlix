@@ -41,7 +41,7 @@ const FilteredMoviesList = ({
   return (
     <>
       <div className="pagination-links">{paginationLinks}</div>
-      <div className="movies-list">
+      <div className="filtered-movies-list">
         {filteredMovies?.map((movie) => (
           <MovieCard key={`${movie.id}`} movie={movie} />
         ))}
