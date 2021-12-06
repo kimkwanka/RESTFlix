@@ -1,13 +1,9 @@
-import { useState, useRef, useEffect, MouseEvent } from 'react';
+import { useState, useRef, MouseEvent } from 'react';
 
-import {
-  useLoginUserMutation,
-  useSilentLoginMutation,
-} from '@features/slices/api';
+import { useLoginUserMutation } from '@features/slices/api';
 
 const useLoginView = () => {
   const [loginUser, { error: loginError }] = useLoginUserMutation();
-  const [silentLogin] = useSilentLoginMutation();
 
   const [username, setUsername] = useState('FlyingBanana');
   const [password, setPassword] = useState('test123');
@@ -24,11 +20,6 @@ const useLoginView = () => {
       loginUser({ username, password });
     }
   };
-  useEffect(() => {
-    silentLogin();
-
-    return () => {};
-  }, []);
 
   return {
     username,
