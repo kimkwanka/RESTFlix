@@ -59,7 +59,7 @@ const MovieModal = ({ movie }: MovieModalProps) => {
         <img
           className="movie-modal__img"
           crossOrigin="anonymous"
-          src={movie.backdropUrl}
+          src={movie.backdropUrl || movie.posterUrl}
           alt={movie.title}
         />
       </Link>

@@ -28,7 +28,7 @@ const MovieCard = ({ movie }: IMovieCardProps) => {
         <img
           className="movie-card__img"
           crossOrigin="anonymous"
-          src={movie.backdropUrl}
+          src={movie.backdropUrl || movie.posterUrl}
           alt={movie.title}
         />
       </Link>
