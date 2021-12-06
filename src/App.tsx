@@ -7,6 +7,7 @@ import {
 
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import NavBar from '@components/NavBar/NavBar';
+import Footer from '@components/Footer/Footer';
 
 import Routes from './Routes';
 
@@ -47,6 +48,7 @@ const App = () => {
           <Routes silentLoginPending={isUninitialized || isLoading} />
         </div>
       </main>
+      <Footer />
     </>
   );
 };
