@@ -6,7 +6,7 @@ import {
 } from '@features/slices/api';
 
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-import NavBar from '@components/NavBar/NavBar';
+import Header from '@src/components/Header/Header';
 import Footer from '@components/Footer/Footer';
 
 import Routes from './Routes';
@@ -39,9 +39,7 @@ const App = () => {
 
   return (
     <>
-      <header>
-        <NavBar />
-      </header>
+      <Header />
       <main>
         <div className="container">
           <LoadingSpinner />
