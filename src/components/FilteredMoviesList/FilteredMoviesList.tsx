@@ -1,5 +1,4 @@
 import { memo } from 'react';
-import { Link } from 'react-router-dom';
 
 import { TmdbMovieSimple } from '@features/types';
 
@@ -28,25 +27,12 @@ const FilteredMoviesList = ({
   // Filter out movies by using the filterFunc.
   const filteredMovies = movies.filter(filterFunc);
 
-  const paginationLinks = [];
-
-  for (let i = page; i < page + 10; i++) {
-    paginationLinks.push(
-      <Link key={`/${i}`} to={`/${i}`}>
-        {i}
-      </Link>,
-    );
-  }
-
   return (
-    <>
-      <div className="pagination-links">{paginationLinks}</div>
-      <div className="filtered-movies-list">
-        {filteredMovies?.map((movie) => (
-          <MovieCard key={`${movie.id}`} movie={movie} />
-        ))}
-      </div>
-    </>
+    <div className="filtered-movies-list">
+      {filteredMovies?.map((movie) => (
+        <MovieCard key={`${movie.id}`} movie={movie} />
+      ))}
+    </div>
   );
 };
 
