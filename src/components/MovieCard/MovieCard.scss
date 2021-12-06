@@ -9,11 +9,6 @@
   background: var(--mutedBlack);
   border-radius: var(--s1);
   position: relative;
-  overflow: hidden;
-
-  &:hover {
-    overflow: visible;
-  }
 }
 
 .movie-card__img {

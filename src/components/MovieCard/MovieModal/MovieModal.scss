@@ -5,17 +5,6 @@
   text-decoration: none;
 }
 
-.movie-card {
-  background: var(--mutedBlack);
-  border-radius: var(--s1);
-  overflow: hidden;
-  position: relative;
-
-  &:hover {
-    overflow: visible;
-  }
-}
-
 .movie-modal__img {
   border-radius: var(--s1) var(--s1) 0 0;
   height: 196px;
@@ -88,14 +77,34 @@
 .movie-modal {
   border-radius: var(--s1);
   position: absolute;
-  transition: all 0s ease-in;
-  visibility: hidden;
+  transition: transform var(--transitionSpeed) ease-in-out;
+  animation-name: zIndexAnimation;
+  animation-timing-function: ease;
+  animation-duration: var(--transitionSpeed);
+  animation-fill-mode: forwards;
 }
+
+// We need to set a higher z-index (100) on hover for the modal to overlap other cards.
+// Normally, when no longer hovering, the z-index would instantly jump back to the initial value (2), which makes it so that the
+// modal text suddenly is behind other cards even while the transition back is still playing.
+
+// To fix this we add a keyframe animation to the not-hovered modal ("animating" z-index), that plays once we
+// are no longer hovering the modal so that the z-index going back is delayed.
+// ("animation:none" is needed to reset the animation)
+
 .movie-card:hover .movie-modal {
   transform: scale(1.1);
-  transition: transform var(--transitionSpeed) ease-in;
-  visibility: visible;
+  animation: none;
   z-index: 100;
+}
+
+@keyframes zIndexAnimation {
+  0% {
+    z-index: 100;
+  }
+  100% {
+    z-index: 2;
+  }
 }
 
 .movie-modal__content {
@@ -108,11 +117,13 @@
   max-height: 0;
   overflow: hidden;
   position: relative;
-  transition: max-height 0s ease-in;
+  opacity: 0;
+  transition: all var(--transitionSpeed) ease-in-out;
 }
+
 .movie-card:hover .movie-modal__content {
   max-height: 1000px;
-  transition: max-height var(--transitionSpeed) ease-in;
+  opacity: 1;
 }
 
 .movie-modal__video {
