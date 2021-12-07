@@ -307,10 +307,9 @@ const api = createApi({
 
         const queryArgs: string[] = [];
         Object.entries(restArgs).forEach(([key, value]) => {
-          console.log('KEY', key, value);
           queryArgs.push(`&${key}=${value}`);
         });
-        console.log(`tmdb/discover/movie?page=${page}${queryArgs}`);
+
         const response = (await baseQuery(
           `tmdb/discover/movie?page=${page}${queryArgs}`,
         )) as TBaseQueryFnResponse<{
@@ -318,7 +317,7 @@ const api = createApi({
           total_pages: number;
           total_results: number;
         }>;
-        console.log(response.data);
+
         if (response.data) {
           const movies = (response.data.results as TmdbMovieSimple[]) || [];
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
