@@ -107,6 +107,7 @@
   animation-timing-function: ease;
   animation-duration: var(--transitionSpeed);
   animation-fill-mode: forwards;
+  width: 100%
 }
 
 // We need to set a higher z-index (100) on hover for the modal to overlap other cards.
