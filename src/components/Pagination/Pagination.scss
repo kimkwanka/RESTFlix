@@ -1,0 +1,21 @@
+.pagination-links {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  justify-content: center;
+  padding: var(--s3);
+  width: 100%;
+}
+
+.pagination-input {
+  height: 40px;
+  width: 64px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+// Hide increment / decrement buttons
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
