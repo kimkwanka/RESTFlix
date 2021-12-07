@@ -2,10 +2,10 @@
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  justify-content: flex-end;
+  justify-content: space-between;
   margin: 0 auto;
   max-width: var(--contentMaxWidth);
-  padding: var(--s2) var(--s3);
+  padding: var(--s2) 0;
 
   ul {
     list-style-type: none;
@@ -16,6 +16,11 @@
   li {
     display: inline;
   }
+}
+
+.navbar__right {
+  align-items: center;
+  display: flex;
 }
 
 .navbar__link {
@@ -37,7 +42,7 @@
 
 .logo-link {
   color: #fff;
-  flex-grow: 1;
+
   text-decoration: none;
   * {
     transition: color var(--transitionSpeed) var(--transitionTiming);

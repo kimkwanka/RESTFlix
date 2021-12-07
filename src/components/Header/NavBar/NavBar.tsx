@@ -32,7 +32,7 @@ const NavBar = () => {
         </h1>
       </NavLink>
       {isLoggedIn && (
-        <>
+        <div className="navbar__right">
           <SearchBar />
           <ul>
             <li>
@@ -64,7 +64,7 @@ const NavBar = () => {
               </a>
             </li>
           </ul>
-        </>
+        </div>
       )}
     </nav>
   );
