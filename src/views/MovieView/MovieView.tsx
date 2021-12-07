@@ -57,12 +57,12 @@ const MovieView = ({
             </Link>
           ))}
         </p>
-        <p className="movie-view__director">
+        {/* <p className="movie-view__director">
           Director:&nbsp;
-          {/* <Link to={`/directors/${movie?.director.name}`}>
+          <Link to={`/directors/${movie?.director.name}`}>
             {movie?.director.name}
-          </Link> */}
-        </p>
+          </Link>
+        </p> */}
         <div className="movie-view__description">{movie?.overview}</div>
         <div className="movie-view__button-wrapper">
           <FavoriteButton movieId={movie?.id} showText />
