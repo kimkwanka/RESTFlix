@@ -1,5 +1,5 @@
 import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
-import FilteredMoviesList from '@components/FilteredMoviesList/FilteredMoviesList';
+import FavoriteMoviesList from './FavoriteMoviesList/FavoriteMoviesList';
 
 import useProfileView from './useProfileView';
 
@@ -95,12 +95,10 @@ const ProfileView = () => {
           }
         />
       </form>
-      {favoriteMovies.length > 0 ? (
+      {favoriteMovies.length ? (
         <>
           <h2>Favorite Movies</h2>
-          <FilteredMoviesList
-            filterFunc={(movie) => favoriteMovies.includes(movie.id)}
-          />
+          <FavoriteMoviesList />
         </>
       ) : null}
     </div>
