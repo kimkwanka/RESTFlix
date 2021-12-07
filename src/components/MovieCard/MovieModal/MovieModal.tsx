@@ -44,7 +44,7 @@ const MovieModal = ({ movie }: MovieModalProps) => {
           <div className="movie-modal__description">{movie.overview}</div>
           <div className="movie-modal__details">
             <div className="movie-modal__genre">
-              {movie.genreList.join(', ')}
+              {movie.genres.map(({ name }) => name).join(', ')}
             </div>
             <div className="movie-modal__rating">
               &#9733;

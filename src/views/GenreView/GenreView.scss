@@ -1,24 +1,35 @@
-.genre-view {
-  display: flex;
-  flex-direction: column;
-  flex-grow: 1;
+.genre-heading {
+  text-align: left;
   padding: var(--s3);
-  margin-top: var(--s3);
   width: 100%;
 }
 
-.genre-view__name {
-  margin-bottom: var(--s3);
+.genre-movies-list {
+  display: grid;
+  gap: var(--s3);
+  grid-template-columns: repeat(auto-fill, minmax(min(256px, 100%), 1fr));
+  padding: var(--s3);
+  width: 100%;
 }
 
-.genre-view__description {
-  font-size: 18px;
-  line-height: 1.8;
-  margin-bottom: var(--s5);
-  margin-top: var(--s4);
+.genre-pagination-links {
+  display: flex;
+  gap: var(--s3);
+  align-items: center;
+  justify-content: center;
+  padding: var(--s3);
+  width: 100%;
 }
 
-.genre-view .movies-list {
-  margin-top: var(--s3);
+.genre-pagination-input {
+  height: 40px;
+  width: 64px;
+  margin: 0;
   padding: 0;
+  text-align: center;
+}
+// Hide increment / decrement buttons
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
 }

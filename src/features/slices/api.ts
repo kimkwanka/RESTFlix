@@ -19,6 +19,7 @@ import {
   TmdbMovieSimple,
   TmdbMovieDetailed,
   TAppDispatch,
+  TmdbGenre,
 } from '@features/types';
 
 type TAPIResponse<T> = {
@@ -55,6 +56,19 @@ type TBaseQueryFnResponse<T> = QueryReturnValue<
   FetchBaseQueryMeta
 >;
 
+type TDiscoverMoviesOptions = {
+  page?: number;
+  with_genres?: string;
+  without_genres?: string;
+  with_cast?: string;
+  with_crew?: string;
+  with_people?: string;
+  with_keywords?: string;
+  without_keywords?: string;
+  with_watch_providers?: string;
+  with_watch_monetization_types?: 'flatrate' | 'free' | 'ads' | 'rent' | 'buy';
+};
+
 // To break the circular dependency between api slice and user slice we define the actions in here instead of
 // in the user slice.
 // (user slice needs to react to api endpoints, but api needs to dispatch user slice actions)
@@ -66,7 +80,7 @@ const baseUrl = import.meta.env.VITE_MOVIE_API_URL as string;
 let pendingTokenRequest: ReturnType<TAppDispatch> = null;
 
 let imageBaseUrls: TmdbImageBaseUrls | undefined;
-let genreLookupTable: Record<number, string> | undefined;
+let genreLookupTable: Record<number, TmdbGenre> | undefined;
 
 const baseQueryWithAuthHeaders = fetchBaseQuery({
   baseUrl,
@@ -182,10 +196,13 @@ const fetchGenreLookupTableIfUndefined = async (
     const genres = genreLookupTableQueryResponse.data?.genres;
 
     if (genres) {
-      genreLookupTable = genres.reduce((acc: Record<number, string>, genre) => {
-        acc[genre.id] = genre.name;
-        return acc;
-      }, {});
+      genreLookupTable = genres.reduce(
+        (acc: Record<number, TmdbGenre>, genre) => {
+          acc[genre.id] = genre;
+          return acc;
+        },
+        {},
+      );
     }
   }
 };
@@ -271,20 +288,37 @@ const api = createApi({
       }),
     }),
     discoverMovies: builder.query<
-      { movies: Array<TmdbMovieSimple>; totalPages: number },
-      number | void
+      {
+        movies: Array<TmdbMovieSimple>;
+        totalPages: number;
+        totalResults: number;
+        genreLookupTable: Record<number, TmdbGenre> | undefined;
+      },
+      TDiscoverMoviesOptions
     >({
-      queryFn: async (page = 1, queryApi, extraOptions, baseQuery) => {
+      queryFn: async (
+        { page = 1, ...restArgs },
+        queryApi,
+        extraOptions,
+        baseQuery,
+      ) => {
         await fetchImageBaseUrlsIfUndefined(baseQuery);
         await fetchGenreLookupTableIfUndefined(baseQuery);
 
+        const queryArgs: string[] = [];
+        Object.entries(restArgs).forEach(([key, value]) => {
+          console.log('KEY', key, value);
+          queryArgs.push(`&${key}=${value}`);
+        });
+        console.log(`tmdb/discover/movie?page=${page}${queryArgs}`);
         const response = (await baseQuery(
-          `tmdb/discover/movie?page=${page}`,
+          `tmdb/discover/movie?page=${page}${queryArgs}`,
         )) as TBaseQueryFnResponse<{
           results: Array<TmdbMovieSimple>;
           total_pages: number;
+          total_results: number;
         }>;
-
+        console.log(response.data);
         if (response.data) {
           const movies = (response.data.results as TmdbMovieSimple[]) || [];
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
@@ -296,14 +330,18 @@ const api = createApi({
             posterUrl: movie.poster_path
               ? imageBaseUrls?.posterBaseUrl + movie.poster_path
               : '',
-            genreList: movie.genre_ids.map(
-              (genreId) => genreLookupTable?.[genreId] || '',
+            genres: movie.genre_ids.map((genreId) =>
+              genreLookupTable
+                ? genreLookupTable[genreId]
+                : { id: -1, name: '' },
             ),
           }));
           return {
             data: {
+              genreLookupTable,
               movies: moviesWithImagePathsAndGenres,
               totalPages: response.data.total_pages,
+              totalResults: response.data.total_results,
             },
           };
         }
@@ -331,7 +369,6 @@ const api = createApi({
             posterUrl: movie.poster_path
               ? imageBaseUrls?.posterBaseUrl + movie.poster_path
               : '',
-            genreList: movie.genres.map(({ name }) => name),
           };
           return { data: movieWithImagePathsAndGenres };
         }
@@ -344,6 +381,7 @@ const api = createApi({
         movies: Array<TmdbMovieSimple>;
         totalPages: number;
         totalResults: number;
+        genreLookupTable: Record<number, TmdbGenre> | undefined;
       },
       { query: string; page: number }
     >({
@@ -363,6 +401,7 @@ const api = createApi({
           results: Array<TmdbMovieSimple>;
           total_pages: number;
           total_results: number;
+          genreLookupTable: Record<number, TmdbGenre>;
         }>;
 
         if (response.data) {
@@ -376,12 +415,15 @@ const api = createApi({
             posterUrl: movie.poster_path
               ? imageBaseUrls?.posterBaseUrl + movie.poster_path
               : '',
-            genreList: movie.genre_ids.map(
-              (genreId) => genreLookupTable?.[genreId] || '',
+            genres: movie.genre_ids.map((genreId) =>
+              genreLookupTable
+                ? genreLookupTable[genreId]
+                : { id: -1, name: '' },
             ),
           }));
           return {
             data: {
+              genreLookupTable,
               movies: moviesWithImagePathsAndGenres,
               totalPages: response.data.total_pages,
               totalResults: response.data.total_results,

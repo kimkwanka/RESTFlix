@@ -51,9 +51,9 @@ const MovieView = ({
         </div>
         <p className="movie-view__genre">
           Genres:&nbsp;
-          {movie?.genreList.map((genreName) => (
-            <Link key={genreName} to={`/genres/${genreName}`}>
-              {genreName}{' '}
+          {movie?.genres.map(({ id, name }) => (
+            <Link key={id} to={`/genres/${id}`}>
+              {name}{' '}
             </Link>
           ))}
         </p>

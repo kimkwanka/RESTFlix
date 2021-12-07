@@ -62,7 +62,7 @@ const HomeView = () => {
 
   const pageAsNumber = parseInt(queryParams.get('page') || '1', 10);
 
-  const { data } = useDiscoverMoviesQuery(pageAsNumber);
+  const { data } = useDiscoverMoviesQuery({ page: pageAsNumber });
 
   if (!data) {
     return null;

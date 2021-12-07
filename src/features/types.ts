@@ -19,7 +19,7 @@ export type TmdbMovieSimple = {
   backdrop_path: string;
   backdropUrl: string;
   genre_ids: number[];
-  genreList: string[];
+  genres: TmdbGenre[];
   id: string;
   original_language: boolean;
   original_title: string;
@@ -45,7 +45,7 @@ export type TmdbMovieDetailed = {
   backdropUrl: string;
   budget: number;
   genres: TmdbGenre[];
-  genreList: string[];
+  genreList: TmdbGenre[];
   homepage?: string;
   id: string;
   imdb_id?: string;
