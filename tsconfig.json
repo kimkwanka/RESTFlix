@@ -22,8 +22,9 @@
     "paths": {
       "@src/*": ["*"],
       "@components/*": ["components/*"],
-      "@views/*": ["views/*"],
       "@features/*": ["features/*"],
+      "@hooks": ["hooks"],
+      "@views/*": ["views/*"],
     },
   },
   "include": [
