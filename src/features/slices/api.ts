@@ -375,6 +375,52 @@ const api = createApi({
         return { error: response.error as FetchBaseQueryError };
       },
     }),
+    getManyMoviesById: builder.query<TmdbMovieDetailed[], string[]>({
+      queryFn: async (movieIds, queryApi, extraOptions, baseQuery) => {
+        await fetchImageBaseUrlsIfUndefined(baseQuery);
+        await fetchGenreLookupTableIfUndefined(baseQuery);
+
+        const movies: TmdbMovieDetailed[] = [];
+        const errors: FetchBaseQueryError[] = [];
+
+        // Note that 'map' is deliberately used here to iterate instead of forEach or for...of to
+        // allow for parallel execution of queries.
+        // Check https://stackoverflow.com/questions/37576685/using-async-await-with-a-foreach-loop/37576787#37576787
+        // for more details.
+
+        await Promise.all(
+          movieIds.map(async (movieId) => {
+            const response = (await baseQuery(
+              `tmdb/movie/${movieId}`,
+            )) as TBaseQueryFnResponse<TmdbMovieDetailed>;
+
+            if (response.data) {
+              const movie = response.data;
+              const movieWithImagePaths = {
+                ...movie,
+                id: movie.id.toString(),
+                backdropUrl: movie.backdrop_path
+                  ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
+                  : '',
+                posterUrl: movie.poster_path
+                  ? imageBaseUrls?.posterBaseUrl + movie.poster_path
+                  : '',
+              };
+              movies.push(movieWithImagePaths);
+            }
+            errors.push(response.error as FetchBaseQueryError);
+          }),
+        );
+
+        if (movies.length) {
+          return {
+            data: movies,
+          };
+        }
+
+        return { error: errors[0] };
+      },
+    }),
     searchMovies: builder.query<
       {
         movies: Array<TmdbMovieSimple>;
@@ -452,6 +498,7 @@ export const {
   useRemoveMovieFromFavoritesMutation,
   useDiscoverMoviesQuery,
   useGetMovieByIdQuery,
+  useGetManyMoviesByIdQuery,
   useSearchMoviesQuery,
   useGetMovieCreditsByIdQuery,
 } = api;
