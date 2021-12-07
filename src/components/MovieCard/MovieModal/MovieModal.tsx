@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@features/hooks';
 
-import { TmdbMovieSimple } from '@features/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '@features/types';
 
 import './MovieModal.scss';
 
 import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
 interface MovieModalProps {
-  movie: TmdbMovieSimple;
+  movie: TmdbMovieSimple | TmdbMovieDetailed;
 }
 
 const MovieModal = ({ movie }: MovieModalProps) => {
