@@ -359,7 +359,7 @@ const api = createApi({
 
         if (response.data) {
           const movie = response.data;
-          const movieWithImagePathsAndGenres = {
+          const movieWithImagePaths = {
             ...movie,
             id: movie.id.toString(),
             backdropUrl: movie.backdrop_path
@@ -369,7 +369,7 @@ const api = createApi({
               ? imageBaseUrls?.posterBaseUrl + movie.poster_path
               : '',
           };
-          return { data: movieWithImagePathsAndGenres };
+          return { data: movieWithImagePaths };
         }
 
         return { error: response.error as FetchBaseQueryError };
