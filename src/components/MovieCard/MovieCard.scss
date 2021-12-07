@@ -1,45 +1,6 @@
-.movie-card__wrapper-link {
-  color: inherit;
-  display: flex;
-  position: relative;
-  text-decoration: none;
-}
-
 .movie-card {
   background: var(--mutedBlack);
   border-radius: var(--s1);
-  position: relative;
-}
-
-.movie-card__img {
-  border-radius: var(--s1) var(--s1) 0 0;
   height: 196px;
-  object-fit: cover;
-  object-position: 0 10%;
-  width: 100%;
-}
-
-.movie-card__favorite-heart {
-  background: linear-gradient(
-    111.34deg,
-    var(--buttonGradientCol1) 0%,
-    var(--buttonGradientCol2) 100%
-  );
-  border-radius: 50%;
-  height: 40px;
-  position: absolute;
-  right: var(--s1);
-  top: var(--s1);
-  width: 40px;
-  z-index: 1;
-}
-
-.movie-card__favorite-heart::after {
-  color: var(--textCol);
-  content: '♡';
-  font-size: 48px;
-  left: 50%;
-  position: absolute;
-  top: 50%;
-  transform: translate(-50%, -50%);
+  position: relative;
 }

@@ -1,4 +1,4 @@
-import { memo, useState, useRef } from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 import { useAppSelector } from '@features/hooks';
@@ -20,48 +20,20 @@ const MovieModal = ({ movie }: MovieModalProps) => {
 
   const isFavorite = favoriteMovies.indexOf(movie.id) !== -1;
 
-  const previewVideo = useRef<HTMLVideoElement>(null);
-
-  const [isHovered, setIsHovered] = useState(false);
-
-  if (previewVideo.current) {
-    // https://stackoverflow.com/questions/36803176/how-to-prevent-the-play-request-was-interrupted-by-a-call-to-pause-error
-    const video = previewVideo.current;
-
-    const isPlaying = video.currentTime > 0 && !video.paused;
-
-    if (isHovered && !isPlaying) {
-      // previewVideo.current.play();
-    }
-
-    if (!isHovered && isPlaying) {
-      // previewVideo.current.pause();
-    }
-  }
-
   return (
-    <div
-      className="movie-modal"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="movie-modal">
       {isFavorite && <span className="movie-modal__favorite-heart" />}
-
       <Link className="movie-modal__wrapper-link" to={`/movies/${movie.id}`}>
-        <video
-          ref={previewVideo}
-          className="movie-modal__video"
-          src=""
-          crossOrigin="anonymous"
-          muted
-          loop
-        />
-        <img
-          className="movie-modal__img"
-          crossOrigin="anonymous"
-          src={movie.backdropUrl || movie.posterUrl}
-          alt={movie.title}
-        />
+        {movie.backdropUrl || movie.posterUrl ? (
+          <img
+            className="movie-modal__img"
+            crossOrigin="anonymous"
+            src={movie.backdropUrl || movie.posterUrl}
+            alt={movie.title}
+          />
+        ) : (
+          <div className="movie-modal__img-placeholder">No image available</div>
+        )}
       </Link>
       <div className="movie-modal__content">
         <div className="movie-modal__upper">
