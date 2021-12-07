@@ -27,7 +27,7 @@ const Routes = ({ silentLoginPending }: IRoutesProps) => {
         <Route exact path="/movies/:movieId" component={MovieView} />
         <Route exact path="/genres/:genreName" component={GenreView} />
         <Route exact path="/directors/:directorName" component={DirectorView} />
-        <Route exact path="/:page?" component={HomeView} />
+        <Route exact path="/" component={HomeView} />
       </Switch>
     );
   }

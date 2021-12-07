@@ -3,6 +3,8 @@ import { Link, useHistory } from 'react-router-dom';
 
 import { useDiscoverMoviesQuery } from '@features/slices/api';
 
+import { useQueryParams } from '@hooks';
+
 import MovieCard from '@components/MovieCard/MovieCard';
 
 import './HomeView.scss';
@@ -23,7 +25,9 @@ const Pagination = ({ initialPage, totalPages }: IPaginationProps) => {
 
   return (
     <div className="home-pagination-links">
-      {initialPage > 1 && <Link to={`/${initialPage - 1}`}>&lt; Previous</Link>}
+      {initialPage > 1 && (
+        <Link to={`/?page=${initialPage - 1}`}>&lt; Previous</Link>
+      )}
       <input
         className="home-pagination-input"
         type="number"
@@ -36,7 +40,7 @@ const Pagination = ({ initialPage, totalPages }: IPaginationProps) => {
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             if (inputRef?.current?.reportValidity()) {
-              history.push(`/${currentPage}`);
+              history.push(`/?page=${currentPage}`);
             }
           }
         }}
@@ -47,26 +51,16 @@ const Pagination = ({ initialPage, totalPages }: IPaginationProps) => {
       />
       <p>of {totalPages}</p>
       {initialPage < totalPages && (
-        <Link to={`/${initialPage + 1}`}>Next &gt;</Link>
+        <Link to={`/?page=${initialPage + 1}`}>Next &gt;</Link>
       )}
     </div>
   );
 };
 
-interface IHomeViewProps {
-  match: {
-    params: {
-      page: string;
-    };
-  };
-}
+const HomeView = () => {
+  const queryParams = useQueryParams();
 
-const HomeView = ({
-  match: {
-    params: { page = '1' },
-  },
-}: IHomeViewProps) => {
-  const pageAsNumber = parseInt(page, 10);
+  const pageAsNumber = parseInt(queryParams.get('page') || '1', 10);
 
   const { data } = useDiscoverMoviesQuery(pageAsNumber);
 
