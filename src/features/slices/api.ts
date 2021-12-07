@@ -190,6 +190,9 @@ const fetchGenreLookupTableIfUndefined = async (
   }
 };
 
+const isURIEncoded = (str: string) =>
+  !str.match('.*[\\ "\\<\\>\\{\\}|\\\\^~\\[\\]].*');
+
 const api = createApi({
   reducerPath: 'moviesApi',
   baseQuery: baseQueryWithReauth,
@@ -336,6 +339,59 @@ const api = createApi({
         return { error: response.error as FetchBaseQueryError };
       },
     }),
+    searchMovies: builder.query<
+      {
+        movies: Array<TmdbMovieSimple>;
+        totalPages: number;
+        totalResults: number;
+      },
+      { query: string; page: number }
+    >({
+      queryFn: async (
+        { query = '', page = 1 },
+        queryApi,
+        extraOptions,
+        baseQuery,
+      ) => {
+        await fetchImageBaseUrlsIfUndefined(baseQuery);
+        await fetchGenreLookupTableIfUndefined(baseQuery);
+        const encodedQuery = isURIEncoded(query) ? query : encodeURI(query);
+
+        const response = (await baseQuery(
+          `tmdb/search/movie?query=${encodedQuery}&page=${page}`,
+        )) as TBaseQueryFnResponse<{
+          results: Array<TmdbMovieSimple>;
+          total_pages: number;
+          total_results: number;
+        }>;
+
+        if (response.data) {
+          const movies = (response.data.results as TmdbMovieSimple[]) || [];
+          const moviesWithImagePathsAndGenres = movies.map((movie) => ({
+            ...movie,
+            id: movie.id.toString(),
+            backdropUrl: movie.backdrop_path
+              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
+              : '',
+            posterUrl: movie.poster_path
+              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
+              : '',
+            genreList: movie.genre_ids.map(
+              (genreId) => genreLookupTable?.[genreId] || '',
+            ),
+          }));
+          return {
+            data: {
+              movies: moviesWithImagePathsAndGenres,
+              totalPages: response.data.total_pages,
+              totalResults: response.data.total_results,
+            },
+          };
+        }
+
+        return { error: response.error as FetchBaseQueryError };
+      },
+    }),
     getMovieCreditsById: builder.query<TmdbCredits, string>({
       query: (id) => `tmdb/movie/${id}/credits`,
     }),
@@ -354,6 +410,7 @@ export const {
   useAddMovieToFavoritesMutation,
   useRemoveMovieFromFavoritesMutation,
   useDiscoverMoviesQuery,
-  useGetMovieCreditsByIdQuery,
   useGetMovieByIdQuery,
+  useSearchMoviesQuery,
+  useGetMovieCreditsByIdQuery,
 } = api;
