@@ -5,6 +5,7 @@ import { useAppSelector } from '@features/hooks';
 import LoginView from '@views/LoginView/LoginView';
 import RegistrationView from '@views/RegistrationView/RegistrationView';
 import HomeView from '@views/HomeView/HomeView';
+import SearchView from '@views/SearchView/SearchView';
 import MovieView from '@views/MovieView/MovieView';
 import GenreView from '@views/GenreView/GenreView';
 import DirectorView from '@views/DirectorView/DirectorView';
@@ -27,6 +28,7 @@ const Routes = ({ silentLoginPending }: IRoutesProps) => {
         <Route exact path="/movies/:movieId" component={MovieView} />
         <Route exact path="/genres/:genreName" component={GenreView} />
         <Route exact path="/directors/:directorName" component={DirectorView} />
+        <Route exact path="/search" component={SearchView} />
         <Route exact path="/" component={HomeView} />
       </Switch>
     );

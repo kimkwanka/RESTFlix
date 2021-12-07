@@ -1,18 +1,15 @@
 import { useState, useRef } from 'react';
-
-import { useAppSelector, useAppDispatch } from '@features/hooks';
-
-import { setSearchTerm } from '@features/actions';
+import { useHistory } from 'react-router-dom';
 
 import './SearchBar.scss';
 
 const SearchBar = () => {
-  const searchTerm = useAppSelector((state) => state.ui.searchTerm);
-  const dispatch = useAppDispatch();
+  const history = useHistory();
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [isOpen, setIsOpen] = useState(false);
 
   const inputRef = useRef<HTMLInputElement>(null);
-
-  const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenClick = () => {
     setIsOpen(true);
@@ -35,7 +32,12 @@ const SearchBar = () => {
       <input
         type="text"
         className="search-bar__input"
-        onChange={(e) => dispatch(setSearchTerm(e.target.value))}
+        onChange={(e) => setSearchTerm(e.target.value)}
+        onKeyPress={(e) => {
+          if (e.key === 'Enter') {
+            history.push(`/search?query=${searchTerm}`);
+          }
+        }}
         value={searchTerm}
         placeholder="Search RESTFlix"
         onBlur={handleLoseFocus}
