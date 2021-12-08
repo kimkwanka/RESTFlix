@@ -1,6 +1,6 @@
 import { useState, useRef, MouseEvent } from 'react';
 
-import { useRegisterUserMutation } from '@features/slices/api';
+import { useRegisterUserMutation } from '@state/slices/api';
 
 const RegistrationView = () => {
   const [registerUser, { error: registerError, isSuccess: isRegisterSuccess }] =

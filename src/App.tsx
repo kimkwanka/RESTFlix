@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import {
   useLogoutUserMutation,
   useSilentLoginMutation,
-} from '@features/slices/api';
+} from '@state/slices/api';
 
 import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
 import Header from '@src/components/Header/Header';

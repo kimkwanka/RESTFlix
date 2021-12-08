@@ -20,7 +20,7 @@ import {
   TmdbMovieDetailed,
   TAppDispatch,
   TmdbGenre,
-} from '@features/types';
+} from '@state/types';
 
 type TAPIResponse<T> = {
   data: T | null;

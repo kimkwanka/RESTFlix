@@ -1,4 +1,4 @@
-import { useDiscoverMoviesQuery } from '@features/slices/api';
+import { useDiscoverMoviesQuery } from '@state/slices/api';
 
 import { useQueryParams } from '@hooks';
 

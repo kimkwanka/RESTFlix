@@ -1,6 +1,6 @@
 import { Switch, Route, Redirect } from 'react-router-dom';
 
-import { useAppSelector } from '@features/hooks';
+import { useAppSelector } from '@state/hooks';
 
 import LoginView from '@views/LoginView/LoginView';
 import RegistrationView from '@views/RegistrationView/RegistrationView';

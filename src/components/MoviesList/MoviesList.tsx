@@ -1,4 +1,4 @@
-import { TmdbMovieSimple, TmdbMovieDetailed } from '@features/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '@state/types';
 
 import MovieCard from '@components/MovieCard/MovieCard';
 

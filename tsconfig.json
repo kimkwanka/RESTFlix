@@ -22,7 +22,7 @@
     "paths": {
       "@src/*": ["*"],
       "@components/*": ["components/*"],
-      "@features/*": ["features/*"],
+      "@state/*": ["state/*"],
       "@hooks": ["hooks"],
       "@views/*": ["views/*"],
     },

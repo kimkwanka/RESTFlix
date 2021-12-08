@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom';
 
-import { useGetMovieByIdQuery } from '@features/slices/api';
+import { useGetMovieByIdQuery } from '@state/slices/api';
 
-import { useAppSelector } from '@features/hooks';
+import { useAppSelector } from '@state/hooks';
 
 import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
