@@ -9,13 +9,8 @@ const uiSlice = createSlice({
   name: 'ui',
   initialState: {
     isRequestPending: false,
-    searchTerm: '',
   },
-  reducers: {
-    setSearchTerm(state, action) {
-      state.searchTerm = action.payload;
-    },
-  },
+  reducers: {},
   extraReducers: (builder) => {
     builder
       .addMatcher(isPendingAction, (state) => {
@@ -27,8 +22,6 @@ const uiSlice = createSlice({
   },
 });
 
-const { actions, reducer } = uiSlice;
-
-export const { setSearchTerm } = actions;
+const { reducer } = uiSlice;
 
 export default reducer;
