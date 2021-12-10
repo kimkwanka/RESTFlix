@@ -1,4 +1,4 @@
-import { Link, Redirect } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
 import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
 
@@ -22,7 +22,7 @@ const RegistrationView = () => {
   } = useRegistrationView();
 
   if (isRegisterSuccess) {
-    return <Redirect to="/" />;
+    return <Navigate to="/" />;
   }
 
   return (

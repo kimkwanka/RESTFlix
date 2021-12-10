@@ -1,3 +1,5 @@
+import { useParams } from 'react-router-dom';
+
 import { useDiscoverMoviesQuery } from '@state/slices/api';
 
 import { useQueryParams } from '@hooks';
@@ -7,19 +9,8 @@ import MoviesList from '@components/MoviesList/MoviesList';
 
 import './GenreView.scss';
 
-interface IGenreViewProps {
-  match: {
-    params: {
-      genreId: string;
-    };
-  };
-}
-
-const GenreView = ({
-  match: {
-    params: { genreId },
-  },
-}: IGenreViewProps) => {
+const GenreView = () => {
+  const { genreId } = useParams();
   const queryParams = useQueryParams();
 
   const pageAsNumber = parseInt(queryParams.get('page') || '1', 10);
@@ -36,7 +27,7 @@ const GenreView = ({
   const { movies, totalPages, genreLookupTable } = data;
 
   const genreName = genreLookupTable
-    ? genreLookupTable[parseInt(genreId, 10)].name
+    ? genreLookupTable[parseInt(genreId || '', 10)].name
     : '';
   return (
     <>

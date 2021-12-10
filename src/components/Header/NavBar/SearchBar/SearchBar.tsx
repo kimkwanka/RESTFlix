@@ -1,10 +1,10 @@
 import { useState, useRef } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import './SearchBar.scss';
 
 const SearchBar = () => {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const [searchTerm, setSearchTerm] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -35,7 +35,7 @@ const SearchBar = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            history.push(`/search?query=${searchTerm}`);
+            navigate(`/search?query=${searchTerm}`);
           }
         }}
         value={searchTerm}

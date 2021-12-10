@@ -37,18 +37,23 @@ const NavBar = () => {
           <ul>
             <li>
               <NavLink
-                className="navbar__link"
-                activeClassName="navbar__link--active"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'navbar__link navbar__link--active'
+                    : 'navbar__link'
+                }
                 to="/"
-                exact
               >
                 Home
               </NavLink>
             </li>
             <li>
               <NavLink
-                className="navbar__link"
-                activeClassName="navbar__link--active"
+                className={({ isActive }) =>
+                  isActive
+                    ? 'navbar__link navbar__link--active'
+                    : 'navbar__link'
+                }
                 to="/profile"
               >
                 Profile

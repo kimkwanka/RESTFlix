@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 import { useGetMovieByIdQuery } from '@state/slices/api';
 
@@ -8,20 +8,9 @@ import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
 
 import './MovieView.scss';
 
-interface IMovieViewProps {
-  match: {
-    params: {
-      movieId: string;
-    };
-  };
-}
-
-const MovieView = ({
-  match: {
-    params: { movieId },
-  },
-}: IMovieViewProps) => {
-  const { data: movie } = useGetMovieByIdQuery(movieId);
+const MovieView = () => {
+  const { movieId } = useParams();
+  const { data: movie } = useGetMovieByIdQuery(movieId || '');
 
   const favoriteMovies = useAppSelector(
     (state) => state.user.data.favoriteMovies,

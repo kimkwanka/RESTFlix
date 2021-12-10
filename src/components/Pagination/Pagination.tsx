@@ -1,5 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 import './Pagination.scss';
 
@@ -10,7 +10,7 @@ interface IPaginationProps {
 }
 
 const Pagination = ({ baseUrl, initialPage, totalPages }: IPaginationProps) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const inputRef = useRef<HTMLInputElement>(null);
   const [currentPage, setCurrentPage] = useState(initialPage);
 
@@ -35,7 +35,7 @@ const Pagination = ({ baseUrl, initialPage, totalPages }: IPaginationProps) => {
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
             if (inputRef?.current?.reportValidity()) {
-              history.push(`${baseUrl}page=${currentPage}`);
+              navigate(`${baseUrl}page=${currentPage}`);
             }
           }
         }}
