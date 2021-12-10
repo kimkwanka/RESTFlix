@@ -18,7 +18,6 @@ import {
   TRootState,
   TmdbMovieSimple,
   TmdbMovieDetailed,
-  TAppDispatch,
   TmdbGenre,
 } from '@state/types';
 
@@ -56,6 +55,12 @@ type TBaseQueryFnResponse<T> = QueryReturnValue<
   FetchBaseQueryMeta
 >;
 
+type MaybePromise<T> = T | Promise<T> | PromiseLike<T>;
+
+type TPendingTokenRequest = MaybePromise<
+  QueryReturnValue<unknown, FetchBaseQueryError, FetchBaseQueryMeta>
+>;
+
 type TDiscoverMoviesOptions = {
   page?: number;
   with_genres?: string;
@@ -77,7 +82,7 @@ export const setLoggedOut = createAction('user/setLoggedOut');
 
 const baseUrl = import.meta.env.VITE_MOVIE_API_URL as string;
 
-let pendingTokenRequest: ReturnType<TAppDispatch> = null;
+let pendingTokenRequest: TPendingTokenRequest | null = null;
 
 let imageBaseUrls: TmdbImageBaseUrls | undefined;
 let genreLookupTable: Record<number, TmdbGenre> | undefined;
