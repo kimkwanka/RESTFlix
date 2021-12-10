@@ -1,9 +1,12 @@
 ## RESTFlix
-Client written in React for the [cf-movie-api backend](https://github.com/kimkwanka/cf-movie-api).
+React app that allows you discover old and upcoming movies alike and let's you save them in your favorite movies list.
+
+The app uses the [flix-backend](https://github.com/kimkwanka/flix-backend)'s REST API and consumes it via RTK Query operations.
 
 ## Built With
 - React
 - Redux
+- RTK Query
 - TypeScript
 
 ## Live demo
@@ -18,7 +21,7 @@ After cloning the repository run either
 ### Environment Variables
 The app depends on the following environment variables (supplied via a [.env file](https://www.npmjs.com/package/react-native-dotenv) or natively by your OS environment).
 
-  ***VITE_MOVIE_API_URL**=https://dry-sands-45830.herokuapp.com*
+  ***VITE_MOVIE_API_URL**=movie-api.cardinalzero.com*
 
 (Just create a file named ``.env`` in the project root, copy the above line into it and you're good to go.)
 
