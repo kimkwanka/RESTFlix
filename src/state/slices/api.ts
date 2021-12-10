@@ -328,12 +328,14 @@ const api = createApi({
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
             ...movie,
             id: movie.id.toString(),
-            backdropUrl: movie.backdrop_path
-              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
-              : '',
-            posterUrl: movie.poster_path
-              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
-              : '',
+            backdropUrl:
+              movie.backdrop_path && imageBaseUrls
+                ? imageBaseUrls.backdropBaseUrl + movie.backdrop_path
+                : '',
+            posterUrl:
+              movie.poster_path && imageBaseUrls
+                ? imageBaseUrls.posterBaseUrl + movie.poster_path
+                : '',
             genres: movie.genre_ids.map((genreId) =>
               genreLookupTable
                 ? genreLookupTable[genreId]
@@ -367,12 +369,14 @@ const api = createApi({
           const movieWithImagePaths = {
             ...movie,
             id: movie.id.toString(),
-            backdropUrl: movie.backdrop_path
-              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
-              : '',
-            posterUrl: movie.poster_path
-              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
-              : '',
+            backdropUrl:
+              movie.backdrop_path && imageBaseUrls
+                ? imageBaseUrls.backdropBaseUrl + movie.backdrop_path
+                : '',
+            posterUrl:
+              movie.poster_path && imageBaseUrls
+                ? imageBaseUrls.posterBaseUrl + movie.poster_path
+                : '',
           };
           return { data: movieWithImagePaths };
         }
@@ -404,12 +408,14 @@ const api = createApi({
               const movieWithImagePaths = {
                 ...movie,
                 id: movie.id.toString(),
-                backdropUrl: movie.backdrop_path
-                  ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
-                  : '',
-                posterUrl: movie.poster_path
-                  ? imageBaseUrls?.posterBaseUrl + movie.poster_path
-                  : '',
+                backdropUrl:
+                  movie.backdrop_path && imageBaseUrls
+                    ? imageBaseUrls.backdropBaseUrl + movie.backdrop_path
+                    : '',
+                posterUrl:
+                  movie.poster_path && imageBaseUrls
+                    ? imageBaseUrls.posterBaseUrl + movie.poster_path
+                    : '',
               };
               movies.push(movieWithImagePaths);
             }
@@ -459,12 +465,14 @@ const api = createApi({
           const moviesWithImagePathsAndGenres = movies.map((movie) => ({
             ...movie,
             id: movie.id.toString(),
-            backdropUrl: movie.backdrop_path
-              ? imageBaseUrls?.backdropBaseUrl + movie.backdrop_path
-              : '',
-            posterUrl: movie.poster_path
-              ? imageBaseUrls?.posterBaseUrl + movie.poster_path
-              : '',
+            backdropUrl:
+              movie.backdrop_path && imageBaseUrls
+                ? imageBaseUrls.backdropBaseUrl + movie.backdrop_path
+                : '',
+            posterUrl:
+              movie.poster_path && imageBaseUrls
+                ? imageBaseUrls.posterBaseUrl + movie.poster_path
+                : '',
             genres: movie.genre_ids.map((genreId) =>
               genreLookupTable
                 ? genreLookupTable[genreId]
