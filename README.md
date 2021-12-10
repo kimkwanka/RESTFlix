@@ -1,5 +1,5 @@
 ## RESTFlix
-React app that allows you discover old and upcoming movies alike and let's you save them in your favorite movies list.
+React app that allows you to discover old and upcoming movies alike and let's you save them in your favorite movies list.
 
 The app uses the [flix-backend](https://github.com/kimkwanka/flix-backend)'s REST API and consumes it via RTK Query operations.
 
