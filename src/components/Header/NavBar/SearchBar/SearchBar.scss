@@ -3,6 +3,7 @@
   display: flex;
   flex-direction: row;
   justify-content: center;
+  position: relative;
 }
 
 .search-bar__input {
@@ -37,15 +38,16 @@
 .search-bar__open-button {
   background: transparent;
   border-radius: 0;
+  left: 0;
   margin: 0;
   padding: 0 var(--s2);
-  transform: translateX(90px);
-  transition: transform var(--transitionSpeed) ease;
+  position: absolute;
+  transform: translateX(50%);
 }
 
 .search-bar--opened .search-bar__open-button {
   pointer-events: none;
-  transform: translateX(56px);
+  transform: translateX(0%);
 }
 
 .search-bar--opened .search-bar__input {
@@ -54,4 +56,24 @@
   pointer-events: auto;
   transition: max-width var(--transitionSpeed) ease,
     opacity var(--transitionSpeed) ease;
+}
+
+@media screen and (max-width: 850px) {
+  .search-bar {
+    padding: var(--s2) var(--s3);
+    width: 100%;
+    order: 2;
+  }
+
+  .search-bar__input {
+    flex-grow: 1;
+    max-width: 100%;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .search-bar__open-button {
+    pointer-events: none;
+    transform: translateX(var(--s3));
+  }
 }

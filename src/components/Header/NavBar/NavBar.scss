@@ -21,6 +21,7 @@
 .navbar__right {
   align-items: center;
   display: flex;
+  justify-content: center;
 }
 
 .navbar__link {
@@ -65,6 +66,17 @@
 }
 
 a.button.logout-button {
-  margin-left: var(--s5);
+  margin-left: var(--s3);
   text-decoration: none;
+}
+
+@media screen and (max-width: 850px) {
+  .navbar {
+    gap: var(--s3);
+    justify-content: center;
+  }
+
+  .navbar__right {
+    flex-wrap: wrap;
+  }
 }
