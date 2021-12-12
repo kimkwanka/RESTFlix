@@ -77,7 +77,7 @@ a:not([class]) {
   font-weight: bold;
 
   &:hover {
-    color: var(--buttonGradientCol1);
+    color: var(--secondaryCol);
   }
 }
 
@@ -130,8 +130,8 @@ button,
     135deg,
     var(--buttonGradientCol1),
     var(--buttonGradientCol2),
-    var(--gradientCol1),
-    var(--primaryCol)
+    var(--buttonGradientCol3),
+    var(--buttonGradientCol4)
   );
   background-size: 300% 100%;
   border-radius: var(--s1);
@@ -161,8 +161,8 @@ button.secondary,
 .button.secondary {
   background: linear-gradient(
     135deg,
-    var(--gradientCol1),
-    var(--primaryCol),
+    var(--buttonGradientCol3),
+    var(--buttonGradientCol4),
     var(--buttonGradientCol1),
     var(--buttonGradientCol2)
   );
@@ -197,8 +197,8 @@ button.clear--secondary,
     135deg,
     var(--mutedBlack),
     var(--mutedBlack),
-    var(--gradientCol1),
-    var(--primaryCol)
+    var(--buttonGradientCol3),
+    var(--buttonGradientCol4)
   );
   background-size: 400% 100%;
   color: var(--mutedText);
