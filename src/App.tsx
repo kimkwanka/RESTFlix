@@ -3,11 +3,11 @@ import { useEffect } from 'react';
 import {
   useLogoutUserMutation,
   useSilentLoginMutation,
-} from '@state/slices/api';
+} from 'state/slices/api';
 
-import LoadingSpinner from '@components/LoadingSpinner/LoadingSpinner';
-import Header from '@src/components/Header/Header';
-import Footer from '@components/Footer/Footer';
+import LoadingSpinner from '#components/LoadingSpinner/LoadingSpinner';
+import Header from '#components/Header/Header';
+import Footer from '#components/Footer/Footer';
 
 import Routes from './Routes';
 

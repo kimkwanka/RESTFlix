@@ -4,9 +4,9 @@ import { useState, useRef, MouseEvent } from 'react';
 import {
   useUpdateUserMutation,
   useDeleteUserMutation,
-} from '@state/slices/api';
+} from '#state/slices/api';
 
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
 const formatDate = (date: string) => {
   const inputDate = new Date(date);

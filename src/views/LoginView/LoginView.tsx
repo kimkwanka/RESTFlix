@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 
-import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
+import ErrorMessages from '#components/ErrorMessages/ErrorMessages';
 
 import useLoginView from './useLoginView';
 

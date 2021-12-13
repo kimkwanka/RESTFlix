@@ -123,4 +123,6 @@ export type TmdbImageBaseUrls = {
 
 // eslint-disable-next-line import/no-cycle
 export type { TRootState } from './store';
+
+// eslint-disable-next-line import/no-cycle
 export type { TAppDispatch } from './store';

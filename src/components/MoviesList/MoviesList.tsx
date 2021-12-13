@@ -1,6 +1,6 @@
-import { TmdbMovieSimple, TmdbMovieDetailed } from '@state/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '#state/types';
 
-import MovieCard from '@components/MovieCard/MovieCard';
+import MovieCard from '#components/MovieCard/MovieCard';
 
 import './MoviesList.scss';
 

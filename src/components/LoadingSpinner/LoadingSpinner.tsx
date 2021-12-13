@@ -1,4 +1,4 @@
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
 import './LoadingSpinner.scss';
 

@@ -1,9 +1,9 @@
-import { useSearchMoviesQuery } from '@state/slices/api';
+import { useSearchMoviesQuery } from '#state/slices/api';
 
-import { useQueryParams } from '@hooks';
+import { useQueryParams } from '#hooks';
 
-import Pagination from '@components/Pagination/Pagination';
-import MoviesList from '@components/MoviesList/MoviesList';
+import Pagination from '#components/Pagination/Pagination';
+import MoviesList from '#components/MoviesList/MoviesList';
 
 import './SearchView.scss';
 

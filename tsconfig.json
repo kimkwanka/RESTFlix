@@ -20,11 +20,11 @@
     "jsx": "preserve",
     "baseUrl": "./src",
     "paths": {
-      "@src/*": ["*"],
-      "@components/*": ["components/*"],
-      "@state/*": ["state/*"],
-      "@hooks": ["hooks"],
-      "@views/*": ["views/*"],
+      "#src/*": ["*"],
+      "#components/*": ["components/*"],
+      "#state/*": ["state/*"],
+      "#hooks": ["hooks"],
+      "#views/*": ["views/*"],
     },
   },
   "include": [

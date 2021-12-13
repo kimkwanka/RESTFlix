@@ -1,6 +1,6 @@
 import { memo } from 'react';
 
-import { TmdbMovieSimple, TmdbMovieDetailed } from '@state/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '#state/types';
 
 import MovieModal from './MovieModal/MovieModal';
 

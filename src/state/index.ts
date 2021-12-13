@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux';
 
-import api from '@state/slices/api';
+import api from '#state/slices/api';
 
 import userReducer from './slices/user';
 import uiReducer from './slices/ui';

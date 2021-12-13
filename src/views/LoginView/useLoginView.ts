@@ -1,6 +1,6 @@
 import { useState, useRef, MouseEvent } from 'react';
 
-import { useLoginUserMutation } from '@state/slices/api';
+import { useLoginUserMutation } from '#state/slices/api';
 
 const useLoginView = () => {
   const [loginUser, { error: loginError }] = useLoginUserMutation();

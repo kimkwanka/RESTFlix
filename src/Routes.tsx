@@ -1,14 +1,14 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
-import LoginView from '@views/LoginView/LoginView';
-import RegistrationView from '@views/RegistrationView/RegistrationView';
-import HomeView from '@views/HomeView/HomeView';
-import SearchView from '@views/SearchView/SearchView';
-import MovieView from '@views/MovieView/MovieView';
-import GenreView from '@views/GenreView/GenreView';
-import ProfileView from '@views/ProfileView/ProfileView';
+import LoginView from '#views/LoginView/LoginView';
+import RegistrationView from '#views/RegistrationView/RegistrationView';
+import HomeView from '#views/HomeView/HomeView';
+import SearchView from '#views/SearchView/SearchView';
+import MovieView from '#views/MovieView/MovieView';
+import GenreView from '#views/GenreView/GenreView';
+import ProfileView from '#views/ProfileView/ProfileView';
 
 interface IRoutesProps {
   silentLoginPending: boolean;

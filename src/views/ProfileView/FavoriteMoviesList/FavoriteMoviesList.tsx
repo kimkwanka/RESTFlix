@@ -1,7 +1,7 @@
-import { useGetManyMoviesByIdQuery } from '@state/slices/api';
-import { useAppSelector } from '@state/hooks';
+import { useGetManyMoviesByIdQuery } from '#state/slices/api';
+import { useAppSelector } from '#state/hooks';
 
-import MovieCard from '@components/MovieCard/MovieCard';
+import MovieCard from '#components/MovieCard/MovieCard';
 
 import './FavoriteMoviesList.scss';
 

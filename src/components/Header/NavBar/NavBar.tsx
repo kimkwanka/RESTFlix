@@ -2,9 +2,9 @@ import { MouseEvent } from 'react';
 
 import { NavLink } from 'react-router-dom';
 
-import { useLogoutUserMutation } from '@state/slices/api';
+import { useLogoutUserMutation } from '#state/slices/api';
 
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
 import SearchBar from './SearchBar/SearchBar';
 

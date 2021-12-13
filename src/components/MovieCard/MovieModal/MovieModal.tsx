@@ -1,13 +1,13 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
-import { TmdbMovieSimple, TmdbMovieDetailed } from '@state/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '#state/types';
 
 import './MovieModal.scss';
 
-import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
+import FavoriteButton from '#components/FavoriteButton/FavoriteButton';
 
 interface MovieModalProps {
   movie: TmdbMovieSimple | TmdbMovieDetailed;

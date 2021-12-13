@@ -1,10 +1,10 @@
 import { Link, useParams } from 'react-router-dom';
 
-import { useGetMovieByIdQuery } from '@state/slices/api';
+import { useGetMovieByIdQuery } from '#state/slices/api';
 
-import { useAppSelector } from '@state/hooks';
+import { useAppSelector } from '#state/hooks';
 
-import FavoriteButton from '@components/FavoriteButton/FavoriteButton';
+import FavoriteButton from '#components/FavoriteButton/FavoriteButton';
 
 import './MovieView.scss';
 

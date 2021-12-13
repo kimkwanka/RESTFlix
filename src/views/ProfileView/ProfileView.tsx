@@ -1,4 +1,4 @@
-import ErrorMessages from '@components/ErrorMessages/ErrorMessages';
+import ErrorMessages from '#components/ErrorMessages/ErrorMessages';
 import FavoriteMoviesList from './FavoriteMoviesList/FavoriteMoviesList';
 
 import useProfileView from './useProfileView';

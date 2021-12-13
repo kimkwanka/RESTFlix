@@ -1,7 +1,7 @@
 /* eslint-disable no-param-reassign */
 import { createSlice, AnyAction } from '@reduxjs/toolkit';
 
-import moviesApi, { setAccessToken, setLoggedOut } from '@state/slices/api';
+import moviesApi, { setAccessToken, setLoggedOut } from '#state/slices/api';
 
 const userSlice = createSlice({
   name: 'user',
