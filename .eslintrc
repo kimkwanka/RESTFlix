@@ -13,7 +13,7 @@
   ],
   "parser": "@typescript-eslint/parser",
   "parserOptions": { "project": ["tsconfig.json"] },
-  "plugins": ["react", "@typescript-eslint"],
+  "plugins": ["react", "@typescript-eslint", "import"],
   "rules": {
     "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
     "react/react-in-jsx-scope": "off",
@@ -34,5 +34,12 @@
         "unnamedComponents": "arrow-function"
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "project": ["tsconfig.json"]
+      }
+    }
   }
 }
