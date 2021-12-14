@@ -17,21 +17,29 @@ const MovieView = () => {
   );
   const isFavorite = movie ? favoriteMovies.indexOf(movie?.id) !== -1 : false;
 
+  const movieImageUrl = movie?.posterUrl || movie?.backdropUrl;
+
   return (
     <div className="movie-view">
       {isFavorite && <span className="movie-view__favorite-heart" />}
-      <img
-        className="movie-view__background-image"
-        crossOrigin="anonymous"
-        src={movie?.posterUrl}
-        alt={movie?.title}
-      />
-      <img
-        className="movie-view__image"
-        crossOrigin="anonymous"
-        src={movie?.posterUrl}
-        alt={movie?.title}
-      />
+      {movieImageUrl && (
+        <img
+          className="movie-view__background-image"
+          crossOrigin="anonymous"
+          src={movieImageUrl}
+          alt={movie?.title}
+        />
+      )}
+      {movieImageUrl ? (
+        <img
+          className="movie-view__image"
+          crossOrigin="anonymous"
+          src={movieImageUrl}
+          alt={movie?.title}
+        />
+      ) : (
+        <div className="movie-view__image-placeholder">No image available</div>
+      )}
       <div className="movie-view__details">
         <h1 className="movie-view__title">{movie?.title}</h1>
         <div className="movie-view__rating">

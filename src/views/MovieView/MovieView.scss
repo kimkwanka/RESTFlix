@@ -91,3 +91,16 @@
 .movie-view__button-wrapper {
   text-align: center;
 }
+
+.movie-view__image-placeholder {
+  align-items: center;
+  background: linear-gradient(
+    111.34deg,
+    var(--gradientCol1) 0%,
+    var(--gradientCol2) 100%
+  );
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+}
