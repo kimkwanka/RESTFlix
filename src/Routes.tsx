@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { useAppSelector } from '#state/hooks';
+import { useAppSelector } from '#redux/hooks';
 
 import LoginView from '#views/LoginView/LoginView';
 import RegistrationView from '#views/RegistrationView/RegistrationView';

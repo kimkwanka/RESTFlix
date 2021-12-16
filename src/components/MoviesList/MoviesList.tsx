@@ -1,4 +1,4 @@
-import { TmdbMovieSimple, TmdbMovieDetailed } from '#state/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '#redux/types';
 
 import MovieCard from '#components/MovieCard/MovieCard';
 

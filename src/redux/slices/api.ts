@@ -19,7 +19,7 @@ import {
   TmdbMovieSimple,
   TmdbMovieDetailed,
   TmdbGenre,
-} from '#state/types';
+} from '#redux/types';
 
 type TAPIResponse<T> = {
   data: T | null;

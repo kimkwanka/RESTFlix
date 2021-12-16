@@ -3,9 +3,9 @@ import { memo, MouseEvent } from 'react';
 import {
   useAddMovieToFavoritesMutation,
   useRemoveMovieFromFavoritesMutation,
-} from '#state/slices/api';
+} from '#redux/slices/api';
 
-import { useAppSelector } from '#state/hooks';
+import { useAppSelector } from '#redux/hooks';
 
 import './FavoriteButton.scss';
 

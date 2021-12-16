@@ -1,5 +1,5 @@
-import { useGetManyMoviesByIdQuery } from '#state/slices/api';
-import { useAppSelector } from '#state/hooks';
+import { useGetManyMoviesByIdQuery } from '#redux/slices/api';
+import { useAppSelector } from '#redux/hooks';
 
 import MovieCard from '#components/MovieCard/MovieCard';
 

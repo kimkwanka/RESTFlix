@@ -4,9 +4,9 @@ import { useState, useRef, MouseEvent } from 'react';
 import {
   useUpdateUserMutation,
   useDeleteUserMutation,
-} from '#state/slices/api';
+} from '#redux/slices/api';
 
-import { useAppSelector } from '#state/hooks';
+import { useAppSelector } from '#redux/hooks';
 
 const formatDate = (date: string) => {
   const inputDate = new Date(date);

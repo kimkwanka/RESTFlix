@@ -1,9 +1,9 @@
 import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
-import { useAppSelector } from '#state/hooks';
+import { useAppSelector } from '#redux/hooks';
 
-import { TmdbMovieSimple, TmdbMovieDetailed } from '#state/types';
+import { TmdbMovieSimple, TmdbMovieDetailed } from '#redux/types';
 
 import './MovieModal.scss';
 

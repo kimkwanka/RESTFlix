@@ -1,4 +1,4 @@
-import { useSearchMoviesQuery } from '#state/slices/api';
+import { useSearchMoviesQuery } from '#redux/slices/api';
 
 import { useQueryParams } from '#hooks';
 

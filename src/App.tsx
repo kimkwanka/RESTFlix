@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import {
   useLogoutUserMutation,
   useSilentLoginMutation,
-} from 'state/slices/api';
+} from '#redux/slices/api';
 
 import LoadingSpinner from '#components/LoadingSpinner/LoadingSpinner';
 import Header from '#components/Header/Header';
