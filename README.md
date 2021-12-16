@@ -16,7 +16,7 @@ To see the GraphQL version of this app, check out [GraphFlix](https://github.com
 - TypeScript
 
 ## Live Version
-Check out the [live demo](https://restflix.netlify.app/) to see the app in action.
+Check out the [live version](https://restflix.netlify.app/) to see the app in action.
 
 ## Getting Started
 
