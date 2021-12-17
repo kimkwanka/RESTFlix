@@ -80,7 +80,7 @@ type TDiscoverMoviesOptions = {
 export const setAccessToken = createAction<string>('user/setAccessToken');
 export const setLoggedOut = createAction('user/setLoggedOut');
 
-const baseUrl = import.meta.env.VITE_MOVIE_API_URL as string;
+const baseUrl = process.env.VITE_MOVIE_API_URL as string;
 
 let pendingTokenRequest: TPendingTokenRequest | null = null;
 

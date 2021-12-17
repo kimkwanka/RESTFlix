@@ -8,7 +8,7 @@ import store from '#redux/store';
 
 import App from './App';
 
-if (!import.meta.env.VITE_MOVIE_API_URL) {
+if (!process.env.VITE_MOVIE_API_URL) {
   throw new Error(
     'Environment variable MOVIE_API_URL is not set. Either provide it via a .env file or natively in your OS.',
   );
