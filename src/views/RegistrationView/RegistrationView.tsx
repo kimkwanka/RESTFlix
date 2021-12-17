@@ -78,9 +78,12 @@ const RegistrationView = () => {
         </button>
         <ErrorMessages
           errors={
-            registerError && 'error' in registerError
+            (registerError && 'error' in registerError
               ? [registerError.error]
-              : []
+              : []) ||
+            (registerError && 'message' in registerError
+              ? [registerError.message]
+              : [])
           }
         />
       </form>

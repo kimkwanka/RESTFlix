@@ -46,7 +46,10 @@ const LoginView = () => {
           Sign In
         </button>
         <ErrorMessages
-          errors={loginError && 'error' in loginError ? [loginError.error] : []}
+          errors={
+            (loginError && 'error' in loginError ? [loginError.error] : []) ||
+            (loginError && 'message' in loginError ? [loginError.message] : [])
+          }
         />
       </form>
       <p>

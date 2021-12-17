@@ -86,12 +86,22 @@ const ProfileView = () => {
         </div>
         <ErrorMessages
           errors={
-            updateError && 'error' in updateError ? [updateError.error] : []
+            (updateError && 'error' in updateError
+              ? [updateError.error]
+              : []) ||
+            (updateError && 'message' in updateError
+              ? [updateError.message]
+              : [])
           }
         />
         <ErrorMessages
           errors={
-            deleteError && 'error' in deleteError ? [deleteError.error] : []
+            (deleteError && 'error' in deleteError
+              ? [deleteError.error]
+              : []) ||
+            (deleteError && 'message' in deleteError
+              ? [deleteError.message]
+              : [])
           }
         />
       </form>
