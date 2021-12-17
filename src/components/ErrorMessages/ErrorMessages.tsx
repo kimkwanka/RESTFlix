@@ -8,7 +8,7 @@ const ErrorMessages = ({ errors }: IErrorMessagesProps) => {
   return (
     <div className="m-4">
       <div>
-        {errors.map((e) => (
+        {errors.filter(Boolean).map((e) => (
           <p className="error-text" key={`err_${e}`}>
             {e}
           </p>
