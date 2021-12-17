@@ -38,6 +38,6 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
-    "lint": "npx eslint \"src/**/*.{ts,tsx}\"; npx tsc --noEmit"
+    "lint": "npx tsc --noEmit; npx eslint \"src/**/*.{ts,tsx}\""
   }
 }
