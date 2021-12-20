@@ -12,8 +12,10 @@
     "redux": "^4.1.2"
   },
   "devDependencies": {
+    "@testing-library/cypress": "^8.0.2",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
+    "@types/faker": "^5.5.9",
     "@types/jest": "^27.0.3",
     "@types/react": "^17.0.37",
     "@types/react-dom": "^17.0.11",
@@ -21,6 +23,7 @@
     "@typescript-eslint/eslint-plugin": "^5.6.0",
     "@typescript-eslint/parser": "^5.6.0",
     "@vitejs/plugin-react": "^1.1.1",
+    "cypress": "^9.1.1",
     "eslint": "8.4.1",
     "eslint-config-airbnb": "^19.0.2",
     "eslint-config-airbnb-typescript": "^16.1.0",
@@ -31,7 +34,9 @@
     "eslint-plugin-prettier": "^4.0.0",
     "eslint-plugin-react": "^7.27.1",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "faker": "^5.5.3",
     "jest": "^27.4.5",
+    "local-cypress": "^1.2.3",
     "prettier": "^2.5.1",
     "sass": "^1.45.0",
     "ts-jest": "^27.1.2",
@@ -41,9 +46,12 @@
   },
   "scripts": {
     "build": "tsc && vite build",
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
     "dev": "vite",
     "lint": "npx tsc --noEmit; npx eslint \"src/**/*.{ts,tsx}\"",
     "serve": "vite preview",
-    "test": "jest"
+    "test": "jest",
+    "test:e2e": "cypress run"
   }
 }

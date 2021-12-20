@@ -11,4 +11,5 @@ module.exports = {
     '\\.(css|scss)$': '<rootDir>/jest/style.mock.ts',
   },
   collectCoverageFrom: ['src/**/*.{ts,tsx}'],
+  testPathIgnorePatterns: ['<rootDir>/cypress/'],
 };
