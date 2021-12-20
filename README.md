@@ -14,6 +14,9 @@ To see the GraphQL version of this app, check out [GraphFlix](https://github.com
 - Redux / Redux Toolkit
 - RTK Query
 - TypeScript
+- Jest
+- Cypress
+- React / Cypress Testing Library
 
 ## Live Version
 Check out the [live version](https://restflix.netlify.app/) to see the app in action.
@@ -37,3 +40,15 @@ Use ``yarn dev`` or ``npm run dev`` to run app in development mode.
 
 ### Build
 Use ``yarn build`` or ``npm run build`` to build for production.
+
+### Testing (Unit / Integration)
+Use ``yarn test`` or ``npm run test`` to run the test suite ([Jest](https://jestjs.io/) + [React Testing Library](https://testing-library.com/docs/react-testing-library/intro)) once or
+``yarn test --watch`` or ``npm run test -- --watch`` to run it in watch mode.
+
+Check the [Jest CLI docs](https://jestjs.io/docs/cli) for more options.
+### Testing (E2E)
+Use ``yarn test:e2e`` or ``npm run test:e2e`` to run the end-to-end test suite ([Cypress](https://www.cypress.io/) + [Cypress Testing Library](https://testing-library.com/docs/cypress-testing-library/intro/)) headlessly or ``yarn test:e2e --headed`` or ``npm run test:e2e -- --headed`` to force the browser to show.
+
+Check the [Cypress CLI docs](https://docs.cypress.io/guides/guides/command-line) for more CLI options.
+
+Alternatively you can run ``yarn cy:open`` or ``npm run cy:open`` to open Cypress and run the tests manually.
